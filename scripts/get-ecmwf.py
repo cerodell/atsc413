@@ -7,7 +7,7 @@ import cartopy.crs as ccrs
 
 ############### gfs #################
 
-H = Herbie("2021-07-11", model="gfs", product="pgrb2.0p25")
+H = Herbie("2021-05-16", model="gfs", product="pgrb2.0p25")
 # Show all available sources
 H.SOURCES
 # Show all available products
