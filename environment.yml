@@ -247,6 +247,7 @@ dependencies:
   - tenacity=8.1.0=pyhd8ed1ab_0
   - threadpoolctl=3.1.0=pyh8a188c0_0
   - tifffile=2022.10.10=pyhd8ed1ab_0
+  - tiledb=2.11.2=h8b9cbf0_0
   - tk=8.6.12=h5dbffcc_0
   - toml=0.10.2=pyhd8ed1ab_0
   - toolz=0.12.0=pyhd8ed1ab_0
@@ -280,4 +281,4 @@ dependencies:
   - zlib=1.2.12=hfd90126_3
   - zlib-ng=2.0.6=hac89ed1_0
   - zstd=1.5.2=hfa58983_4
-prefix: /Users/crodell/miniconda3/envs/fwf
+prefix: /Users/crodell/miniconda3/envs/atsc413
