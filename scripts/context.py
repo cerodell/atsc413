@@ -18,6 +18,8 @@ this_dir = path.parent  # this folder
 notebooks_dir = this_dir
 root_dir = notebooks_dir.parents[0]
 data_dir = root_dir / Path("data")
+json_dir = root_dir / Path("json")
+img_dir = root_dir / Path("img")
 
 
 sys.path.insert(0, str(root_dir))

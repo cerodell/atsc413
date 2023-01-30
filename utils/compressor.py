@@ -32,14 +32,11 @@ def file_size(file_path):
         return convert_bytes(file_info.st_size)
 
 
-# def compressor(ds):
-#     """
-#     this function compresses datasets
-#     """
-#     ds = ds.load()
-#     comp = dict(zlib=True, complevel=9)
-#     encoding = {var: comp for var in ds.data_vars}
-#     for var in ds.data_vars:
-#         ds[var].attrs = var_dict[var]
-
-#     return ds, encoding
+def compressor(ds):
+    """
+    this function compresses datasets
+    """
+    ds = ds.load()
+    comp = dict(zlib=True, complevel=9)
+    encoding = {var: comp for var in ds.data_vars}
+    return ds, encoding

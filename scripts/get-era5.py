@@ -17,9 +17,9 @@ file_name = "precip"
 
 level = "single"
 get_data = {
-    # "variable": ['2m_temperature', 'mean_sea_level_pressure', 'total_precipitation']
     "variable": "total_precipitation",
-    "variable": "mean_sea_level_pressure",
+    # "variable": "mean_sea_level_pressure",
+    # "variable": "2m_temperature",
 }
 
 
@@ -101,12 +101,12 @@ config = {
         "22:00",
         "23:00",
     ],
-    "area": [
-        90,
-        -180,
-        -10,
-        10,
-    ],
+    # "area": [
+    #     90,
+    #     -180,
+    #     -10,
+    #     10,
+    # ],
 }
 
 
@@ -116,7 +116,7 @@ c = cdsapi.Client()
 c.retrieve(
     f"reanalysis-era5-{level}-levels-monthly-means",
     config,
-    save_dir + f"era5-{level}-monthly-{year[0]}-{year[-1]}.nc",
+    save_dir + f"era5-{file_name}-monthly-{year[0]}-{year[-1]}.nc",
 )
 print(f"wrote:  {save_dir}era5-{file_name}-monthly-{year[0]}-{year[-1]}.nc")
 

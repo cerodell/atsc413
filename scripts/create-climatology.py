@@ -7,7 +7,7 @@ import xarray as xr
 from pathlib import Path
 from datetime import datetime
 
-# from utils.compressor import compressor
+from utils.compressor import compressor
 
 ## https://stackoverflow.com/questions/49620140/get-hourly-average-for-each-month-from-a-netcds-file
 
@@ -15,17 +15,16 @@ from datetime import datetime
 ## Earth's gravitational acceleration
 g = 9.80665
 data_dir = "/Volumes/WFRT-Data02/era5/"
+var = "precip"
+# pathlist = sorted(Path(data_dir).glob(f"era5-50kPa-monthly*"))
+# open = datetime.now()
+# ds = xr.open_mfdataset(pathlist, parallel=True)
+# print("Opening Time: ", datetime.now() - open)
 
-pathlist = sorted(Path(data_dir).glob(f"era5-50kPa-monthly*"))
-
-
+path = str(data_dir) + f"/era5-{var}-monthly-1991-2021.nc"
 open = datetime.now()
-ds = xr.open_mfdataset(pathlist, parallel=True)
+ds = xr.open_dataset(path)
 print("Opening Time: ", datetime.now() - open)
-
-
-# ds = ds.sel(time = slice("1991-01-01","1993-01-01"))
-# ds = ds.resample(time="1D").mean(dim = 'time'
 
 
 def rechunk(ds):
@@ -43,34 +42,34 @@ def hour_mean(x):
 
 
 ## group data into month day hour and solve the hourly means
+# group = datetime.now()
+# ds = ds.groupby("time.month").apply(hour_mean)
+# ds = xr.apply_ufunc(hour_mean, ds, dask='parallelized',output_dtypes=[float], vectorize=True,)
+# print("Grouping Time: ", datetime.now() - group)
+
+
+# ## group data into month day hour and solve the hourly means
 group = datetime.now()
 ds = ds.groupby("time.month").apply(hour_mean)
 print("Grouping Time: ", datetime.now() - group)
 
-ds = rechunk(ds)
 
-# rechunk_time = datetime.now()
-# final_ds = final_ds.isel(month= 0, day = 1)
-# print(final_ds)
-# final_ds = rechunk(final_ds)
-# print("Rechunk Time: ", datetime.now() - rechunk_time)
+# loadTime = datetime.now()
+# ds = ds.load()
+# print("Loading Time: ", datetime.now() - loadTime)
 
-print("Starting Compute Time: ", datetime.now())
-compute = datetime.now()
-final_ds = ds.compute()
-print("Compute Time: ", datetime.now() - compute)
-
-
-final_ds.attrs["pyproj_srs"] = "+proj=longlat +datum=WGS84 +no_defs"
-final_ds.attrs[
+ds.attrs["pyproj_srs"] = "+proj=longlat +datum=WGS84 +no_defs"
+ds.attrs[
     "description"
-] = "Monthly averaged reanalysis by hour of day over 30 years (1991-2021)"
+] = "30 year (1991-2021) monthly averaged reanalysis by hour of day"
 
+# ds, encoding = compressor(ds)
 
 write = datetime.now()
-final_ds.to_netcdf(
-    str(data_dir) + f"/zz50kPa-Climo.nc",
+ds.to_netcdf(
+    str(data_dir) + f"/{var}-climatology.nc",
     mode="w",
+    # encoding = encoding
 )
 print("Write Time: ", datetime.now() - write)
 
