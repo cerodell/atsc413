@@ -1,4 +1,5 @@
 import context
+import json
 import salem
 import cfgrib
 import numpy as np
@@ -18,15 +19,40 @@ import cartopy.feature as cfeature
 from cartopy.feature import NaturalEarthFeature
 
 from datetime import datetime
-from context import data_dir, img_dir
+from context import data_dir, img_dir, json_dir
 
 levels = np.arange(-450, 468, 18)
+
+with open(str(json_dir) + "/var-attrs.json") as f:
+    var_attrs = json.load(f)
 
 
 model = "gfs"
 case_study = "high_level"
 
-pathlist = sorted(Path(str(data_dir) + f"/{model}/{case_study}/").glob(f"gfs*"))
+len(var_attrs["r2"]["filter_by_keys"][model])
+
+print(
+    any(isinstance(i, dict) for i in var_attrs["wsp"]["filter_by_keys"][model].values())
+)
+
+
+pathlist = sorted(Path(str(data_dir) + f"/{model}/{case_study}/").glob(f"*.grib2"))
+
+# Import data
+grib_data = cfgrib.open_datasets(pathlist[0])
+for i in range(len(grib_data)):
+    print("----------")
+    print(i)
+    print(list(grib_data[i]))
+
+ds = xr.open_dataset(
+    pathlist[0],
+    engine="cfgrib",
+    backend_kwargs={
+        "filter_by_keys": {"typeOfLevel": "heightAboveGround", "shortName": "10u"}
+    },
+)
 
 ds_climatology = salem.open_xr_dataset(str(data_dir) + "/climatology-1991-2021.nc")
 

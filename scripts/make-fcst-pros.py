@@ -1,3 +1,4 @@
+import sys
 import context
 import json
 import salem
@@ -12,7 +13,7 @@ import matplotlib.colors
 from matplotlib.axes import Axes
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-from scipy.ndimage.filters import gaussian_filter
+from scipy.ndimage import gaussian_filter
 from cartopy.vector_transform import vector_scalar_to_grid
 
 import cartopy.crs as ccrs
@@ -21,19 +22,9 @@ import cartopy.feature as cfeature
 from cartopy.feature import NaturalEarthFeature
 
 from datetime import datetime
-from utils.plot import base_plot, get_data
+from utils.plot import base_plot, open_data
 from context import json_dir, data_dir, img_dir
 
-
-var = "r2"
-model = "gfs"
-case_study = "high_level"
-
-
-datacrs = ccrs.PlateCarree()
-
-
-pathlist = sorted(Path(str(data_dir) + f"/{model}/{case_study}/").glob(f"*"))
 
 with open(str(json_dir) + "/var-attrs.json") as f:
     var_attrs = json.load(f)
@@ -42,17 +33,26 @@ with open(str(json_dir) + "/case-attrs.json") as f:
     case_attrs = json.load(f)
 
 
+model = "gfs"
+case_study = "high_level"
+
+# case_study = sys.argv[1]
+# model = case_attrs[case_study]["model"]
+# print(case_study)
+
+
+pathlist = sorted(Path(str(data_dir) + f"/{model}/{case_study}/").glob(f"*.grib2"))
 save_dir = Path(str(img_dir) + f"/{model}/{case_study}")
 save_dir.mkdir(parents=True, exist_ok=True)
 
-
-for path in pathlist[::2]:
+datacrs = ccrs.PlateCarree()
+for path in pathlist[:1]:
     print(path)
     ###################### 50 kPa  ######################
     var = "50kPa"
     var_name = "gh"
     figTime = datetime.now()
-    ds, ds_climo = get_data(path, model, var, case_study)
+    ds, ds_climo = open_data(path, model, var, case_study)
     ds = ds.sel(isobaricInhPa=500)
     fig, gs, ax, lons, lats, vtimes = base_plot(
         ds, ccrs.NorthPolarStereo(central_longitude=-100.0), var
@@ -109,7 +109,7 @@ for path in pathlist[::2]:
     vmin, vmax = var_attrs[var]["vmin"], var_attrs[var]["vmax"]
     unit = var_attrs[var]["unit"]
     figTime = datetime.now()
-    ds, ds_climo = get_data(path, model, var, case_study)
+    ds, ds_climo = open_data(path, model, var, case_study)
     u10 = ds.u10.values * 3.6
     v10 = ds.v10.values * 3.6
     wsp = np.sqrt((u10 ** 2 + v10 ** 2))
@@ -118,18 +118,44 @@ for path in pathlist[::2]:
     new_x, new_y, new_u, new_v, = vector_scalar_to_grid(
         ccrs.PlateCarree(), ccrs.PlateCarree(), u10.shape, lons, lats, u10, v10
     )
-    Axes.streamplot(
-        ax,
-        new_x,
-        new_y,
-        new_u,
-        new_v,
+    ax.set_extent(var_attrs["50kPa"]["domain"], ccrs.PlateCarree())
+    ax.streamplot(
+        x=lons,
+        y=lats,
+        u=u10,
+        v=v10,
         transform=ccrs.PlateCarree(),
         linewidth=0.5,
         arrowsize=0.8,
         density=1.1,
         color="k",
+        zorder=10,
     )
+    # ax.streamplot(
+    #     x = new_x,
+    #     y = new_y,
+    #     u = new_u,
+    #     v = new_v,
+    #     transform=ccrs.PlateCarree(),
+    #     linewidth=0.5,
+    #     arrowsize=0.8,
+    #     density=1.1,
+    #     color="k",
+    #     zorder = 10
+    # )
+    # Axes.streamplot(
+    #     ax = ax,
+    #     x = new_x,
+    #     y = new_y,
+    #     u = new_u,
+    #     v = new_v,
+    #     transform=ccrs.PlateCarree(),
+    #     linewidth=0.5,
+    #     arrowsize=0.8,
+    #     density=1.1,
+    #     color="k",
+    #     zorder = 10,
+    # )
     cmap = matplotlib.colors.LinearSegmentedColormap.from_list(
         "wxbell", colors, N=len(levels)
     )
@@ -152,7 +178,7 @@ for path in pathlist[::2]:
     vmin, vmax = var_attrs[var]["vmin"], var_attrs[var]["vmax"]
     unit = var_attrs[var]["unit"]
     figTime = datetime.now()
-    ds, ds_climo = get_data(path, model, var, case_study)
+    ds, ds_climo = open_data(path, model, var, case_study)
     fig, gs, ax, lons, lats, vtimes = base_plot(ds, ccrs.PlateCarree(), var)
     norm = matplotlib.colors.Normalize(vmin=vmin, vmax=vmax + 1)
     cf = ax.contourf(
@@ -182,7 +208,7 @@ for path in pathlist[::2]:
     vmin, vmax = var_attrs[var]["vmin"], var_attrs[var]["vmax"]
     unit = var_attrs[var]["unit"]
     figTime = datetime.now()
-    ds, ds_climo = get_data(path, model, var, case_study)
+    ds, ds_climo = open_data(path, model, var, case_study)
     ds[var] = xr.where(ds[var] > vmax - 1, vmax - 0.1, ds[var])
     fig, gs, ax, lons, lats, vtimes = base_plot(ds, ccrs.PlateCarree(), var)
     norm = matplotlib.colors.Normalize(vmin=vmin, vmax=vmax + 1)

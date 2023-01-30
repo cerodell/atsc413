@@ -1,5 +1,4 @@
-#!/Users/rodell/miniconda3/envs/atsc413/bin/python
-
+import sys
 import context
 import json
 import sys, os
@@ -11,17 +10,22 @@ from pathlib import Path
 from context import data_dir, json_dir
 from utils.rad import get_data
 
-#############################  INPUTS  ####################################
-# ## choose case study
-case_study = "high_level"
-# ## choose forecast model
-# model = "gfs"
-# ## choose forecast hour
-# init = "00"  # Z (UTC) time
-# ## choose forecast frequency
-# freq = 3  # in hours
-# date_range = pd.date_range("2019-05-16", "2019-05-18", freq=f"{freq}H")
-############################################################################
+# #############################  INPUTS  ####################################
+# total arguments
+# print("Total arguments passed:", n)
+case_study = sys.argv[1]
+print(case_study)
+
+# # ## choose case study
+# case_study = "high_level"
+# # ## choose forecast model
+# # model = "gfs"
+# # ## choose forecast hour
+# # init = "00"  # Z (UTC) time
+# # ## choose forecast frequency
+# # freq = 3  # in hours
+# # date_range = pd.date_range("2019-05-16", "2019-05-18", freq=f"{freq}H")
+# ############################################################################
 
 with open(str(json_dir) + "/case-attrs.json") as f:
     case_attrs = json.load(f)
@@ -51,9 +55,20 @@ else:
     raise ValueError(f"{model} is an invalid model option at this time")
 
 
-for file in filelist:
-    file_path = str(make_dir) + "/" + file.rsplit("/", 1)[-1]
-    if os.path.isfile(file_path) == False:
-        get_data(file)
-    else:
-        print("file exist previously downloaded")
+res = [
+    os.path.isfile(str(make_dir) + "/" + file.rsplit("/", 1)[-1])
+    for file in filelist
+    if os.path.isfile(str(make_dir) + "/" + file.rsplit("/", 1)[-1]) != True
+]
+
+
+def check_item(file):
+    return os.path.isfile(str(make_dir) + "/" + file.rsplit("/", 1)[-1])
+
+
+filelist = list(filter(lambda file: check_item(file) != True, filelist))
+
+if len(filelist) == 0:
+    print(f"files for {case_study} previously downloaded")
+else:
+    get_data(filelist, make_dir)

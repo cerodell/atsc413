@@ -34,7 +34,7 @@ def setBold(txt):
     return r"$\bf{" + str(txt) + "}$"
 
 
-def get_data(path, model, var, case_study):
+def open_data(path, model, var, case_study):
     ds_climo = salem.open_xr_dataset(str(data_dir) + "/climatology-1991-2021.nc")
 
     if len(var_attrs[var]["domain"]) == 2:
@@ -51,16 +51,28 @@ def get_data(path, model, var, case_study):
         # latitude = slice(extent[-1], extent[-2])
         latitude = slice(90, 0)
 
-    try:
+    if (
+        any(
+            isinstance(i, dict)
+            for i in var_attrs[var]["filter_by_keys"][model].values()
+        )
+        == False
+    ):
         ds = xr.open_dataset(
             path,
             engine="cfgrib",
             backend_kwargs={"filter_by_keys": var_attrs[var]["filter_by_keys"][model]},
         )
-    except:
+    elif (
+        any(
+            isinstance(i, dict)
+            for i in var_attrs[var]["filter_by_keys"][model].values()
+        )
+        == True
+    ):
         ds_list = []
         for filter_by_keys in var_attrs[var]["filter_by_keys"][model]:
-            # print(filter_by_keys)
+            print(filter_by_keys)
             ds_list.append(
                 xr.open_dataset(
                     path,
@@ -73,6 +85,8 @@ def get_data(path, model, var, case_study):
                 )
             )
         ds = xr.merge(ds_list)
+    else:
+        raise ValueError("Bad filter_by_key options")
 
     ds = ds_climo.salem.transform(ds)
     ds = ds.sel(longitude=longitude, latitude=latitude)
