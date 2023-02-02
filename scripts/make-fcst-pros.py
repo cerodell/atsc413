@@ -1,0 +1,81 @@
+import sys
+import context
+import json
+from pathlib import Path
+
+
+from datetime import datetime
+from utils.plot import *
+from context import json_dir, data_dir, img_dir
+
+startTime = datetime.now()
+
+with open(str(json_dir) + "/var-attrs.json") as f:
+    var_attrs = json.load(f)
+
+with open(str(json_dir) + "/case-attrs.json") as f:
+    case_attrs = json.load(f)
+
+case_study = "high_level"
+model = "gfs"
+
+# case_study = sys.argv[1]
+# model = case_attrs[case_study]["model"]
+# print(case_study)
+
+
+# plot_list = ["25kPa", "50kPa", "100-50kPa", "70kPa-RH", "wsp", "t2m", "r2", "tp"]
+# plot_list = ["70kPa-RH",  "wsp", "t2m", "r2", "tp"]
+plot_list = ["cape"]
+pathlist = sorted(Path(str(data_dir) + f"/{model}/{case_study}/").glob(f"*.grib2"))
+save_dir = Path(str(img_dir) + f"/{model}/{case_study}")
+save_dir.mkdir(parents=True, exist_ok=True)
+
+pathlist = pathlist[:1]
+for i in range(len(pathlist)):
+    # print(path)
+    # figTime = datetime.now()
+    ds = open_data(pathlist, i, model, "all_vars")
+    print(
+        f"Making Figs for Valid Datetime: {np.datetime_as_string(ds.valid_time, unit='h')}"
+    )
+
+    ###################### 25 kPa  ######################
+    if "25kPa" in plot_list:
+        plot_25kPa(ds, case_study, save_dir)
+
+    ###################### 50 kPa  ######################
+    if "50kPa" in plot_list:
+        plot_50kPa(ds, case_study, save_dir)
+
+    #################### 100-50 kPa  ######################
+    if "100-50kPa" in plot_list:
+        plot_100_50kPa(ds, case_study, save_dir)
+
+    #################### 100-50 kPa  ######################
+    if "70kPa-RH" in plot_list:
+        plot_70kPa_RH(ds, case_study, save_dir)
+
+    #################### Wsp Wdir  ######################
+    if "wsp" in plot_list:
+        plot_wspwdir(ds, case_study, save_dir, "10m")
+        plot_wspwdir(ds, case_study, save_dir, "100m")
+
+    ##################### 2m Temp ######################
+    if "t2m" in plot_list:
+        plot_t2m(ds, case_study, save_dir)
+
+    ##################### 2m RH ######################
+    if "r2" in plot_list:
+        plot_r2(ds, case_study, save_dir)
+
+    ##################### Precip ######################
+    if "tp" in plot_list:
+        plot_tp(ds, case_study, save_dir)
+
+    ##################### Precip ######################
+    if "cape" in plot_list:
+        plot_cape(ds, case_study, save_dir)
+
+
+print("Total Run Time: ", datetime.now() - startTime)
