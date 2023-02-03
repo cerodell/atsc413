@@ -18,10 +18,10 @@ Products include:
 - Wind Speed and Direction at varied heights
 - Surface-based CAPE (J/kg)
 
+Sample Product:
+- 50kPa Geopotential Heights (dam) and Anomaly (m)
 
-![50kPa Geopotential Heights (dam) and Anomaly (m)](img/50kPa-2021062600.png)
-
-
+    ![50kPa Geopotential Heights (dam) and Anomaly (m)](img/50kPa-2021062600.png)
 
 
 ## Data
