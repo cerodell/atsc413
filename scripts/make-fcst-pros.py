@@ -2,12 +2,12 @@ import sys
 import context
 import json
 from pathlib import Path
-import getdata
 
 
 from datetime import datetime
 from utils.plot import *
 from context import json_dir, data_dir, img_dir
+
 
 startTime = datetime.now()
 
@@ -19,11 +19,17 @@ with open(str(json_dir) + "/case-attrs.json") as f:
 
 # case_study = "high_level"
 # model = "gfs"
+# int_dir = "20190519T00"
 
-case_study = sys.argv[1]
-model = case_attrs[case_study]["model"]
-int_dir = getdata.int_dir
-print(case_study)
+case_study = "sparks_lake"
+model = "gfs"
+int_dir = "20210625T00"
+
+# import getdata
+# case_study = sys.argv[1]
+# model = case_attrs[case_study]["model"]
+# int_dir = getdata.int_dir
+# print(case_study)
 
 plot_list = [
     "25kPa",
@@ -36,13 +42,13 @@ plot_list = [
     "tp",
     "cape",
 ]
-# plot_list = ["70kPa-RH"]
+# plot_list = ["wsp"]
 pathlist = sorted(
     Path(str(data_dir) + f"/{case_study}/{model}/{int_dir}").glob(f"*.grib2")
 )
 
 
-# pathlist = pathlist[:1]
+# pathlist = pathlist[5:6]
 for i in range(len(pathlist)):
     # print(path)
     # figTime = datetime.now()

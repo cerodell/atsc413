@@ -13,7 +13,7 @@ startTime = datetime.now()
 
 
 print(os.path.expanduser("~"))
-case_study = "high_level"
+case_study = "sparks_lake"
 
 
 ## download historical forecast data

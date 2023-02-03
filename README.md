@@ -1,9 +1,7 @@
 
 # ATSC 413 Forest-fire Weather and Climate
 
-The ATSC413 repo downloads archived numerical weather prediction (NWP) model output and generates a sweep of forecast products. The forecast products will aid in teaching a fourth-year synoptic fire weather meteorology course at the University of British Columbia. Student will uses the forecat poridcts to create m
-
-
+The ATSC413 repo downloads archived numerical weather prediction (NWP) model output and generates a sweep of forecast products. The forecast products will aid in teaching a fourth-year synoptic fire weather meteorology course at the University of British Columbia, where students will forecast fire weather conditions of past wildfire events.
 
 ## Forecast Products
 
@@ -20,12 +18,64 @@ Products include:
 - Wind Speed and Direction at varied heights
 - Surface-based CAPE (J/kg)
 
+Sample graphic:
+3-h Precip (mm), MSLP (hPa), 100-50kPa Thickness (dam)
+
+
+
 
 ## Data
 
 NWP data is downloaded from the [Research Data Archive (RDA)](https://rda.ucar.edu/) manged by the [National Center for Atmospheric Research (NCAR)](https://ncar.ucar.edu/).
 
+
+## Set up
+
+Currently you need to clone the gitrepo to your machine
+
+```
+git clone git@github.com:cerodell/atsc413.git
+```
+
+Create conda env from `environment.yml`
+```
+conda env create -f environment.yml
+
+```
+Download climatology and road data from google.
+```
+
+```
+This data is used for create anomaly forecast products and for plotting roads on basemaps.
+
+
 ## How to use
 
-The
-To download nwp data and generate forecast products, one needs to add a
+There are two steps to download NWP data and generate forecast products.
+
+1)  one needs to first add a case study to the `atsc413/json/case-attrs.json`.
+
+    An example json configuration for a case study named, high level.
+    ```
+    {
+    "high_level":{
+        "loc": [58.305, -117.2924],
+        "doi": ["2019-05-20", "2019-05-22"],
+        "model": "gfs",
+        "init": "00",
+        "freq": 3
+    }
+    }
+    ```
+    - `"high_level"` is the name of the case study
+    - `"loc":` is the lat and long
+    - `"doi":` is the date of interest
+    - `"model":` the abbreviation of the nwp model, currently only works for the nam and gfs
+    - `"init":` the initializing time of the model run
+    - `"freq":` the frequency of the forecast output
+
+2)  After adding case study to the `atsc413/json/case-attrs.json`, edit the `case_study` variable in `atsc413/scripts/supervisor.py` and run `supervisor.py`.
+
+    Running `supervisor.py` will download the data and generate the forecast graphics. NOTE if data was previously   downloaded, it will not re-download.
+
+##

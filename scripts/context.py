@@ -15,14 +15,13 @@ from pathlib import Path
 
 path = Path(__file__).resolve()  # this file
 this_dir = path.parent  # this folder
-notebooks_dir = this_dir
-root_dir = notebooks_dir.parents[0]
+root_dir = this_dir.parents[0]
 data_dir = root_dir / Path("data")
 json_dir = root_dir / Path("json")
-# img_dir = root_dir / Path("img")
-img_dir = Path(
-    "/Users/rodell/crodell@weather.eoas.ubc.ca - Google Drive/My Drive/atsc413/img"
-)
+img_dir = root_dir / Path("img")  ## local img dir
+
+# home = str(Path.home())
+# img_dir = home /Path("GoogleDrive/My Drive/atsc413/img") ## collaborative img dir
 
 
 sys.path.insert(0, str(root_dir))
