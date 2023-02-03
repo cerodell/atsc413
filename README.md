@@ -42,11 +42,10 @@ Create conda env from `environment.yml`
 conda env create -f environment.yml
 
 ```
-Download climatology and road data from google.
-```
+Download climatology and road data from [google drive](https://drive.google.com/drive/folders/1QDcrmuP-GM3Gm63PlNUsy_aKgnB37j78?usp=share_link
+) and place in `atsc413/data/`.
 
-```
-This data is used for create anomaly forecast products and for plotting roads on basemaps.
+- This data is used for create anomaly forecast products and for plotting roads on basemaps.
 
 
 ## Download and Generate Forecasts Maps
