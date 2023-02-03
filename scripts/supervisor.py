@@ -13,13 +13,11 @@ startTime = datetime.now()
 
 
 print(os.path.expanduser("~"))
-
-
 case_study = "high_level"
 
 
 ## download historical forecast data
-command = f"{os.path.expanduser('~')}//miniconda3/envs/atsc413/bin/python {root_dir}/scripts/get-data.py {case_study}"
+command = f"{os.path.expanduser('~')}//miniconda3/envs/atsc413/bin/python {root_dir}/scripts/getdata.py {case_study}"
 os.system(command)
 
 

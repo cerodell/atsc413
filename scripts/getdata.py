@@ -12,7 +12,6 @@ from utils.rad import get_data
 
 # #############################  INPUTS  ####################################
 # total arguments
-# print("Total arguments passed:", n)
 case_study = sys.argv[1]
 print(case_study)
 
@@ -36,14 +35,20 @@ model = case_attrs[case_study]["model"]
 init = case_attrs[case_study]["init"]  # Z (UTC) time
 ## choose forecast frequency
 freq = case_attrs[case_study]["freq"]  # in hours
+
+# window = np.arange(2)
+
+# for i in window:
 date_range = pd.date_range(
     case_attrs[case_study]["doi"][0], case_attrs[case_study]["doi"][1], freq=f"{freq}H"
 )
-make_dir = Path(str(data_dir) + f"/{model}/{case_study}")
-make_dir.mkdir(parents=True, exist_ok=True)
 
 
 int_fct = date_range[0]
+int_dir = int_fct.strftime("%Y%m%dT%H")
+make_dir = Path(str(data_dir) + f"/{case_study}/{model}/{int_dir}")
+make_dir.mkdir(parents=True, exist_ok=True)
+
 fct_hours = np.arange(0, len(date_range) * freq, freq, dtype=int)
 
 if model == "gfs":

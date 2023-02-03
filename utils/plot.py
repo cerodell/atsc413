@@ -248,7 +248,6 @@ def plot_25kPa(ds, case_study, save_dir, *args):
     )
     print(f"Time to create {var.upper()} fig: ", datetime.now() - figTime)
     plt.close()
-
     return
 
 
@@ -445,6 +444,8 @@ def plot_100_50kPa(ds, case_study, save_dir, *args):
         bbox_inches="tight",
     )
     print(f"Time to create {var.upper()} fig: ", datetime.now() - figTime)
+    plt.close()
+    return
 
 
 def plot_70kPa_RH(ds, case_study, save_dir, *args):

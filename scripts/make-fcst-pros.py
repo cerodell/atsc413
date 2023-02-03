@@ -2,6 +2,7 @@ import sys
 import context
 import json
 from pathlib import Path
+import getdata
 
 
 from datetime import datetime
@@ -16,22 +17,32 @@ with open(str(json_dir) + "/var-attrs.json") as f:
 with open(str(json_dir) + "/case-attrs.json") as f:
     case_attrs = json.load(f)
 
-case_study = "high_level"
-model = "gfs"
+# case_study = "high_level"
+# model = "gfs"
 
-# case_study = sys.argv[1]
-# model = case_attrs[case_study]["model"]
-# print(case_study)
+case_study = sys.argv[1]
+model = case_attrs[case_study]["model"]
+int_dir = getdata.int_dir
+print(case_study)
+
+plot_list = [
+    "25kPa",
+    "50kPa",
+    "100-50kPa",
+    "70kPa-RH",
+    "wsp",
+    "t2m",
+    "r2",
+    "tp",
+    "cape",
+]
+# plot_list = ["70kPa-RH"]
+pathlist = sorted(
+    Path(str(data_dir) + f"/{case_study}/{model}/{int_dir}").glob(f"*.grib2")
+)
 
 
-# plot_list = ["25kPa", "50kPa", "100-50kPa", "70kPa-RH", "wsp", "t2m", "r2", "tp"]
-# plot_list = ["70kPa-RH",  "wsp", "t2m", "r2", "tp"]
-plot_list = ["cape"]
-pathlist = sorted(Path(str(data_dir) + f"/{model}/{case_study}/").glob(f"*.grib2"))
-save_dir = Path(str(img_dir) + f"/{model}/{case_study}")
-save_dir.mkdir(parents=True, exist_ok=True)
-
-pathlist = pathlist[:1]
+# pathlist = pathlist[:1]
 for i in range(len(pathlist)):
     # print(path)
     # figTime = datetime.now()
@@ -39,6 +50,9 @@ for i in range(len(pathlist)):
     print(
         f"Making Figs for Valid Datetime: {np.datetime_as_string(ds.valid_time, unit='h')}"
     )
+    int_time = np.datetime_as_string(ds.time, unit="h").replace("-", "")
+    save_dir = Path(str(img_dir) + f"/{case_study}/{model}/{int_time}/")
+    save_dir.mkdir(parents=True, exist_ok=True)
 
     ###################### 25 kPa  ######################
     if "25kPa" in plot_list:

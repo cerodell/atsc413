@@ -19,7 +19,10 @@ notebooks_dir = this_dir
 root_dir = notebooks_dir.parents[0]
 data_dir = root_dir / Path("data")
 json_dir = root_dir / Path("json")
-img_dir = root_dir / Path("img")
+# img_dir = root_dir / Path("img")
+img_dir = Path(
+    "/Users/rodell/crodell@weather.eoas.ubc.ca - Google Drive/My Drive/atsc413/img"
+)
 
 
 sys.path.insert(0, str(root_dir))
