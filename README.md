@@ -18,8 +18,8 @@ Products include:
 - Wind Speed and Direction at varied heights
 - Surface-based CAPE (J/kg)
 
-Sample graphic:
-3-h Precip (mm), MSLP (hPa), 100-50kPa Thickness (dam)
+
+![50kPa Geopotential Heights (dam) and Anomaly (m)](img/50kPa-2021062600.png)
 
 
 
@@ -49,7 +49,7 @@ Download climatology and road data from google.
 This data is used for create anomaly forecast products and for plotting roads on basemaps.
 
 
-## How to use
+## Download and Generate Forecasts Maps
 
 There are two steps to download NWP data and generate forecast products.
 
@@ -77,5 +77,3 @@ There are two steps to download NWP data and generate forecast products.
 2)  After adding case study to the `atsc413/json/case-attrs.json`, edit the `case_study` variable in `atsc413/scripts/supervisor.py` and run `supervisor.py`.
 
     Running `supervisor.py` will download the data and generate the forecast graphics. NOTE if data was previously   downloaded, it will not re-download.
-
-##

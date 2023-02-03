@@ -1,6 +1,6 @@
 # Personal
 data/
-img/
+img/*/
 __pycache__
 .DS_Store
 
