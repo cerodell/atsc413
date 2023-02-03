@@ -23,6 +23,7 @@ Sample Product:
 
     ![50kPa Geopotential Heights (dam) and Anomaly (m)](img/50kPa-2021062600.png)
 
+There is an example of all the products in `atsc413/img/`.
 
 ## Data
 
