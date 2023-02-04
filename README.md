@@ -23,7 +23,7 @@ Sample Product:
 
     ![50kPa Geopotential Heights (dam) and Anomaly (m)](img/50kPa-2021062600.png)
 
-There is an example of all the products in `atsc413/img/`.
+See an example of all the products below
 
 ## Data
 
@@ -46,7 +46,7 @@ conda env create -f environment.yml
 Download climatology and road data from [google drive](https://drive.google.com/drive/folders/1QDcrmuP-GM3Gm63PlNUsy_aKgnB37j78?usp=share_link
 ) and place in `atsc413/data/`.
 
-- This data is used for create anomaly forecast products and for plotting roads on basemaps.
+- This data is used to create anomaly forecast products and for plotting roads on basemaps.
 
 
 ## Download and Generate Forecasts Maps
@@ -77,3 +77,44 @@ There are two steps to download NWP data and generate forecast products.
 2)  After adding case study to the `atsc413/json/case-attrs.json`, edit the `case_study` variable in `atsc413/scripts/supervisor.py` and run `supervisor.py`.
 
     Running `supervisor.py` will download the data and generate the forecast graphics. NOTE if data was previously   downloaded, it will not re-download.
+
+
+
+
+## Sample Forecast Products
+- 25kPa Geopotential Heights (dam) and Wind Speed (knots)
+
+    ![25kPa Geopotential Heights (dam) and Wind Speed (knots)](img/25kPa-2021062600.png)
+
+- 50kPa Geopotential Heights (dam) and Anomaly (m)
+
+    ![50kPa Geopotential Heights (dam) and Anomaly (m)](img/50kPa-2021062600.png)
+
+- 3-h Precip (mm), MSLP (hPa), 100-50kPa Thickness (dam)
+
+    ![3-h Precip (mm), MSLP (hPa), 100-50kPa Thickness (dam)](img/100-50kPa-2021062600.png)
+
+
+- 70kPa Relative Humidity (%)
+
+    ![70kPa Relative Humidity (%)](img/70kPa-RH-2021062600.png)
+
+- 3-hr Precipitation (mm)
+
+    ![3-hr Precipitation (mm)](img/tp-2021062600.png)
+
+- 2m Relative Humidity (%)
+
+    ![2m Relative Humidity (%)](img/r2-2021062600.png)
+
+- 2m Temperature (C)
+
+    ![2m Temperature (C)](img/t2m-2021062600.png)
+
+- Wind Speed and Direction at 10m
+
+    ![Wind Speed and Direction at 10m](img/wsp-10m-2021062600.png)
+
+- Wind Speed and Direction at 100m
+
+    ![Wind Speed and Direction at 10m](img/wsp-100m-2021062600.png)
