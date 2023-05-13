@@ -18,6 +18,10 @@
                     "typeOfLevel": "isobaricInhPa",
                     "shortName": "t"
                 },
+                "pt": {
+                    "typeOfLevel": "isobaricInhPa",
+                    "shortName": "pt"
+                },
                 "r": {
                     "typeOfLevel": "isobaricInhPa",
                     "shortName": "r"
@@ -95,7 +99,7 @@
             75
         ],
         "figsize": [
-            10.0,
+            9.0,
             5.0
         ]
     },
@@ -129,7 +133,7 @@
             75
         ],
         "figsize": [
-            10.0,
+            9.0,
             5.0
         ]
     },
@@ -185,6 +189,30 @@
         "figsize": [
             8.0,
             5.6
+        ]
+    },
+    "85kPa": {
+        "colors": [ "#442d15", "#653f1f", "#815228", "#9d622f", "#ad7644", "#b98b5c", "#c7a074", "#e1cdb3", "#efded9", "#d0d3bb", "#afc599", "#88bf87", "#7ab58d", "#6da893", "#59929b", "#568999", "#4c6497", "#6c4a97" ],
+        "vmax": 100,
+        "vmin": 0,
+        "levels": [ 0, 1, 2, 3, 5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 95, 97, 100 ],
+        "unit": "dm",
+        "conversion": "",
+        "title": "85kPa Geopotential Heights (dm)",
+        "sigma": "",
+        "filter_by_keys": {
+            "gfs":  {
+                "typeOfLevel": "isobaricInhPa",
+                "shortName": "r"
+            }
+        },
+        "domain": [
+            7,
+            10
+        ],
+        "figsize": [
+            8.0,
+            5.5
         ]
     },
     "tp": {

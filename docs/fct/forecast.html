@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>UBC ATSC 413 - Forest-fire Weather and Climate</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/forecast.css" />
+    <link href="../css/a313styles.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+  </head>
+  <body>
+  <header>UBC ATSC 413 - Forest-fire Weather &amp; Climate
+      <nav>|
+        <a href="../index.html">Home</a> |
+        <a href="index.html">Basics</a> |
+        <a href="../cases/index.html">Fire Cases</a> |
+        <a href="../met_concepts/index.html">Weather</a> |
+        <a href="forecast.html">Forecast Tool</a> |
+        <a href="test.html">Test</a> |
+        <a href="index.html">F</a> |
+      </nav>
+    </header>
+    <nav class="sidebar">
+      <a href="#" class="logo">Forecast Parameters</a>
+
+      <div class="menu-content">
+        <ul class="menu-items">
+
+          <li class="item">
+            <div class="submenu-item">
+              <span>Upper Air Heights</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+                          Back
+              </div>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), '25kPa')">25kPa Geopotential Heights (dam) and Wind Speed (knots)</a>
+              </li>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), '50kPa')">50kPa Geopotential Heights (dam) and Anomaly (m)</a>
+              </li>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'wsp-85kPa')">85kPa Wind Speed and Direction (km/hr)</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="item">
+            <div class="submenu-item">
+              <span>Upper Air Moisture</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+                          Back
+              </div>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), '70kPa-RH')">70kPa Relative Humidity (%)</a>
+              </li>
+            </ul>
+          </li>
+
+
+          <li class="item">
+            <div class="submenu-item">
+              <span>Surface</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+                Back
+              </div>
+              <li class="item">
+                <a href="#"  onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'tp')" >3-hr Precipitation (mm)</a>
+              </li>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'r2')" >2m Relative Humidity (%)</a>
+              </li>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 't2m')">2m Temperature (C)</a>
+              </li>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'wsp-10m')">Wind Speed and Direction at 10m</a>
+              </li>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'wsp-100m')">Wind Speed and Direction at 100m</a>
+              </li>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'cape')">Convective Available Potential Energy (J/kg )</a>
+              </li>
+            </ul>
+          </li>
+
+
+          <li class="item">
+            <div class="submenu-item">
+              <span>Milti-Parameter</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+                          Back
+              </div>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), '100-50kPa')">3-h Precip (mm), MSLP (hPa), 100-50kPa Thickness (dam)</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <nav class="navbar">
+      <i class="fa-solid fa-bars" id="sidebar-close"></i>
+    </nav>
+
+    <main class="main">
+      <div class="buttons-container">
+        <div class="dropdown" >
+          <button class="button" data-custom-attribute="high_level">High Level</button>
+          <div class="dropdown-content">
+            <button class="dropdown-option" onclick="showImage('high_level', '20190516Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190516Z00</button>
+            <button class="dropdown-option" onclick="showImage('high_level', '20190517Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190517Z00</button>
+            <button class="dropdown-option" onclick="showImage('high_level', '20190518Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190518Z00</button>
+          </div>
+        </div>
+        <div class="dropdown" >
+          <button class="button" data-custom-attribute="sparks_lake">Sparks Lake</button>
+          <div class="dropdown-content">
+            <button class="dropdown-option" onclick="showImage('sparks_lake', '20210625Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210625Z00</button>
+            <button class="dropdown-option" onclick="showImage('sparks_lake', '20210626Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210626Z00</button>
+          </div>
+        </div>
+        <button class="button">Case Case 6</button>
+        <button class="button">Case Case 7</button>
+      </div>
+      <div class="image-container">
+        <img id="currentImage" src="" alt="Image">
+      </div>
+    </main>
+
+
+
+      <script>
+
+      </script>
+
+
+    <script src="../js/forecast.js"></script>
+  </body>
+</html>

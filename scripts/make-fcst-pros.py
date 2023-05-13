@@ -19,7 +19,7 @@ with open(str(json_dir) + "/case-attrs.json") as f:
 
 # case_study = "high_level"
 # model = "gfs"
-# int_dir = "20190517T00"
+# int_dir = "20190516T00"
 
 case_study = "sparks_lake"
 model = "gfs"
@@ -29,7 +29,7 @@ int_dir = "20210625T00"
 # case_study = sys.argv[1]
 # model = case_attrs[case_study]["model"]
 # int_dir = getdata.int_dir
-print(case_study)
+# print(case_study)
 
 plot_list = [
     "25kPa",
@@ -42,13 +42,14 @@ plot_list = [
     "tp",
     "cape",
 ]
-# plot_list = ["wsp"]
+# plot_list = ["85kPa"]
 pathlist = sorted(
     Path(str(data_dir) + f"/{case_study}/{model}/{int_dir}").glob(f"*.grib2")
 )
 
 
-# pathlist = pathlist[:1]
+# pathlist = pathlist[7:8]
+# pathlist = pathlist[0:1]
 for i in range(len(pathlist)):
     # print(path)
     # figTime = datetime.now()
@@ -76,26 +77,31 @@ for i in range(len(pathlist)):
     if "70kPa-RH" in plot_list:
         plot_70kPa_RH(ds, case_study, save_dir)
 
+    ###################### 50 kPa  ######################
+    if "85kPa" in plot_list:
+        plot_85kPa(ds, case_study, save_dir)
+
     #################### Wsp Wdir  ######################
     if "wsp" in plot_list:
-        plot_wspwdir(ds, case_study, save_dir, "10m")
-        plot_wspwdir(ds, case_study, save_dir, "100m")
+        plot_wspwdir(ds, case_study, save_dir, "10m", roads=True)
+        plot_wspwdir(ds, case_study, save_dir, "100m", roads=True)
+        plot_wspwdir(ds, case_study, save_dir, "85kPa")
 
     ##################### 2m Temp ######################
     if "t2m" in plot_list:
-        plot_t2m(ds, case_study, save_dir)
+        plot_t2m(ds, case_study, save_dir, roads=True)
 
     ##################### 2m RH ######################
     if "r2" in plot_list:
-        plot_r2(ds, case_study, save_dir)
+        plot_r2(ds, case_study, save_dir, roads=True)
 
     ##################### Precip ######################
     if "tp" in plot_list:
-        plot_tp(ds, case_study, save_dir)
+        plot_tp(ds, case_study, save_dir, roads=True)
 
     ##################### Precip ######################
     if "cape" in plot_list:
-        plot_cape(ds, case_study, save_dir)
+        plot_cape(ds, case_study, save_dir, roads=True)
 
 
 print("Total Run Time: ", datetime.now() - startTime)

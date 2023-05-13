@@ -38,6 +38,13 @@ with open(str(json_dir) + "/case-attrs.json") as f:
 
 from pylab import *
 
+
+height = "85kPa"
+
+test = "".join([i for i in height if not i.isdigit()])
+
+test2 = int("".join(c for c in height if c.isdigit())) * 10
+
 levels = np.arange(0, 6000, 100)
 cmap = cm.get_cmap("seismic", 101)  # PiYG
 

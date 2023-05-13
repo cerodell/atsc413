@@ -8,12 +8,15 @@ from pathlib import Path
 
 from context import json_dir, root_dir
 from datetime import datetime, date, timedelta
+import cartopy
+
+cartopy.__version__
 
 startTime = datetime.now()
 
 
 print(os.path.expanduser("~"))
-case_study = "sparks_lake"
+case_study = "high_level"
 
 
 ## download historical forecast data

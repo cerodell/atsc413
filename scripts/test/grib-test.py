@@ -12,7 +12,11 @@ from context import data_dir, img_dir, json_dir
 
 model = "gfs"
 case_study = "high_level"
-pathlist = sorted(Path(str(data_dir) + f"/{model}/{case_study}/").glob(f"*.grib2"))
+int_dir = "20190517T00"
+
+pathlist = sorted(
+    Path(str(data_dir) + f"/{case_study}/{model}/{int_dir}/").glob(f"*.grib2")
+)
 
 
 # Import data
