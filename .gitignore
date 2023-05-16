@@ -1,6 +1,8 @@
 # Personal
 data/
-img/*/
+img/*
+!img/.gitkeep
+
 __pycache__
 .DS_Store
 
