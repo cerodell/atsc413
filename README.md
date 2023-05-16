@@ -21,7 +21,7 @@ Products include:
 Sample Product:
 - 50kPa Geopotential Heights (dam) and Anomaly (m)
 
-    ![50kPa Geopotential Heights (dam) and Anomaly (m)](img/demo/50kPa-2021062600.jpeg)
+    ![50kPa Geopotential Heights (dam) and Anomaly (m)](demo/50kPa-2021062600.jpeg)
 
 See an example of all the products below
 
@@ -84,37 +84,37 @@ There are two steps to download NWP data and generate forecast products.
 ## Sample Forecast Products
 - 25kPa Geopotential Heights (dam) and Wind Speed (knots)
 
-    ![25kPa Geopotential Heights (dam) and Wind Speed (knots)](img/demo/25kPa-2021062600.jpeg)
+    ![25kPa Geopotential Heights (dam) and Wind Speed (knots)](demo/25kPa-2021062600.jpeg)
 
 - 50kPa Geopotential Heights (dam) and Anomaly (m)
 
-    ![50kPa Geopotential Heights (dam) and Anomaly (m)](img/demo/50kPa-2021062600.jpeg)
+    ![50kPa Geopotential Heights (dam) and Anomaly (m)](demo/50kPa-2021062600.jpeg)
 
 - 3-h Precip (mm), MSLP (hPa), 100-50kPa Thickness (dam)
 
-    ![3-h Precip (mm), MSLP (hPa), 100-50kPa Thickness (dam)](img/demo/100-50kPa-2021062600.jpeg)
+    ![3-h Precip (mm), MSLP (hPa), 100-50kPa Thickness (dam)](demo/100-50kPa-2021062600.jpeg)
 
 
 - 70kPa Relative Humidity (%)
 
-    ![70kPa Relative Humidity (%)](img/demo/70kPa-RH-2021062600.jpeg)
+    ![70kPa Relative Humidity (%)](demo/70kPa-RH-2021062600.jpeg)
 
 - 3-hr Precipitation (mm)
 
-    ![3-hr Precipitation (mm)](img/demo/tp-2021062600.jpeg)
+    ![3-hr Precipitation (mm)](demo/tp-2021062600.jpeg)
 
 - 2m Relative Humidity (%)
 
-    ![2m Relative Humidity (%)](img/demo/r2-2021062600.jpeg)
+    ![2m Relative Humidity (%)](demo/r2-2021062600.jpeg)
 
 - 2m Temperature (C)
 
-    ![2m Temperature (C)](img/demo/t2m-2021062600.jpeg)
+    ![2m Temperature (C)](demo/t2m-2021062600.jpeg)
 
 - Wind Speed and Direction at 10m
 
-    ![Wind Speed and Direction at 10m](img/demo/wsp-10m-2021062600.jpeg)
+    ![Wind Speed and Direction at 10m](demo/wsp-10m-2021062600.jpeg)
 
 - Wind Speed and Direction at 100m
 
-    ![Wind Speed and Direction at 10m](img/demo/wsp-100m-2021062600.jpeg)
+    ![Wind Speed and Direction at 10m](demo/wsp-100m-2021062600.jpeg)
