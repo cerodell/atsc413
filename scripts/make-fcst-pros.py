@@ -17,13 +17,13 @@ with open(str(json_dir) + "/var-attrs.json") as f:
 with open(str(json_dir) + "/case-attrs.json") as f:
     case_attrs = json.load(f)
 
-# case_study = "high_level"
-# model = "gfs"
-# int_dir = "20190516T00"
-
-case_study = "sparks_lake"
+case_study = "high_level"
 model = "gfs"
-int_dir = "20210625T00"
+int_dir = "20190516T00"
+
+# case_study = "sparks_lake"
+# model = "gfs"
+# int_dir = "20210625T00"
 
 # import getdata
 # case_study = sys.argv[1]
@@ -32,15 +32,15 @@ int_dir = "20210625T00"
 # print(case_study)
 
 plot_list = [
-    "25kPa",
-    "50kPa",
+    # "25kPa",
+    # "50kPa",
     "100-50kPa",
-    "70kPa-RH",
-    "wsp",
-    "t2m",
-    "r2",
+    # "70kPa-RH",
+    # "wsp",
+    # "t2m",
+    # "r2",
     "tp",
-    "cape",
+    # "cape",
 ]
 # plot_list = ["85kPa"]
 pathlist = sorted(
@@ -49,7 +49,7 @@ pathlist = sorted(
 
 
 # pathlist = pathlist[7:8]
-# pathlist = pathlist[0:1]
+# pathlist = pathlist[16:17]
 for i in range(len(pathlist)):
     # print(path)
     # figTime = datetime.now()
@@ -57,7 +57,9 @@ for i in range(len(pathlist)):
     print(
         f"Making Figs for Valid Datetime: {np.datetime_as_string(ds.valid_time, unit='h')}"
     )
-    int_time = np.datetime_as_string(ds.time, unit="h").replace("-", "")
+    int_time = (
+        np.datetime_as_string(ds.time, unit="h").replace("-", "").replace("T", "Z")
+    )
     save_dir = Path(str(img_dir) + f"/{case_study}/{model}/{int_time}/")
     save_dir.mkdir(parents=True, exist_ok=True)
 

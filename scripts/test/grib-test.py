@@ -12,7 +12,7 @@ from context import data_dir, img_dir, json_dir
 
 model = "gfs"
 case_study = "high_level"
-int_dir = "20190517T00"
+int_dir = "20190516T00"
 
 pathlist = sorted(
     Path(str(data_dir) + f"/{case_study}/{model}/{int_dir}/").glob(f"*.grib2")

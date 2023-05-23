@@ -73,20 +73,24 @@ def open_data(pathlist, i, model, var):
                         ]
                     },
                 )
-                if filter_by_keys == "tp":
-                    try:
-                        ds_ii = xr.open_dataset(
-                            pathlist[i - 1],
-                            engine="cfgrib",
-                            backend_kwargs={
-                                "filter_by_keys": var_attrs[var]["filter_by_keys"][
-                                    model
-                                ][filter_by_keys]
-                            },
-                        )
-                        ds_i = ds_i - ds_ii
-                    except:
-                        pass
+                # if filter_by_keys == "tp":
+                #     try:
+                #         ds_ii = xr.open_dataset(
+                #             pathlist[i - 1],
+                #             engine="cfgrib",
+                #             backend_kwargs={
+                #                 "filter_by_keys": var_attrs[var]["filter_by_keys"][
+                #                     model
+                #                 ][filter_by_keys]
+                #             },
+                #         )
+                #         print(float(ds_i['tp'].mean()))
+                #         print(float(ds_ii['tp'].mean()))
+                #         ds_i['tp'] = ds_i['tp'] - ds_ii['tp']
+                #         print(float(ds_i['tp'].mean()))
+                #     except:
+                #         pass
+
                 ds_list.append(ds_i)
                 keys.append(filter_by_keys)
             except:

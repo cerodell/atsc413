@@ -12,18 +12,18 @@ from utils.rad import get_data
 
 # #############################  INPUTS  ####################################
 # total arguments
-case_study = sys.argv[1]
-print(case_study)
+# case_study = sys.argv[1]
+# print(case_study)
 
-# # ## choose case study
-# case_study = "high_level"
-# # ## choose forecast model
-# # model = "gfs"
-# # ## choose forecast hour
-# # init = "00"  # Z (UTC) time
-# # ## choose forecast frequency
-# # freq = 3  # in hours
-# # date_range = pd.date_range("2019-05-16", "2019-05-18", freq=f"{freq}H")
+# ## choose case study
+case_study = "high_level"
+## choose forecast model
+model = "gfs"
+## choose forecast hour
+init = "00"  # Z (UTC) time
+## choose forecast frequency
+freq = 3  # in hours
+date_range = pd.date_range("2019-05-16", "2019-05-21", freq=f"{freq}H")
 # ############################################################################
 
 with open(str(json_dir) + "/case-attrs.json") as f:

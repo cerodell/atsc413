@@ -97,7 +97,35 @@ function formatDate(date) {
 
 // ####################### IMAGES ##########################
 // This is for displaying and looping through images
+if (typeof loc === 'undefined') {
+  localStorage.setItem("loc", "high_level");
+} else {
+}
 
+if (typeof int === 'undefined') {
+  localStorage.setItem("int", "20190516Z00");
+} else {
+}
+
+if (typeof valid === 'undefined') {
+  localStorage.setItem("valid", "20190516Z00");
+} else {
+}
+
+if (typeof valid === 'undefined') {
+localStorage.setItem("dataI", "20190516Z00");
+} else {
+}
+
+if (typeof valid === 'undefined') {
+localStorage.setItem("dataJ", "20190518Z00");
+} else {
+}
+
+if (typeof varname === 'undefined') {
+localStorage.setItem("varname", "50kPa");
+} else {
+}
 // Retrieve the cached variable
 var loc = localStorage.getItem("loc");
 var int = localStorage.getItem("int");
@@ -134,6 +162,9 @@ buttons.forEach(function(button) {
 function showImage(loc, int, valid, varname) {
   var dataI = localStorage.getItem("dataI");
   var dataJ = localStorage.getItem("dataJ");
+  console.log("dataI:", dataI);
+  console.log("dataJ:", dataJ);
+
   if (isDateInPast(parseDateTime(valid), parseDateTime(dataI))) {
     var valid = dataI
     localStorage.setItem("valid", valid);
@@ -273,41 +304,7 @@ function decrementDateTime(dateTime) {
 
 // #################### END VAV ##########################
 
-// if (typeof loc !== 'undefined') {
-//     var loc = "high_level"
-//     localStorage.setItem("loc", loc);
-//   } else {
-//   }
 
-// if (typeof int !== 'undefined') {
-//     var int = "20190516Z00"
-//     localStorage.setItem("int", int);
-//   } else {
-//   }
-
-// if (typeof valid !== 'undefined') {
-//     var valid = "20190516Z00"
-//     localStorage.setItem("valid", valid);
-//   } else {
-//   }
-
-// if (typeof valid !== 'undefined') {
-//   var dataI = "20190516Z00"
-//   localStorage.setItem("dataI", dataI);
-// } else {
-// }
-
-// if (typeof valid !== 'undefined') {
-//   var dataJ = "20190518Z00"
-//   localStorage.setItem("dataJ", dataJ);
-// } else {
-// }
-
-// if (typeof varname !== 'undefined') {
-//   var varname = "50kPa"
-//   localStorage.setItem("varname", varname);
-// } else {
-// }
 
 // Get the sidebar element
 
