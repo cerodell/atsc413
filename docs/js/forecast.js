@@ -25,12 +25,8 @@ subMenuTitles.forEach((title) => {
     menu.classList.remove("submenu-active");
   });
 });
+
 // ####################### END SIDE BAR ##########################
-
-
-
-
-
 
 
 // ####################### MENU ##########################
@@ -113,52 +109,6 @@ console.log("loc:", loc);
 console.log("int:", int);
 console.log("valid:", valid);
 console.log("varname:", varname);
-
-try {
-  if (typeof loc !== 'undefined') {
-    var loc = "high_level"
-    localStorage.setItem("loc", loc);
-  } else {
-  }
-} catch (error) {
-  console.log("false");
-}
-
-try {
-  if (typeof int !== 'undefined') {
-    var int = "20190516Z00"
-    localStorage.setItem("int", int);
-  } else {
-  }
-} catch (error) {
-  console.log("false");
-}
-
-try {
-  if (typeof valid !== 'undefined') {
-    var valid = "20190516Z00"
-    localStorage.setItem("valid", valid);
-  } else {
-  }
-} catch (error) {
-  console.log("false");
-}
-
-try {
-  if (typeof varname !== 'undefined') {
-
-    var varname = "50kPa"
-    localStorage.setItem("varname", varname);
-  } else {
-  }
-} catch (error) {
-  console.log("false");
-}
-// Retrieve the cached variable
-var loc = localStorage.getItem("loc");
-var int = localStorage.getItem("int");
-var valid = localStorage.getItem("valid");
-var varname = localStorage.getItem("varname");
 showImage(loc, int, valid, varname);
 
 
@@ -167,26 +117,39 @@ function toggleDropdown() {
   dropdownContainer.classList.toggle('open');
 }
 
-
-
 var currentIndex = 0; // Initialize the current index of the date range
+const buttons = document.querySelectorAll('.dropdown-option');
+buttons.forEach(function(button) {
+  button.addEventListener('click', function() {
+    const dataI = button.getAttribute('i');
+    const dataJ = button.getAttribute('j');
+    localStorage.setItem("dataI", dataI);
+    localStorage.setItem("dataJ", dataJ);
+
+    console.log("dataI  "  +dataI);
+    console.log("dataJ  "  +dataJ);
+  });
+});
 
 function showImage(loc, int, valid, varname) {
-  var varname = localStorage.getItem("varname");
-
-  if (isDateInPast(parseDateTime(valid), parseDateTime(int))) {
-    var valid = int
+  var dataI = localStorage.getItem("dataI");
+  var dataJ = localStorage.getItem("dataJ");
+  if (isDateInPast(parseDateTime(valid), parseDateTime(dataI))) {
+    var valid = dataI
     localStorage.setItem("valid", valid);
-  } else {
-  }
-  console.log(loc);
-  console.log(localStorage.getItem("loc", loc));
+    console.log("valid  less than dataI" );
+  } else if (isDateInPast(parseDateTime(dataJ), parseDateTime(valid))) {
+    var valid = dataJ
+    localStorage.setItem("valid", valid);
+    console.log("dataJ  less than valid" );
+  }else{
+    }
   if (loc === localStorage.getItem("loc", loc)) {
     console.log("Same location");
   } else {
     var valid = int
     localStorage.setItem("valid", valid);
-    console.log("NEW Same location");
+    console.log("New location");
   }
   imageUrl = `../img/${loc}/gfs/${int}/${varname}-${valid.split('Z').join("")}.jpeg`
   $.get(imageUrl)
@@ -199,9 +162,12 @@ function showImage(loc, int, valid, varname) {
       const currentImage = document.getElementById('currentImage');
       currentImage.src = imageUrl;
     }).fail(function() {
+      if (isDateInPast(parseDateTime(valid), parseDateTime(int))) {
+        var valid = int
+        localStorage.setItem("valid", valid);
+      }else{
+      }
       var loc = localStorage.getItem("loc");
-      var int = localStorage.getItem("int");
-      var valid = localStorage.getItem("valid");
       var varname = localStorage.getItem("varname");
       imageUrl = `../img/${loc}/gfs/${int}/${varname}-${valid.split('Z').join("")}.jpeg`
       console.log(imageUrl);
@@ -264,6 +230,7 @@ function decrementDateTime(dateTime) {
 
 
 
+
 // // Function to handle the next image
 // function nextImage() {
 //   var loc = localStorage.getItem("loc");
@@ -305,3 +272,83 @@ function decrementDateTime(dateTime) {
 
 
 // #################### END VAV ##########################
+
+// if (typeof loc !== 'undefined') {
+//     var loc = "high_level"
+//     localStorage.setItem("loc", loc);
+//   } else {
+//   }
+
+// if (typeof int !== 'undefined') {
+//     var int = "20190516Z00"
+//     localStorage.setItem("int", int);
+//   } else {
+//   }
+
+// if (typeof valid !== 'undefined') {
+//     var valid = "20190516Z00"
+//     localStorage.setItem("valid", valid);
+//   } else {
+//   }
+
+// if (typeof valid !== 'undefined') {
+//   var dataI = "20190516Z00"
+//   localStorage.setItem("dataI", dataI);
+// } else {
+// }
+
+// if (typeof valid !== 'undefined') {
+//   var dataJ = "20190518Z00"
+//   localStorage.setItem("dataJ", dataJ);
+// } else {
+// }
+
+// if (typeof varname !== 'undefined') {
+//   var varname = "50kPa"
+//   localStorage.setItem("varname", varname);
+// } else {
+// }
+
+// Get the sidebar element
+
+// Get the toggle button element
+const toggleButton = document.querySelector('#btn');
+
+// Add event listener to the toggle button
+toggleButton.addEventListener('click', function() {
+  // Toggle the collapsed class on the sidebar
+  sidebar.classList.toggle('collapsed');
+});
+
+function changeText() {
+  const btn = document.getElementById('btn');
+  const submenuText1 = document.getElementById('submenu-text1');
+  const submenuText2 = document.getElementById('submenu-text2');
+  const submenuText3 = document.getElementById('submenu-text3');
+  const submenuText4 = document.getElementById('submenu-text4');
+
+  if (btn.textContent === 'Forecast Parameters') {
+    btn.textContent = 'FP';
+    submenuText1.textContent = 'UH';
+    submenuText1.style.fontSize = '10px'; // Change the font size to desired value
+    submenuText2.textContent = 'UM';
+    submenuText2.style.fontSize = '10px'; // Change the font size to desired value
+    submenuText3.textContent = 'SF';
+    submenuText3.style.fontSize = '10px'; // Change the font size to desired value
+    submenuText4.textContent = 'MP';
+    submenuText4.style.fontSize = '10px'; // Change the font size to desired value
+
+
+  } else {
+    btn.textContent = 'Forecast Parameters';
+    submenuText1.textContent = 'Upper Air Heights';
+    submenuText1.style.fontSize = ''; // Change the font size to desired value
+    submenuText2.textContent = 'Upper Air Moisture';
+    submenuText2.style.fontSize = ''; // Change the font size to desired value
+    submenuText3.textContent = 'Surface';
+    submenuText3.style.fontSize = ''; // Change the font size to desired value
+    submenuText4.textContent = 'Milti-Parameter';
+    submenuText4.style.fontSize = ''; // Change the font size to desired value
+
+  }
+}

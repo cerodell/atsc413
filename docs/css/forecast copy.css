@@ -3,58 +3,44 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 .sidebar {
-  height: 100%;
   position: fixed;
-  width: calc(20% - 30px); /* Adjust the percentage and padding according to your preference */
-  max-width: 290px; /* Set a maximum width for the sidebar */
+  height: 100%;
+  width: 290px;
   background: #f1f1f1;
   padding: 15px;
   z-index: 99;
-  transition: width 0.5s ease; /* Add transition for smooth collapsing/expanding */
 }
-
-.sidebar.collapsed {
-  width: 60px;
-}
-
 .logo {
   font-size: 25px;
   padding: 0 15px;
 }
-
 .sidebar a {
   color: #333;
   text-decoration: none;
 }
-
-.sidebar .logo-details {
+.sidebar .logo-details{
   height: 60px;
   display: flex;
   align-items: center;
   position: relative;
 }
-
-.sidebar .logo-details .icon {
+.sidebar .logo-details .icon{
   opacity: 0;
   transition: all 0.5s ease;
 }
-
-.sidebar .logo-details .logo_name {
+.sidebar .logo-details .logo_name{
   color: #fff;
   font-size: 20px;
   font-weight: 600;
   opacity: 0;
   transition: all 0.5s ease;
 }
-
 .sidebar.open .logo-details .icon,
-.sidebar.open .logo-details .logo_name {
+.sidebar.open .logo-details .logo_name{
   opacity: 1;
 }
-
-.sidebar .logo-details #btn {
+.sidebar .logo-details #btn{
   position: absolute;
   top: 50%;
   right: 0;
@@ -66,21 +52,8 @@
   cursor: pointer;
   transition: all 0.5s ease;
 }
-
-.sidebar.open .logo-details #btn {
+.sidebar.open .logo-details #btn{
   text-align: right;
-}
-
-#btn {
-  /* background-color: #4070f4; */
-  color: #080808;
-  padding: 8px 15px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-#btn:hover {
-  background-color: #f9f6f6;
 }
 .menu-content {
   position: relative;
@@ -112,7 +85,6 @@
   display: inline-block;
   width: 100%;
   border-radius: 12px;
-
 }
 .item i {
   font-size: 12px;
@@ -134,12 +106,10 @@
   height: 100%;
   width: 100%;
   top: 0;
-  right: calc(-100% - 2px);
+  right: calc(-100% - 26px);
   height: calc(100% + 100vh);
   background: #f1f1f1;
   display: none;
-  padding: 20px;
-
 }
 .show-submenu ~ .submenu {
   display: block;
@@ -168,10 +138,15 @@
   color: #fff;
   padding: 15px 20px;
   font-size: 25px;
+  /* background: #4070f4; */
+  /* cursor: pointer; */
 }
 .navbar #sidebar-close {
   cursor: pointer;
 }
+
+
+
 
 
 .main {
@@ -185,6 +160,16 @@
   overflow: hidden; /* Prevent scrolling */
 }
 
+/* .image-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  height: 100vh;
+  z-index: 100;
+} */
 img {
   max-width: 100%;
   max-height: 100%;
@@ -197,12 +182,11 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: flex-end; Align image to the bottom */
-  padding: 10px;
+  justify-content: flex-end; /* Align image to the bottom */
+  padding: 40px;
   height: 80vh; /* Reduce the height of image container */
   z-index: 100;
 }
-
 
 .buttons-container {
   display: flex;
@@ -216,22 +200,8 @@ img {
   background-color: #e0e0e0;
 }
 
-@media (max-width: 768px) {
-  .buttons-container {
-    flex-wrap: wrap; /* Allow buttons to wrap onto multiple lines */
-    justify-content: flex-start; /* Align buttons to the left */
-  }
-}
 
-@media (max-width: 480px) {
-  .buttons-container {
-    flex-direction: column; /* Stack buttons vertically on smaller screens */
-    align-items: center; /* Center the buttons vertically */
-  }
-}
-
-
-.button {
+.button{
   padding: 10px 20px;
   font-size: 16px;
   background-color: #9de8fa;
@@ -244,21 +214,6 @@ img {
 .button:hover {
   background-color: #e0e0e0;
 }
-
-@media (max-width: 768px) {
-  .button {
-    padding: 2px 2px; /* Adjust the padding for smaller screens */
-    font-size: 8px; /* Adjust the font size for smaller screens */
-  }
-}
-
-@media (max-width: 480px) {
-  .button {
-    padding: 2px 2px; /* Further adjust the padding for even smaller screens */
-    font-size: 10px; /* Further adjust the font size for even smaller screens */
-  }
-}
-
 
 .dropdown {
   position: relative;

@@ -25,14 +25,15 @@
       </nav>
     </header>
     <nav class="sidebar">
-      <a href="#" class="logo">Forecast Parameters</a>
+      <!-- <a href="#" class="logo">Forecast Parameters</a> -->
+      <i class="logo" id="btn" onclick="changeText()">Forecast Parameters</i>
 
       <div class="menu-content">
         <ul class="menu-items">
 
           <li class="item">
             <div class="submenu-item">
-              <span>Upper Air Heights</span>
+              <span id="submenu-text1">Upper Air Heights</span>
               <i class="fa-solid fa-chevron-right"></i>
             </div>
             <ul class="menu-items submenu">
@@ -54,7 +55,7 @@
 
           <li class="item">
             <div class="submenu-item">
-              <span>Upper Air Moisture</span>
+              <span id="submenu-text2">Upper Air Moisture</span>
               <i class="fa-solid fa-chevron-right"></i>
             </div>
 
@@ -72,7 +73,7 @@
 
           <li class="item">
             <div class="submenu-item">
-              <span>Surface</span>
+              <span id="submenu-text3">Surface</span>
               <i class="fa-solid fa-chevron-right"></i>
             </div>
             <ul class="menu-items submenu">
@@ -104,7 +105,7 @@
 
           <li class="item">
             <div class="submenu-item">
-              <span>Milti-Parameter</span>
+              <span id="submenu-text4">Milti-Parameter</span>
               <i class="fa-solid fa-chevron-right"></i>
             </div>
 
@@ -130,16 +131,16 @@
         <div class="dropdown" >
           <button class="button" data-custom-attribute="high_level">High Level</button>
           <div class="dropdown-content">
-            <button class="dropdown-option" onclick="showImage('high_level', '20190516Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190516Z00</button>
-            <button class="dropdown-option" onclick="showImage('high_level', '20190517Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190517Z00</button>
-            <button class="dropdown-option" onclick="showImage('high_level', '20190518Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190518Z00</button>
+            <button class="dropdown-option" i="20190516Z00" j="20190520Z00" onclick="showImage('high_level', '20190516Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190516Z00</button>
+            <button class="dropdown-option" i="20190517Z00" j="20190521Z00" onclick="showImage('high_level', '20190517Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190517Z00</button>
+            <button class="dropdown-option" i="20190518Z00" j="20190520Z00" onclick="showImage('high_level', '20190518Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190518Z00</button>
           </div>
         </div>
         <div class="dropdown" >
           <button class="button" data-custom-attribute="sparks_lake">Sparks Lake</button>
           <div class="dropdown-content">
-            <button class="dropdown-option" onclick="showImage('sparks_lake', '20210625Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210625Z00</button>
-            <button class="dropdown-option" onclick="showImage('sparks_lake', '20210626Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210626Z00</button>
+            <button class="dropdown-option" i="20210625Z00" j="20210627Z00" onclick="showImage('sparks_lake', '20210625Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210625Z00</button>
+            <button class="dropdown-option" i="20210626Z00" j="20210628Z00" onclick="showImage('sparks_lake', '20210626Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210626Z00</button>
           </div>
         </div>
         <button class="button">Case Case 6</button>
