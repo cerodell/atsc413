@@ -96,6 +96,16 @@ function formatDate(date) {
 
 
 // ####################### IMAGES ##########################
+
+// Retrieve the cached variable
+var loc = localStorage.getItem("loc");
+var int = localStorage.getItem("int");
+var valid = localStorage.getItem("valid");
+var dataI = localStorage.getItem("dataI");
+var dataJ = localStorage.getItem("dataJ");
+var varname = localStorage.getItem("varname");
+
+
 // This is for displaying and looping through images
 if (typeof loc === 'undefined') {
   localStorage.setItem("loc", "high_level");
@@ -112,12 +122,12 @@ if (typeof valid === 'undefined') {
 } else {
 }
 
-if (typeof valid === 'undefined') {
+if (typeof dataI === 'undefined') {
 localStorage.setItem("dataI", "20190516Z00");
 } else {
 }
 
-if (typeof valid === 'undefined') {
+if (typeof dataJ === 'undefined') {
 localStorage.setItem("dataJ", "20190518Z00");
 } else {
 }
@@ -126,11 +136,6 @@ if (typeof varname === 'undefined') {
 localStorage.setItem("varname", "50kPa");
 } else {
 }
-// Retrieve the cached variable
-var loc = localStorage.getItem("loc");
-var int = localStorage.getItem("int");
-var valid = localStorage.getItem("valid");
-var varname = localStorage.getItem("varname");
 
 // Log the cached variables
 console.log("loc:", loc);

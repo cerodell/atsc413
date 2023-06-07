@@ -12,7 +12,7 @@ from context import data_dir, img_dir, json_dir
 
 model = "gfs"
 case_study = "high_level"
-int_dir = "20190516T00"
+int_dir = "20190517T00"
 
 pathlist = sorted(
     Path(str(data_dir) + f"/{case_study}/{model}/{int_dir}/").glob(f"*.grib2")
@@ -20,7 +20,7 @@ pathlist = sorted(
 
 
 # Import data
-grib_data = cfgrib.open_datasets(pathlist[3])
+grib_data = cfgrib.open_datasets(pathlist[0])
 # grib_data1 = cfgrib.open_datasets(pathlist[4])[26]
 
 for i in range(len(grib_data)):
