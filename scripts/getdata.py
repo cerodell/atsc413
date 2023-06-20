@@ -1,3 +1,5 @@
+#!/Users/crodell/miniconda3/envs/atsc413/bin/python
+
 import sys
 import context
 import json
@@ -11,19 +13,19 @@ from context import data_dir, json_dir
 from utils.rad import get_data
 
 # #############################  INPUTS  ####################################
-# total arguments
-# case_study = sys.argv[1]
-# print(case_study)
+## total arguments
+case_study = sys.argv[1]
+print(case_study)
 
-# ## choose case study
-case_study = "high_level"
-## choose forecast model
-model = "gfs"
-## choose forecast hour
-init = "00"  # Z (UTC) time
-## choose forecast frequency
-freq = 3  # in hours
-date_range = pd.date_range("2019-05-16", "2019-05-21", freq=f"{freq}H")
+# # ## choose case study
+# case_study = "high_level"
+# ## choose forecast model
+# model = "gfs"
+# ## choose forecast hour
+# init = "00"  # Z (UTC) time
+# ## choose forecast frequency
+# freq = 3  # in hours
+# date_range = pd.date_range("2019-05-16", "2019-05-21", freq=f"{freq}H")
 # ############################################################################
 
 with open(str(json_dir) + "/case-attrs.json") as f:
@@ -36,9 +38,6 @@ init = case_attrs[case_study]["init"]  # Z (UTC) time
 ## choose forecast frequency
 freq = case_attrs[case_study]["freq"]  # in hours
 
-# window = np.arange(2)
-
-# for i in window:
 date_range = pd.date_range(
     case_attrs[case_study]["doi"][0], case_attrs[case_study]["doi"][1], freq=f"{freq}H"
 )
@@ -52,8 +51,12 @@ make_dir.mkdir(parents=True, exist_ok=True)
 fct_hours = np.arange(0, len(date_range) * freq, freq, dtype=int)
 
 if model == "gfs":
+    # filelist = [
+    #     f'/data/ds084.1/{int_fct.strftime("%Y")}/{int_fct.strftime("%Y%m%d")}/gfs.0p25.{int_fct.strftime("%Y%m%d")}{init}.f{str(fct_hour).zfill(3)}.grib2'
+    #     for fct_hour in fct_hours
+    # ]
     filelist = [
-        f'/data/ds084.1/{int_fct.strftime("%Y")}/{int_fct.strftime("%Y%m%d")}/gfs.0p25.{int_fct.strftime("%Y%m%d")}{init}.f{str(fct_hour).zfill(3)}.grib2'
+        f'/ds084.1/{int_fct.strftime("%Y")}/{int_fct.strftime("%Y%m%d")}/gfs.0p25.{int_fct.strftime("%Y%m%d")}{init}.f{str(fct_hour).zfill(3)}.grib2'
         for fct_hour in fct_hours
     ]
 else:

@@ -1,3 +1,5 @@
+#!/Users/crodell/miniconda3/envs/atsc413/bin/python
+
 import context
 import json
 import os
@@ -16,7 +18,7 @@ startTime = datetime.now()
 
 
 print(os.path.expanduser("~"))
-case_study = "sparks_lake"
+case_study = "kimiwan_complex"
 
 ## download historical forecast data
 command = f"{os.path.expanduser('~')}//miniconda3/envs/atsc413/bin/python {root_dir}/scripts/getdata.py {case_study}"
@@ -24,5 +26,5 @@ os.system(command)
 
 
 # ## create forecast products from historical forecast data
-# command = f"{os.path.expanduser('~')}//miniconda3/envs/atsc413/bin/python {root_dir}/scripts/make-fcst-pros.py {case_study}"
-# os.system(command)
+command = f"{os.path.expanduser('~')}//miniconda3/envs/atsc413/bin/python {root_dir}/scripts/make-fcst-pros.py {case_study}"
+os.system(command)

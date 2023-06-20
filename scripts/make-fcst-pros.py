@@ -1,3 +1,5 @@
+#!/Users/crodell/miniconda3/envs/atsc413/bin/python
+
 import sys
 import context
 import json
@@ -17,31 +19,34 @@ with open(str(json_dir) + "/var-attrs.json") as f:
 with open(str(json_dir) + "/case-attrs.json") as f:
     case_attrs = json.load(f)
 
-case_study = "high_level"
-model = "gfs"
-int_dir = "20190516T00"
+# case_study = "high_level"
+# model = "gfs"
+# int_dir = "20190516T00"
 
 # case_study = "sparks_lake"
 # model = "gfs"
 # int_dir = "20210625T00"
 
-# import getdata
-# case_study = sys.argv[1]
-# model = case_attrs[case_study]["model"]
-# int_dir = getdata.int_dir
-# print(case_study)
+import getdata
+
+case_study = sys.argv[1]
+model = case_attrs[case_study]["model"]
+int_dir = getdata.int_dir
+print(case_study)
 
 plot_list = [
-    # "25kPa",
-    # "50kPa",
+    "25kPa",
+    "50kPa",
     "100-50kPa",
-    # "70kPa-RH",
-    # "wsp",
-    # "t2m",
-    # "r2",
+    "70kPa-RH",
+    "wsp",
+    "t2m",
+    "r2",
     "tp",
-    # "cape",
+    "cape",
 ]
+
+
 # plot_list = ["85kPa"]
 pathlist = sorted(
     Path(str(data_dir) + f"/{case_study}/{model}/{int_dir}").glob(f"*.grib2")

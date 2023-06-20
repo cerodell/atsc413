@@ -1,3 +1,5 @@
+#!/Users/crodell/miniconda3/envs/atsc413/bin/python
+
 import context
 import json
 import sys, os
@@ -44,22 +46,24 @@ def get_data(filelist, make_dir):
         print("Bad Authentication")
         print(ret.text)
         exit(1)
-    dspath = "https://rda.ucar.edu"
-
+    # dspath = "https://rda.ucar.edu"
+    dspath = "https://data.rda.ucar.edu"
     for file in filelist:
         filename = dspath + file
+        print(filename)
         file_base = str(make_dir) + "/" + os.path.basename(file)
         print("Downloading", file_base)
         req = requests.get(
             filename, cookies=ret.cookies, allow_redirects=True, stream=True
         )
-        filesize = int(req.headers["Content-length"])
+        # filesize = int(req.headers["Content-length"])
+        # print(filesize)
         with open(file_base, "wb") as outfile:
             chunk_size = 1048576
             for chunk in req.iter_content(chunk_size=chunk_size):
                 outfile.write(chunk)
-                if chunk_size < filesize:
-                    check_file_status(file_base, filesize)
-        check_file_status(file_base, filesize)
+        #         if chunk_size < filesize:
+        #             check_file_status(file_base, filesize)
+        # check_file_status(file_base, filesize)
         print()
     return

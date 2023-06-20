@@ -35,7 +35,7 @@ with open(str(json_dir) + "/case-attrs.json") as f:
 
 case_study = "high_level"
 model = "gfs"
-int_time = "20190516T00"
+int_time = "20190517T00"
 
 
 pathlist = sorted(
@@ -46,10 +46,11 @@ save_dir = Path(str(img_dir) + f'/{case_study}/{model}/{int_time.replace("T", "Z
 save_dir.mkdir(parents=True, exist_ok=True)
 
 loc = [58.305, -117.2924]
-start = (64, -108.0)
-end = (53, -122.0)
-
-# pathlist = pathlist[7:8]
+# start = (64, -108.0)
+# end = (53, -122.0)
+start = (58.305, -108.0)
+end = (58.305, -122.0)
+pathlist = pathlist[7:8]
 for i in range(len(pathlist)):
     ds = open_data(pathlist, i, model, "all_vars")
     ds["longitude"] = ds["longitude"] - 360
@@ -89,11 +90,12 @@ for i in range(len(pathlist)):
     cs = ax.contour(
         ds_cross.longitude,
         ds_cross.isobaricInhPa,
-        ds_cross["gh"] / 10,
+        # ds_cross["gh"] / 10,
+        ds_cross["v"],
         colors="k",
         linewidths=1.0,
         linestyles="solid",
-        levels=[100, 500, 1000, 1500, 2000, 3000, 4000, 5000, 6000, 8000, 10000],
+        # levels=[100, 500, 1000, 1500, 2000, 3000, 4000, 5000, 6000, 8000, 10000],
     )
     cb = plt.clabel(
         cs,

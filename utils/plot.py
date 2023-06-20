@@ -40,6 +40,41 @@ def setBold(txt):
     return r"$\bf{" + str(txt) + "}$"
 
 
+def solve_W_WD(ds):
+
+    ## Define the latitude and longitude arrays in degrees
+    lons_rad = np.deg2rad(ds["latitude"])
+    lats_rad = np.deg2rad(ds["longitude"])
+    lons_rad, lats_rad = np.meshgrid(lats_rad, lons_rad)
+
+    ## Calculate rotation angle
+    theta = np.arctan2(np.cos(lats_rad) * np.sin(lons_rad), np.sin(lats_rad))
+
+    ## Calculate sine and cosine of rotation angle
+    sin_theta = np.sin(theta)
+    cos_theta = np.cos(theta)
+
+    ## Define the u and v wind components in domain coordinates
+    u_domain = ds["u"]
+    v_domain = ds["v"]
+
+    ## Rotate the u and v wind components to Earth coordinates
+    u_earth = u_domain * cos_theta - v_domain * sin_theta
+    v_earth = u_domain * sin_theta + v_domain * cos_theta
+    ds["u_earth"] = u_earth
+    ds["v_earth"] = v_earth
+
+    ## Solve for wind speed
+    wsp = np.sqrt(u_earth ** 2 + v_earth ** 2)
+    ds["wsp"] = wsp
+
+    ## Solve for wind direction on Earth coordinates
+    wdir = 180 + ((180 / np.pi) * np.arctan2(u_earth, v_earth))
+    ds["wdir"] = wdir
+
+    return ds
+
+
 def open_data(pathlist, i, model, var):
     openTime = datetime.now()
     if (
@@ -96,6 +131,7 @@ def open_data(pathlist, i, model, var):
             except:
                 pass
         ds = xr.merge(ds_list, compat="override")
+        ds = solve_W_WD(ds)
         print(
             f"Time to load data with filter keys {keys}:  {datetime.now() - openTime}"
         )
