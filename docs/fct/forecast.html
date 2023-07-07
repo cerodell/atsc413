@@ -1,5 +1,5 @@
+
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,21 +8,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/forecast.css" />
     <link href="../css/a313styles.css" rel="stylesheet" type="text/css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/jquery.js"></script>
 
 
   </head>
   <body>
   <header>UBC ATSC 413 - Forest-fire Weather &amp; Climate
-      <nav>|
-        <a href="../index.html">Home</a> |
-        <a href="index.html">Basics</a> |
-        <a href="../cases/index.html">Fire Cases</a> |
-        <a href="../met_concepts/index.html">Weather</a> |
-        <a href="forecast.html">Forecast Tool</a> |
-        <a href="test.html">Test</a> |
-        <a href="index.html">F</a> |
-      </nav>
+    <nav>|
+      <a href="../index.html">Home</a> |
+	  <a href="../sched/index.html">Schedule</a> |
+	  <a href="../fire_basics/index.html">Fire Basics</a> |
+	  <a href="../cases/index.html">Fire Cases</a> |
+	  <a href="../met_concepts/index.html">Met. Concepts</a> |
+      <a href="../fct/forecast.html">Forecast Tools</a> |
+	  <a href="../smoke/index.html">Smoke</a> |
+    <a href=“../climate/index.html”>Climate</a>
+
+  </nav>
+
     </header>
     <nav class="sidebar">
       <!-- <a href="#" class="logo">Forecast Parameters</a> -->
@@ -83,6 +86,9 @@
               </div>
               <li class="item">
                 <a href="#"  onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'tp')" >3-hr Precipitation (mm)</a>
+              </li>
+              <li class="item">
+                <a href="#"  onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'atp')" >Total Accumulated Precipitation (mm)</a>
               </li>
               <li class="item">
                 <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'r2')" >2m Relative Humidity (%)</a>
@@ -152,6 +158,25 @@
             <button class="dropdown-option" i="20190516Z00" j="20190520Z00" onclick="showImage('high_level', '20190516Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190516Z00</button>
             <button class="dropdown-option" i="20190517Z00" j="20190521Z00" onclick="showImage('high_level', '20190517Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190517Z00</button>
             <button class="dropdown-option" i="20190518Z00" j="20190520Z00" onclick="showImage('high_level', '20190518Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190518Z00</button>
+            <button class="dropdown-option" i="20190528Z00" j="20190531Z21" onclick="showImage('high_level', '20190528Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190528Z00</button>
+            <button class="dropdown-option" i="20190529Z00" j="20190531Z00" onclick="showImage('high_level', '20190529Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190529Z00</button>
+
+
+          </div>
+        </div>
+        <div class="dropdown" >
+          <button class="button" data-custom-attribute="kimiwan_complex">Kimiwan Complex</button>
+          <div class="dropdown-content">
+            <button class="dropdown-option" i="20230521Z00" j="20230523Z00" onclick="showImage('kimiwan_complex', '20230521Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230521Z00</button>
+            <button class="dropdown-option" i="20230522Z00" j="20230524Z00" onclick="showImage('kimiwan_complex', '20230522Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230522Z00</button>
+            <button class="dropdown-option" i="20230523Z00" j="20230525Z00" onclick="showImage('kimiwan_complex', '20230523Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230523Z00</button>
+            <button class="dropdown-option" i="20230524Z00" j="20230526Z00" onclick="showImage('kimiwan_complex', '20230524Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230524Z00</button>
+          </div>
+        </div>
+        <div class="dropdown" >
+          <button class="button" data-custom-attribute="donnie_creek">Donnie Creek</button>
+          <div class="dropdown-content">
+            <button class="dropdown-option" i="20230519Z00" j="20230521Z00" onclick="showImage('donnie_creek', '20230519Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230519Z00</button>
           </div>
         </div>
         <div class="dropdown" >
@@ -161,8 +186,30 @@
             <button class="dropdown-option" i="20210626Z00" j="20210628Z00" onclick="showImage('sparks_lake', '20210626Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210626Z00</button>
           </div>
         </div>
-        <button class="button">Case Case 6</button>
-        <button class="button">Case Case 7</button>
+        <div class="dropdown" >
+          <button class="button" data-custom-attribute="fort_mcmurray">Fort McMurray</button>
+          <div class="dropdown-content">
+            <button class="dropdown-option" i="20160501Z00" j="20160503Z00" onclick="showImage('fort_mcmurray', '20160501Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160501Z00</button>
+          </div>
+        </div>
+        <div class="dropdown" >
+          <button class="button" data-custom-attribute="camp_fire">Camp Fire</button>
+          <div class="dropdown-content">
+            <button class="dropdown-option" i="20181107Z00" j="20181109Z00" onclick="showImage('camp_fire', '20181107Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20181107Z00</button>
+          </div>
+        </div>
+        <div class="dropdown" >
+          <button class="button" data-custom-attribute="quebec_fires">Quebec Fires</button>
+          <div class="dropdown-content">
+            <button class="dropdown-option" i="20230606Z00" j="20230608Z00" onclick="showImage('quebec_fires', '20230606Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230606Z00</button>
+          </div>
+        </div>
+        <div class="dropdown" >
+          <button class="button" data-custom-attribute="marshall_fire">Marshall Fire</button>
+          <div class="dropdown-content">
+            <button class="dropdown-option" i="20211230Z00" j="20220101Z00" onclick="showImage('marshall_fire', '20211230Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20211230Z00</button>
+          </div>
+        </div>
       </div>
       <div class="image-container">
         <img id="currentImage" src="" alt="Image">

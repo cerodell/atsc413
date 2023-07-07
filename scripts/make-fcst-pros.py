@@ -27,6 +27,10 @@ with open(str(json_dir) + "/case-attrs.json") as f:
 # model = "gfs"
 # int_dir = "20210625T00"
 
+# case_study = "kimiwan_complex"
+# model = "gfs"
+# int_dir = "20230522T00"
+
 import getdata
 
 case_study = sys.argv[1]
@@ -47,18 +51,22 @@ plot_list = [
 ]
 
 
-# plot_list = ["85kPa"]
+# plot_list = ["tp"]
 pathlist = sorted(
     Path(str(data_dir) + f"/{case_study}/{model}/{int_dir}").glob(f"*.grib2")
 )
 
 
-# pathlist = pathlist[7:8]
+# pathlist = pathlist[:2]
 # pathlist = pathlist[16:17]
 for i in range(len(pathlist)):
     # print(path)
     # figTime = datetime.now()
     ds = open_data(pathlist, i, model, "all_vars")
+    try:
+        ds["atp"] = ds["tp"] + ds_i["atp"]
+    except:
+        ds["atp"] = ds["t2m"] * 0
     print(
         f"Making Figs for Valid Datetime: {np.datetime_as_string(ds.valid_time, unit='h')}"
     )
@@ -110,5 +118,5 @@ for i in range(len(pathlist)):
     if "cape" in plot_list:
         plot_cape(ds, case_study, save_dir, roads=True)
 
-
+    ds_i = ds
 print("Total Run Time: ", datetime.now() - startTime)

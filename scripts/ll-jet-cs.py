@@ -19,13 +19,23 @@ import numpy as np
 import xarray as xr
 
 import metpy.calc as mpcalc
+from metpy.units import units
+
 from metpy.cbook import get_test_data
 from metpy.interpolate import cross_section
 
 from datetime import datetime
 from context import data_dir, img_dir, json_dir
 from utils.plot import base_plot, open_data, config_data
+import warnings
 
+warnings.filterwarnings("ignore", category=UserWarning)
+
+
+############################################################
+## LOW LEVEL JET
+# https://www.theweatherprediction.com/habyhints2/696/
+############################################################
 with open(str(json_dir) + "/var-attrs.json") as f:
     var_attrs = json.load(f)
 
@@ -33,9 +43,13 @@ with open(str(json_dir) + "/case-attrs.json") as f:
     case_attrs = json.load(f)
 
 
+data = xr.open_dataset(get_test_data("narr_example.nc", False))
+data = data.metpy.parse_cf().squeeze()
+print(data)
+
 case_study = "high_level"
 model = "gfs"
-int_time = "20190517T00"
+int_time = "20190518T00"
 
 
 pathlist = sorted(
@@ -46,15 +60,17 @@ save_dir = Path(str(img_dir) + f'/{case_study}/{model}/{int_time.replace("T", "Z
 save_dir.mkdir(parents=True, exist_ok=True)
 
 loc = [58.305, -117.2924]
-# start = (64, -108.0)
-# end = (53, -122.0)
-start = (58.305, -108.0)
-end = (58.305, -122.0)
-pathlist = pathlist[7:8]
+start = (64, -108.0)
+end = (52, -122.0)
+# start = (58.305, -118.0)
+# end = (58.305, -120.0)
+# start = (58.305, -108.0)
+# end = (58.305, -122.0)
+# pathlist = pathlist[7:8]
 for i in range(len(pathlist)):
     ds = open_data(pathlist, i, model, "all_vars")
     ds["longitude"] = ds["longitude"] - 360
-    ds["isobaricInhPa"] = ds["isobaricInhPa"] / 10
+    ds["isobaricInhPa"].attrs["units"] = "hPa"
 
     data = ds.metpy.parse_cf().squeeze()
     data = data.sel(longitude=slice(end[1] - 30, start[1] + 30), latitude=slice(80, 30))
@@ -62,9 +78,11 @@ for i in range(len(pathlist)):
 
     ds_cross = cross_section(data, start, end).set_coords(("latitude", "longitude"))
 
-    # ds_cross["longitude"] = ds_cross["longitude"] - 360
-    ds_cross["wsp"] = ((ds_cross["u"] ** 2 + ds_cross["v"] ** 2) ** 0.5) * 3.6
-    # ds_cross['gh'] = ds_cross['gh'] - ds_cross['gh'].sel(isobaricInhPa= 1000)
+    ds_cross["Potential_temperature"] = mpcalc.potential_temperature(
+        ds_cross["isobaricInhPa"], ds_cross["t"]
+    )
+    ds_cross = ds_cross.sel(isobaricInhPa=slice(200, 1000))
+    ds_cross["wsp"] = (ds_cross["u"] ** 2 + ds_cross["v"] ** 2) ** 0.5  # * 3.6
     # %%
     var = "wsp"
 
@@ -86,55 +104,73 @@ for i in range(len(pathlist)):
     fig = plt.figure(figsize=(14, 6))
 
     ax = fig.add_subplot(1, 1, 1)
-
-    cs = ax.contour(
-        ds_cross.longitude,
-        ds_cross.isobaricInhPa,
-        # ds_cross["gh"] / 10,
-        ds_cross["v"],
+    # Plot potential temperature using contour, with some custom labeling
+    # theta_contour = ax.contour(ds_cross['longitude'], ds_cross['isobaricInhPa'], ds_cross['Potential_temperature'],
+    #                         levels=np.arange(250, 450, 5), colors='k', linewidths=1)
+    # theta_contour.clabel(theta_contour.levels[1::2], fontsize=8, colors='k', inline=1,
+    #                     inline_spacing=8, fmt='%i K', rightside_up=True, use_clabeltext=True)
+    theta_contour = ax.contour(
+        ds_cross["longitude"],
+        ds_cross["isobaricInhPa"] / 10,
+        ds_cross["gh"] - ds_cross["gh"].mean(dim="index"),
+        levels=np.arange(-100, 100, 10),
         colors="k",
-        linewidths=1.0,
-        linestyles="solid",
-        # levels=[100, 500, 1000, 1500, 2000, 3000, 4000, 5000, 6000, 8000, 10000],
+        linewidths=1,
     )
-    cb = plt.clabel(
-        cs,
-        fontsize=7,
+
+    theta_contour.clabel(
+        theta_contour.levels[1::2],
+        fontsize=8,
+        colors="k",
         inline=1,
-        inline_spacing=10,
-        fmt="%idm",
+        inline_spacing=8,
+        fmt="%i Δm",
         rightside_up=True,
         use_clabeltext=True,
+    )
+    cf = ax.contourf(
+        ds_cross.longitude,
+        ds_cross.isobaricInhPa / 10,
+        ds_cross["wsp"],
+        levels=np.floor(np.array(levels) / 3.6),
+        cmap=cmap,
+    )
+
+    ax.axvline(x=loc[1], color="red", linestyle="--", lw=0.5, zorder=2)
+
+    # ax.set_ylim(ax.get_ylim()[::-1])
+    ax.set_yscale("symlog")
+    ax.set_yticklabels(np.arange(100, 10, -10))
+    ax.set_ylim(
+        ds_cross["isobaricInhPa"].max() / 10, ds_cross["isobaricInhPa"].min() / 10
+    )
+    ax.set_yticks(np.arange(100, 10, -10))
+
+    ds_cross["sp"] = ds_cross["sp"].metpy.convert_units("hPa")
+
+    ax.fill_between(
+        ds_cross["longitude"],
+        ds_cross["isobaricInhPa"].sel(isobaricInhPa=1000) / 10,
+        ds_cross["sp"] / 10,
+        color="sienna",
         zorder=10,
     )
 
-    cf = ax.contourf(
-        ds_cross.longitude,
-        ds_cross.isobaricInhPa,
-        ds_cross["wsp"],
-        levels=levels,
-        cmap=cmap,
-    )
-    # ax.scatter(loc[1], 980, zorder=2, s=40, marker="*", color="red")
-    ax.axvline(x=loc[1], color="red", linestyle="--", lw=0.5, zorder=2)
-
-    ax.set_ylim(ax.get_ylim()[::-1])
-
     # Define the CRS and inset axes
     data_crs = data["gh"].metpy.cartopy_crs
-    ax_inset = fig.add_axes([-0.14, 0.6, 0.3, 0.3], projection=data_crs)
+    ax_inset = fig.add_axes([-0.18, 0.6, 0.3, 0.3], projection=data_crs)
 
     # Plot geopotential height at 500 hPa using xarray's contour wrapper
     cf_hg = ax_inset.contourf(
         data["longitude"],
         data["latitude"],
-        data["gh"].sel(isobaricInhPa=85) / 10,
+        data["gh"].sel(isobaricInhPa=850) / 10,
         levels=np.arange(115, 160, 5),
         cmap="coolwarm",
         extend="both",
     )
 
-    cbar = plt.colorbar(cf_hg, ax=ax_inset, pad=0.004, location="left")
+    cbar = plt.colorbar(cf_hg, ax=ax_inset, pad=0.0004, location="left")
     cbar.ax.tick_params(labelsize=10)
     cbar.set_label(
         "dm",
@@ -200,7 +236,7 @@ for i in range(len(pathlist)):
         + " "
         + setBold("0.25")
         + r"$^o$ "
-        + "Geopotential Height and Wind Speed",
+        + "Change in Geopotential Height and Wind Speed",
         fontsize=14,
     )
     plt.savefig(
@@ -208,5 +244,6 @@ for i in range(len(pathlist)):
         dpi=250,
         bbox_inches="tight",
     )
+
 
 # %%

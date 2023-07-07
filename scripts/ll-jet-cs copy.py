@@ -54,12 +54,12 @@ print(cross)
 
 
 cross["Potential_temperature"] = mpcalc.potential_temperature(
-    cross["isobaricInhPaInhPa"], cross["t"]
+    cross["isobaricInhPa"], cross["t"]
 )
 cross["Relative_humidity"] = cross["r"]
 
 # mpcalc.relative_humidity_from_specific_humidity(
-#     cross['isobaricInhPaInhPa'],
+#     cross['isobaricInhPa'],
 #     cross['t'],
 #     cross['Specific_humidity']
 # )

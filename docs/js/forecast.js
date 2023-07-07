@@ -107,32 +107,32 @@ var varname = localStorage.getItem("varname");
 
 
 // This is for displaying and looping through images
-if (typeof loc === 'undefined') {
+if (loc === null) {
   localStorage.setItem("loc", "high_level");
 } else {
 }
 
-if (typeof int === 'undefined') {
+if (int === null) {
   localStorage.setItem("int", "20190516Z00");
 } else {
 }
 
-if (typeof valid === 'undefined') {
+if (valid === null) {
   localStorage.setItem("valid", "20190516Z00");
 } else {
 }
 
-if (typeof dataI === 'undefined') {
+if (dataI === null) {
 localStorage.setItem("dataI", "20190516Z00");
 } else {
 }
 
-if (typeof dataJ === 'undefined') {
+if (dataJ === null) {
 localStorage.setItem("dataJ", "20190518Z00");
 } else {
 }
 
-if (typeof varname === 'undefined') {
+if (varname === null) {
 localStorage.setItem("varname", "50kPa");
 } else {
 }

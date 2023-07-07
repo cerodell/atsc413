@@ -26,6 +26,7 @@ grib_data = cfgrib.open_datasets(pathlist[0])
 for i in range(len(grib_data)):
     print("============================================")
     print(i)
+    # print(grib_data[i])
     # print(list(grib_data[i]))
     for var in grib_data[i]:
         print("-------------------------------------")

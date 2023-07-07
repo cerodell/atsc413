@@ -131,6 +131,7 @@ def open_data(pathlist, i, model, var):
             except:
                 pass
         ds = xr.merge(ds_list, compat="override")
+        # ds = xr.combine_by_coords(ds_list, compat="override")
         ds = solve_W_WD(ds)
         print(
             f"Time to load data with filter keys {keys}:  {datetime.now() - openTime}"
@@ -167,7 +168,7 @@ def config_data(ds, var, case_study, anomaly=False, **kwargs):
 
     if anomaly == True:
         ## ONLY WORKS FOR GH AT 50 kPa
-        ## TODO make this better et up for other climo variables
+        ## TODO set this up for other climo variables and interpolate from mid month to mid month to prevent jumps at start of months
         ds_climo = salem.open_xr_dataset(str(data_dir) + "/climatology-1991-2021.nc")
         ds_t = ds_climo.salem.transform(ds["gh"].sel(isobaricInhPa=500))
         ds_t = ds_t.sel(longitude=longitude, latitude=latitude)
@@ -666,14 +667,14 @@ def plot_wspwdir(ds, case_study, save_dir, height, roads=False, **kwargs):
     wsp = np.sqrt((u ** 2 + v ** 2))
     fig, gs, ax, lons, lats, vtimes = base_plot(ds, ccrs.PlateCarree(), var)
 
-    def convert_longitudes(longitudes):
-        converted_longitudes = np.where(longitudes > 180, longitudes - 360, longitudes)
-        return converted_longitudes
+    # def convert_longitudes(longitudes):
+    #     converted_longitudes = np.where(longitudes > 180, longitudes - 360, longitudes)
+    #     return converted_longitudes
 
-    lons = convert_longitudes(lons)
-    new_x, new_y, new_u, new_v, = vector_scalar_to_grid(
-        ccrs.PlateCarree(), ccrs.PlateCarree(), u.shape, lons, lats, u, v
-    )
+    # lons = convert_longitudes(lons)
+    # new_x, new_y, new_u, new_v, = vector_scalar_to_grid(
+    #     ccrs.PlateCarree(), ccrs.PlateCarree(), u.shape, lons, lats, u, v
+    # )
     lons, lats = np.meshgrid(lons, lats)
 
     # ax.streamplot(
@@ -868,6 +869,72 @@ def plot_r2(ds, case_study, save_dir, roads=False, *args):
 
 
 def plot_tp(ds, case_study, save_dir, roads=False, *args):
+    var = "atp"
+    figTime = datetime.now()
+    dataproj = ccrs.PlateCarree()
+    ds, ds_climo, ds_t, extent, center = config_data(ds, var, case_study, anomaly=False)
+    fig, gs, ax, lons, lats, vtimes = base_plot(ds, ccrs.PlateCarree(), var)
+    try:
+        vmin, vmax = var_attrs[var]["vmin"], var_attrs[var]["vmax"]
+        levels, colors = var_attrs[var]["levels"], var_attrs[var]["colors"]
+        unit = var_attrs[var]["unit"]
+        norm = matplotlib.colors.Normalize(vmin=vmin, vmax=vmax + 1)
+        cf = ax.contourf(
+            lons,
+            lats,
+            ds[var].values,
+            levels=levels,
+            colors=colors,
+            norm=norm,
+            transform=ccrs.PlateCarree(),
+        )
+        cax = plt.subplot(gs[1])
+        clb = plt.colorbar(cf, cax=cax, orientation="horizontal")
+        clb.ax.set_title(unit, fontsize=10)
+    except:
+        vmin, vmax = var_attrs[var]["vmin"], var_attrs[var]["vmax"]
+        levels, colors = var_attrs[var]["levels"], var_attrs[var]["colors"]
+        unit = var_attrs[var]["unit"]
+        norm = matplotlib.colors.Normalize(vmin=vmin, vmax=vmax + 1)
+        cf = ax.contourf(
+            lons,
+            lats,
+            np.zeros_like(ds.t2m),
+            levels=levels,
+            colors=colors,
+            norm=norm,
+            transform=ccrs.PlateCarree(),
+        )
+        cax = plt.subplot(gs[1])
+        clb = plt.colorbar(cf, cax=cax, orientation="horizontal")
+        clb.ax.set_title(unit, fontsize=10)
+    if roads == True:
+        ax.add_geometries(
+            gdf["geometry"],
+            crs=ccrs.PlateCarree(),
+            zorder=10,
+            linewidth=0.2,
+            edgecolor="black",
+            facecolor="none",
+        )
+    ax.set_extent(extent, ccrs.PlateCarree())
+    ax.scatter(
+        center[1],
+        center[0],
+        s=40,
+        marker="*",
+        color="red",
+        transform=ccrs.PlateCarree(),
+        zorder=10,
+    )
+    plt.savefig(
+        str(save_dir) + f"/{var}-{vtimes.strftime('%Y%m%d%H')}.jpeg",
+        dpi=250,
+        bbox_inches="tight",
+    )
+    print(f"Time to create {var.upper()} fig: ", datetime.now() - figTime)
+    plt.close()
+
     var = "tp"
     figTime = datetime.now()
     dataproj = ccrs.PlateCarree()
