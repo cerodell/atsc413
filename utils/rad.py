@@ -8,6 +8,12 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 
+from context import json_dir
+
+
+with open(str(json_dir) + "/info.json") as f:
+    info = json.load(f)
+
 
 def check_file_status(filepath, filesize):
     sys.stdout.write("\r")
@@ -21,25 +27,25 @@ def check_file_status(filepath, filesize):
 
 def get_data(filelist, make_dir):
     # Try to get password
-    if len(sys.argv) < 3 and not "RDAPSWD" in os.environ:
-        try:
-            import getpass
+    # if len(sys.argv) < 3 and not "RDAPSWD" in os.environ:
+    #     try:
+    #         import getpass
 
-            input = getpass.getpass
-        except:
-            try:
-                input = raw_input
-            except:
-                pass
-        pswd = input("Password: ")
-    else:
-        try:
-            pswd = sys.argv[1]
-        except:
-            pswd = os.environ["RDAPSWD"]
+    #         input = getpass.getpass
+    #     except:
+    #         try:
+    #             input = raw_input
+    #         except:
+    #             pass
+    #     pswd = input("Password: ")
+    # else:
+    #     try:
+    #         pswd = sys.argv[1]
+    #     except:
+    #         pswd = os.environ["RDAPSWD"]
 
     url = "https://rda.ucar.edu/cgi-bin/login"
-    values = {"email": "crodell@eoas.ubc.ca", "passwd": pswd, "action": "login"}
+    values = info["info"]
     # Authenticate
     ret = requests.post(url, data=values)
     if ret.status_code != 200:

@@ -73,6 +73,36 @@
             }
         }
     },
+    "upper": {
+        "filter_by_keys": {
+            "gfs": {
+                "gh": {
+                    "typeOfLevel": "isobaricInhPa",
+                    "shortName": "gh"
+                },
+                "u": {
+                    "typeOfLevel": "isobaricInhPa",
+                    "shortName": "u"
+                },
+                "v": {
+                    "typeOfLevel": "isobaricInhPa",
+                    "shortName": "v"
+                },
+                "w": {
+                    "typeOfLevel": "isobaricInhPa",
+                    "shortName": "w"
+                },
+                "t": {
+                    "typeOfLevel": "isobaricInhPa",
+                    "shortName": "t"
+                },
+                "r": {
+                    "typeOfLevel": "isobaricInhPa",
+                    "shortName": "r"
+                }
+            }
+        }
+    },
     "25kPa": {
         "colors": [ "#FFFFFF", "#BBBBBB", "#646464", "#1563D3", "#2883F1", "#50A5F5", "#97D3FB", "#0CA10D", "#37D33C", "#97F58D", "#B5FBAB", "#FFE978", "#FFC03D", "#FFA100", "#FF3300", "#C10000", "#960007", "#643C32" ],
         "vmax": 0,

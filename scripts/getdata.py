@@ -38,45 +38,53 @@ init = case_attrs[case_study]["init"]  # Z (UTC) time
 ## choose forecast frequency
 freq = case_attrs[case_study]["freq"]  # in hours
 
-date_range = pd.date_range(
-    case_attrs[case_study]["doi"][0], case_attrs[case_study]["doi"][1], freq=f"{freq}H"
+fct_days = pd.date_range(
+    case_attrs[case_study]["fct_days"][0], case_attrs[case_study]["fct_days"][1]
 )
 
 
-int_fct = date_range[0]
-int_dir = int_fct.strftime("%Y%m%dT%H")
-make_dir = Path(str(data_dir) + f"/{case_study}/{model}/{int_dir}")
-make_dir.mkdir(parents=True, exist_ok=True)
+for fct_day in fct_days:
+    print(f"forecast day: {fct_day}")
+    print(f'fct_horizon: {int(case_attrs[case_study]["fct_horizon"])}')
+    date_range = pd.date_range(
+        fct_day.strftime("%Y-%m-%d"),
+        (
+            fct_day + pd.Timedelta(hours=int(case_attrs[case_study]["fct_horizon"]))
+        ).strftime("%Y-%m-%d"),
+        freq=f"{freq}H",
+    )
 
-fct_hours = np.arange(0, len(date_range) * freq, freq, dtype=int)
+    int_fct = date_range[0]
+    int_dir = int_fct.strftime("%Y%m%dT%H")
+    make_dir = Path(str(data_dir) + f"/{case_study}/{model}/{int_dir}")
+    make_dir.mkdir(parents=True, exist_ok=True)
 
-if model == "gfs":
-    # filelist = [
-    #     f'/data/ds084.1/{int_fct.strftime("%Y")}/{int_fct.strftime("%Y%m%d")}/gfs.0p25.{int_fct.strftime("%Y%m%d")}{init}.f{str(fct_hour).zfill(3)}.grib2'
-    #     for fct_hour in fct_hours
-    # ]
-    filelist = [
-        f'/ds084.1/{int_fct.strftime("%Y")}/{int_fct.strftime("%Y%m%d")}/gfs.0p25.{int_fct.strftime("%Y%m%d")}{init}.f{str(fct_hour).zfill(3)}.grib2'
-        for fct_hour in fct_hours
+    fct_hours = np.arange(0, len(date_range) * freq, freq, dtype=int)
+
+    if model == "gfs":
+        # filelist = [
+        #     f'/data/ds084.1/{int_fct.strftime("%Y")}/{int_fct.strftime("%Y%m%d")}/gfs.0p25.{int_fct.strftime("%Y%m%d")}{init}.f{str(fct_hour).zfill(3)}.grib2'
+        #     for fct_hour in fct_hours
+        # ]
+        filelist = [
+            f'/ds084.1/{int_fct.strftime("%Y")}/{int_fct.strftime("%Y%m%d")}/gfs.0p25.{int_fct.strftime("%Y%m%d")}{init}.f{str(fct_hour).zfill(3)}.grib2'
+            for fct_hour in fct_hours
+        ]
+    else:
+        raise ValueError(f"{model} is an invalid model option at this time")
+
+    res = [
+        os.path.isfile(str(make_dir) + "/" + file.rsplit("/", 1)[-1])
+        for file in filelist
+        if os.path.isfile(str(make_dir) + "/" + file.rsplit("/", 1)[-1]) != True
     ]
-else:
-    raise ValueError(f"{model} is an invalid model option at this time")
 
+    def check_item(file):
+        return os.path.isfile(str(make_dir) + "/" + file.rsplit("/", 1)[-1])
 
-res = [
-    os.path.isfile(str(make_dir) + "/" + file.rsplit("/", 1)[-1])
-    for file in filelist
-    if os.path.isfile(str(make_dir) + "/" + file.rsplit("/", 1)[-1]) != True
-]
+    filelist = list(filter(lambda file: check_item(file) != True, filelist))
 
-
-def check_item(file):
-    return os.path.isfile(str(make_dir) + "/" + file.rsplit("/", 1)[-1])
-
-
-filelist = list(filter(lambda file: check_item(file) != True, filelist))
-
-if len(filelist) == 0:
-    print(f"files for {case_study} previously downloaded")
-else:
-    get_data(filelist, make_dir)
+    if len(filelist) == 0:
+        print(f"files for {case_study} previously downloaded")
+    else:
+        get_data(filelist, make_dir)

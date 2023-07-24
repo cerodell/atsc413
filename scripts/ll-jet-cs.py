@@ -42,11 +42,6 @@ with open(str(json_dir) + "/var-attrs.json") as f:
 with open(str(json_dir) + "/case-attrs.json") as f:
     case_attrs = json.load(f)
 
-
-data = xr.open_dataset(get_test_data("narr_example.nc", False))
-data = data.metpy.parse_cf().squeeze()
-print(data)
-
 case_study = "high_level"
 model = "gfs"
 int_time = "20190518T00"

@@ -1,23 +1,96 @@
 {
   "high_level":{
     "loc": [58.305, -117.2924],
-    "doi": ["2019-05-31", "2019-06-02"],
+    "fct_horizon": 48,
     "model": "gfs",
     "init": "00",
-    "freq": 3
+    "freq": 3,
+    "fct_days": [
+      "2019-05-31",
+      "2019-06-02"
+    ],
+    "nasa": "https://go.nasa.gov/3pQuDhl"
   },
   "sparks_lake":{
     "loc": [50.998, -121.096],
-    "doi": ["2021-06-27", "2021-06-29"],
+    "fct_horizon": 48,
     "model": "gfs",
     "init": "00",
-    "freq": 3
-  },
+    "freq": 3,
+    "fct_days": [
+      "2021-06-25",
+      "2021-07-04"
+    ],
+    "nasa": "https://go.nasa.gov/3PKadBi",
+    "info": "https://earthobservatory.nasa.gov/images/148530/blazes-rage-in-british-columbia",
+    "vid": "https://rammb.cira.colostate.edu/ramsdis/online/loop.asp?data_folder=loop_of_the_day/goes-16/20210630000000&number_of_images_to_display=100&loop_speed_ms=200"
+    },
   "kimiwan_complex":{
-    "loc": [55.877833, -116.407667],
-    "doi": ["2023-05-24", "2023-05-29"],
+      "loc": [55.9924, -116.5107],
+      "fct_horizon": 120,
+      "model": "gfs",
+      "init": "00",
+      "freq": 3,
+      "fct_days": [
+      "2023-05-21",
+      "2023-05-25"
+      ],
+      "nasa": "https://go.nasa.gov/3Dej2M2"
+    },
+  "donnie_creek":{
+    "loc": [],
+    "fct_horizon": 48,
     "model": "gfs",
     "init": "00",
-    "freq": 3
+    "freq": 3,
+    "fct_days": [
+    ],
+    "nasa": ""
+  },
+  "fort_mac":{
+    "loc": [],
+    "fct_horizon": 72,
+    "model": "gfs",
+    "init": "00",
+    "freq": 3,
+    "fct_days": [
+      "2016-05-01",
+      "2016-05-03"
+    ],
+    "nasa": ""
+  },
+  "camp_fire":{
+    "loc": [],
+    "fct_horizon": 72,
+    "model": "gfs",
+    "init": "00",
+    "freq": 3,
+    "fct_days": [
+      "2018-11-06",
+      "2018-11-10"
+    ],
+    "nasa": ""
+  },
+  "qb_fires":{
+    "loc": [],
+    "fct_horizon": 48,
+    "model": "gfs",
+    "init": "00",
+    "freq": 3,
+    "fct_days": [
+    ],
+    "nasa": ""
+  },
+  "marshall_fire":{
+    "loc": [39.9546, -105.1989],
+    "fct_horizon": 48,
+    "model": "gfs",
+    "init": "00",
+    "freq": 3,
+    "fct_days": [
+      "2021-12-29",
+      "2022-01-01"
+    ],
+    "nasa": "https://go.nasa.gov/3r7t2E3"
   }
 }
