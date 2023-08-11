@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -97,6 +98,9 @@
                 <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 't2m')">2m Temperature (C)</a>
               </li>
               <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 't2m-anomaly')">2m Temperature Anomaly (C)</a>
+              </li>
+              <li class="item">
                 <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'wsp-10m')">Wind Speed and Direction at 10m</a>
               </li>
               <li class="item">
@@ -167,10 +171,17 @@
         <div class="dropdown" >
           <button class="button" data-custom-attribute="kimiwan_complex">Kimiwan Complex</button>
           <div class="dropdown-content">
-            <button class="dropdown-option" i="20230521Z00" j="20230523Z00" onclick="showImage('kimiwan_complex', '20230521Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230521Z00</button>
-            <button class="dropdown-option" i="20230522Z00" j="20230524Z00" onclick="showImage('kimiwan_complex', '20230522Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230522Z00</button>
-            <button class="dropdown-option" i="20230523Z00" j="20230525Z00" onclick="showImage('kimiwan_complex', '20230523Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230523Z00</button>
-            <button class="dropdown-option" i="20230524Z00" j="20230526Z00" onclick="showImage('kimiwan_complex', '20230524Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230524Z00</button>
+            <button class="dropdown-option" i="20230515Z00" j="20230520Z00" onclick="showImage('kimiwan_complex', '20230515Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230515Z00</button>
+            <button class="dropdown-option" i="20230516Z00" j="20230521Z00" onclick="showImage('kimiwan_complex', '20230516Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230516Z00</button>
+            <button class="dropdown-option" i="20230517Z00" j="20230522Z00" onclick="showImage('kimiwan_complex', '20230517Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230517Z00</button>
+            <button class="dropdown-option" i="20230518Z00" j="20230523Z00" onclick="showImage('kimiwan_complex', '20230518Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230518Z00</button>
+            <button class="dropdown-option" i="20230519Z00" j="20230524Z00" onclick="showImage('kimiwan_complex', '20230519Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230519Z00</button>
+            <button class="dropdown-option" i="20230520Z00" j="20230525Z00" onclick="showImage('kimiwan_complex', '20230520Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230520Z00</button>
+            <button class="dropdown-option" i="20230521Z00" j="20230526Z00" onclick="showImage('kimiwan_complex', '20230521Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230521Z00</button>
+            <button class="dropdown-option" i="20230522Z00" j="20230527Z00" onclick="showImage('kimiwan_complex', '20230522Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230522Z00</button>
+            <button class="dropdown-option" i="20230523Z00" j="20230528Z00" onclick="showImage('kimiwan_complex', '20230523Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230523Z00</button>
+            <button class="dropdown-option" i="20230524Z00" j="20230529Z00" onclick="showImage('kimiwan_complex', '20230524Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230524Z00</button>
+            <button class="dropdown-option" i="20230525Z00" j="20230530Z00" onclick="showImage('kimiwan_complex', '20230525Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230525Z00</button>
           </div>
         </div>
         <div class="dropdown" >
@@ -184,30 +195,63 @@
           <div class="dropdown-content">
             <button class="dropdown-option" i="20210625Z00" j="20210627Z00" onclick="showImage('sparks_lake', '20210625Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210625Z00</button>
             <button class="dropdown-option" i="20210626Z00" j="20210628Z00" onclick="showImage('sparks_lake', '20210626Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210626Z00</button>
+            <button class="dropdown-option" i="20210627Z00" j="20210629Z00" onclick="showImage('sparks_lake', '20210627Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210627Z00</button>
+            <button class="dropdown-option" i="20210628Z00" j="20210630Z00" onclick="showImage('sparks_lake', '20210628Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210628Z00</button>
+            <button class="dropdown-option" i="20210629Z00" j="20210701Z00" onclick="showImage('sparks_lake', '20210629Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210629Z00</button>
+            <button class="dropdown-option" i="20210630Z00" j="20210702Z00" onclick="showImage('sparks_lake', '20210630Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210630Z00</button>
+            <button class="dropdown-option" i="20210701Z00" j="20210703Z00" onclick="showImage('sparks_lake', '20210701Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210701Z00</button>
+            <button class="dropdown-option" i="20210702Z00" j="20210704Z00" onclick="showImage('sparks_lake', '20210702Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210702Z00</button>
+            <button class="dropdown-option" i="20210703Z00" j="20210705Z00" onclick="showImage('sparks_lake', '20210703Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210703Z00</button>
+            <button class="dropdown-option" i="20210704Z00" j="20210706Z00" onclick="showImage('sparks_lake', '20210704Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210704Z00</button>
           </div>
         </div>
         <div class="dropdown" >
-          <button class="button" data-custom-attribute="fort_mcmurray">Fort McMurray</button>
+          <button class="button" data-custom-attribute="fort_mac">Fort McMurray</button>
           <div class="dropdown-content">
-            <button class="dropdown-option" i="20160501Z00" j="20160503Z00" onclick="showImage('fort_mcmurray', '20160501Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160501Z00</button>
+            <button class="dropdown-option" i="20160501Z00" j="20160503Z00" onclick="showImage('fort_mac', '20160501Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160501Z00</button>
+            <button class="dropdown-option" i="20160502Z00" j="20160504Z00" onclick="showImage('fort_mac', '20160502Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160502Z00</button>
+            <button class="dropdown-option" i="20160503Z00" j="20160505Z00" onclick="showImage('fort_mac', '20160503Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160503Z00</button>
+            <button class="dropdown-option" i="20160504Z00" j="20160506Z00" onclick="showImage('fort_mac', '20160504Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160504Z00</button>
+            <button class="dropdown-option" i="20160505Z00" j="20160507Z00" onclick="showImage('fort_mac', '20160505Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160505Z00</button>
+            <button class="dropdown-option" i="20160506Z00" j="20160508Z00" onclick="showImage('fort_mac', '20160506Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160506Z00</button>
+            <button class="dropdown-option" i="20160507Z00" j="20160509Z00" onclick="showImage('fort_mac', '20160507Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160507Z00</button>
+            <button class="dropdown-option" i="20160508Z00" j="20160510Z00" onclick="showImage('fort_mac', '20160508Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160508Z00</button>
+
           </div>
         </div>
         <div class="dropdown" >
           <button class="button" data-custom-attribute="camp_fire">Camp Fire</button>
           <div class="dropdown-content">
-            <button class="dropdown-option" i="20181107Z00" j="20181109Z00" onclick="showImage('camp_fire', '20181107Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20181107Z00</button>
+            <button class="dropdown-option" i="20181106Z00" j="20181109Z00" onclick="showImage('camp_fire', '20181106Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20181106Z00</button>
+            <button class="dropdown-option" i="20181107Z00" j="20181110Z00" onclick="showImage('camp_fire', '20181107Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20181107Z00</button>
+            <button class="dropdown-option" i="20181108Z00" j="20181111Z00" onclick="showImage('camp_fire', '20181108Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20181108Z00</button>
+            <button class="dropdown-option" i="20181109Z00" j="20181112Z00" onclick="showImage('camp_fire', '20181109Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20181109Z00</button>
+            <button class="dropdown-option" i="20181110Z00" j="20181113Z00" onclick="showImage('camp_fire', '20181110Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20181110Z00</button>
+            <button class="dropdown-option" i="20181111Z00" j="20181114Z00" onclick="showImage('camp_fire', '20181111Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20181111Z00</button>
+            <button class="dropdown-option" i="20181112Z00" j="20181115Z00" onclick="showImage('camp_fire', '20181112Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20181112Z00</button>
+
           </div>
         </div>
         <div class="dropdown" >
-          <button class="button" data-custom-attribute="quebec_fires">Quebec Fires</button>
+          <button class="button" data-custom-attribute="qb_fires">Quebec Fires</button>
           <div class="dropdown-content">
-            <button class="dropdown-option" i="20230606Z00" j="20230608Z00" onclick="showImage('quebec_fires', '20230606Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230606Z00</button>
+            <button class="dropdown-option" i="20230601Z00" j="20230603Z00" onclick="showImage('qb_fires', '20230601Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230601Z00</button>
+            <button class="dropdown-option" i="20230602Z00" j="20230604Z00" onclick="showImage('qb_fires', '20230602Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230602Z00</button>
+            <button class="dropdown-option" i="20230603Z00" j="20230605Z00" onclick="showImage('qb_fires', '20230603Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230603Z00</button>
+            <button class="dropdown-option" i="20230604Z00" j="20230606Z00" onclick="showImage('qb_fires', '20230604Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230604Z00</button>
+            <button class="dropdown-option" i="20230605Z00" j="20230607Z00" onclick="showImage('qb_fires', '20230605Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230605Z00</button>
+            <button class="dropdown-option" i="20230606Z00" j="20230608Z00" onclick="showImage('qb_fires', '20230606Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230606Z00</button>
+            <button class="dropdown-option" i="20230607Z00" j="20230609Z00" onclick="showImage('qb_fires', '20230607Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230607Z00</button>
+            <button class="dropdown-option" i="20230608Z00" j="20230610Z00" onclick="showImage('qb_fires', '20230608Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230608Z00</button>
           </div>
         </div>
         <div class="dropdown" >
           <button class="button" data-custom-attribute="marshall_fire">Marshall Fire</button>
           <div class="dropdown-content">
+            <button class="dropdown-option" i="20211229Z00" j="20211231Z00" onclick="showImage('marshall_fire', '20211229Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20211229Z00</button>
             <button class="dropdown-option" i="20211230Z00" j="20220101Z00" onclick="showImage('marshall_fire', '20211230Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20211230Z00</button>
+            <button class="dropdown-option" i="20211231Z00" j="20220102Z00" onclick="showImage('marshall_fire', '20211231Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20211231Z00</button>
+            <button class="dropdown-option" i="20220101Z00" j="20220103Z00" onclick="showImage('marshall_fire', '20220101Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20220101Z00</button>
           </div>
         </div>
       </div>

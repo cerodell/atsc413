@@ -18,13 +18,21 @@ startTime = datetime.now()
 
 
 print(os.path.expanduser("~"))
-case_study = "kimiwan_complex"
+# case_study = "kimiwan_complex"
+case_studies = [
+    "kimiwan_complex",
+    "high_level",
+    "sparks_lake",
+    "fort_mac",
+    "camp_fire",
+    "qb_fires",
+    "marshall_fire",
+]
+for case_study in case_studies:
+    ## download historical forecast data
+    command = f"{os.path.expanduser('~')}//miniconda3/envs/atsc413/bin/python {root_dir}/scripts/getdata.py {case_study}"
+    os.system(command)
 
-## download historical forecast data
-command = f"{os.path.expanduser('~')}//miniconda3/envs/atsc413/bin/python {root_dir}/scripts/getdata.py {case_study}"
-os.system(command)
-
-
-# ## create forecast products from historical forecast data
-command = f"{os.path.expanduser('~')}//miniconda3/envs/atsc413/bin/python {root_dir}/scripts/make-fcst-pros.py {case_study}"
-os.system(command)
+    # ## create forecast products from historical forecast data
+    command = f"{os.path.expanduser('~')}//miniconda3/envs/atsc413/bin/python {root_dir}/scripts/make-fcst-pros.py {case_study}"
+    os.system(command)

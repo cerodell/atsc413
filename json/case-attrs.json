@@ -32,10 +32,11 @@
       "init": "00",
       "freq": 3,
       "fct_days": [
-      "2023-05-21",
+      "2023-05-15",
       "2023-05-25"
       ],
-      "nasa": "https://go.nasa.gov/3Dej2M2"
+      "nasa": "https://go.nasa.gov/3OpoNvI",
+      "nasa2": "https://go.nasa.gov/45gOe9k"
     },
   "donnie_creek":{
     "loc": [],
@@ -48,38 +49,40 @@
     "nasa": ""
   },
   "fort_mac":{
-    "loc": [],
-    "fct_horizon": 72,
+    "loc": [56.7442, -111.3824],
+    "fct_horizon": 48,
     "model": "gfs",
     "init": "00",
     "freq": 3,
     "fct_days": [
       "2016-05-01",
-      "2016-05-03"
+      "2016-05-08"
     ],
-    "nasa": ""
+    "nasa": "https://go.nasa.gov/3OtBdUl"
   },
   "camp_fire":{
-    "loc": [],
+    "loc": [39.7688, -121.5922],
     "fct_horizon": 72,
     "model": "gfs",
     "init": "00",
     "freq": 3,
     "fct_days": [
       "2018-11-06",
-      "2018-11-10"
+      "2018-11-12"
     ],
-    "nasa": ""
+    "nasa": "https://go.nasa.gov/3Y97ljl"
   },
   "qb_fires":{
-    "loc": [],
-    "fct_horizon": 48,
+    "loc": [48.8652, -76.3752],
+    "fct_horizon": 120,
     "model": "gfs",
     "init": "00",
     "freq": 3,
     "fct_days": [
+      "2023-06-01",
+      "2023-06-08"
     ],
-    "nasa": ""
+    "nasa": "https://go.nasa.gov/3q2ON7Q"
   },
   "marshall_fire":{
     "loc": [39.9546, -105.1989],

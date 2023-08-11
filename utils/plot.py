@@ -1,4 +1,6 @@
 import context
+import gc
+
 import os
 import json
 import salem
@@ -110,7 +112,7 @@ def open_data(pathlist, i, model, var):
                             filter_by_keys
                         ]
                     },
-                ).chunk("auto")
+                )  # .chunk("auto")
                 # if filter_by_keys == "tp":
                 #     try:
                 #         ds_ii = xr.open_dataset(
@@ -172,7 +174,15 @@ def config_data(ds, var, case_study, anomaly=False, **kwargs):
     if anomaly == True:
         ## ONLY WORKS FOR GH AT 50 kPa
         ds_climo = salem.open_xr_dataset(str(data_dir) + "/climatology-1991-2021.nc")
-        ds_t = ds_climo.salem.transform(ds["gh"].sel(isobaricInhPa=500))
+        if var == "50kPa":
+            var_anomaly = "gh"
+            ds_t = ds_climo.salem.transform(ds[var_anomaly].sel(isobaricInhPa=500))
+        elif var == "t2m_anomaly":
+            var_anomaly = "t2m"
+            ds_t = ds_climo.salem.transform(ds[var_anomaly])
+        else:
+            raise ValueError("Invalid anomaly options")
+
         ds_t = ds_t.sel(longitude=longitude, latitude=latitude)
         ds_climo = ds_climo.sel(longitude=longitude, latitude=latitude)
         vtimes = pd.to_datetime(ds.valid_time.values)
@@ -188,7 +198,7 @@ def config_data(ds, var, case_study, anomaly=False, **kwargs):
         )
 
         ds_climo = ds_climo.sel(month=[vtimes.month, ctime.month], hour=vtimes.hour)[
-            "gh"
+            var_anomaly
         ]
         ds_climo["month"] = np.array([0, 31])
         ds_climo = ds_climo.interp(month=np.arange(0, 31, 1)).isel(month=day - 1)
@@ -247,7 +257,7 @@ def plot_25kPa(ds, case_study, save_dir, roads=False, *args):
     var = "25kPa"
     if os.path.exists(
         str(save_dir)
-        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -328,6 +338,8 @@ def plot_25kPa(ds, case_study, save_dir, roads=False, *args):
             color="red",
             transform=ccrs.PlateCarree(),
             zorder=10,
+            edgecolors="black",
+            linewidth=0.8,
         )
 
         plt.savefig(
@@ -337,6 +349,11 @@ def plot_25kPa(ds, case_study, save_dir, roads=False, *args):
         )
         print(f"Time to create {var.upper()} fig: ", datetime.now() - figTime)
         plt.close()
+        del ds
+        del ds_climo
+        del ds_t
+        del fig
+        gc.collect()
     return
 
 
@@ -344,7 +361,7 @@ def plot_50kPa(ds, case_study, save_dir, roads=False, *args):
     var = "50kPa"
     if os.path.exists(
         str(save_dir)
-        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -404,6 +421,8 @@ def plot_50kPa(ds, case_study, save_dir, roads=False, *args):
             color="red",
             transform=ccrs.PlateCarree(),
             zorder=10,
+            edgecolors="black",
+            linewidth=0.8,
         )
         plt.savefig(
             str(save_dir) + f"/{var}-{vtimes.strftime('%Y%m%d%H')}.jpeg",
@@ -412,6 +431,11 @@ def plot_50kPa(ds, case_study, save_dir, roads=False, *args):
         )
         print(f"Time to create {var.upper()} fig: ", datetime.now() - figTime)
         plt.close()
+        del ds
+        del ds_climo
+        del ds_t
+        del fig
+        gc.collect()
     return
 
 
@@ -419,7 +443,7 @@ def plot_85kPa(ds, case_study, save_dir, roads=False, *args):
     var = "85kPa"
     if os.path.exists(
         str(save_dir)
-        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -477,6 +501,8 @@ def plot_85kPa(ds, case_study, save_dir, roads=False, *args):
             color="red",
             transform=ccrs.PlateCarree(),
             zorder=10,
+            edgecolors="black",
+            linewidth=0.8,
         )
         plt.savefig(
             str(save_dir) + f"/{var}-{vtimes.strftime('%Y%m%d%H')}.jpeg",
@@ -485,6 +511,11 @@ def plot_85kPa(ds, case_study, save_dir, roads=False, *args):
         )
         print(f"Time to create {var.upper()} fig: ", datetime.now() - figTime)
         plt.close()
+        del ds
+        del ds_climo
+        del ds_t
+        del fig
+        gc.collect()
     return
 
 
@@ -492,7 +523,7 @@ def plot_100_50kPa(ds, case_study, save_dir, roads=False, *args):
     var = "100-50kPa"
     if os.path.exists(
         str(save_dir)
-        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -634,6 +665,8 @@ def plot_100_50kPa(ds, case_study, save_dir, roads=False, *args):
             color="red",
             transform=ccrs.PlateCarree(),
             zorder=10,
+            edgecolors="black",
+            linewidth=0.8,
         )
         plt.savefig(
             str(save_dir) + f"/{var}-{vtimes.strftime('%Y%m%d%H')}.jpeg",
@@ -642,6 +675,11 @@ def plot_100_50kPa(ds, case_study, save_dir, roads=False, *args):
         )
         print(f"Time to create {var.upper()} fig: ", datetime.now() - figTime)
         plt.close()
+        del ds
+        del ds_climo
+        del ds_t
+        del fig
+        gc.collect()
     return
 
 
@@ -649,7 +687,7 @@ def plot_70kPa_RH(ds, case_study, save_dir, roads=False, *args):
     var = "70kPa-RH"
     if os.path.exists(
         str(save_dir)
-        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -686,6 +724,8 @@ def plot_70kPa_RH(ds, case_study, save_dir, roads=False, *args):
             color="red",
             transform=ccrs.PlateCarree(),
             zorder=10,
+            edgecolors="black",
+            linewidth=0.8,
         )
         plt.savefig(
             str(save_dir) + f"/{var}-{vtimes.strftime('%Y%m%d%H')}.jpeg",
@@ -694,6 +734,11 @@ def plot_70kPa_RH(ds, case_study, save_dir, roads=False, *args):
         )
         print(f"Time to create {var.upper()} fig: ", datetime.now() - figTime)
         plt.close()
+        del ds
+        del ds_climo
+        del ds_t
+        del fig
+        gc.collect()
     return
 
 
@@ -701,7 +746,7 @@ def plot_wspwdir(ds, case_study, save_dir, height, roads=False, **kwargs):
     var = "wsp"
     if os.path.exists(
         str(save_dir)
-        + f"/{var}-{height}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/-{var}-{height}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -816,6 +861,8 @@ def plot_wspwdir(ds, case_study, save_dir, height, roads=False, **kwargs):
             color="red",
             transform=ccrs.PlateCarree(),
             zorder=10,
+            edgecolors="black",
+            linewidth=0.8,
         )
         plt.savefig(
             str(save_dir) + f"/{var}-{height}-{vtimes.strftime('%Y%m%d%H')}.jpeg",
@@ -824,6 +871,11 @@ def plot_wspwdir(ds, case_study, save_dir, height, roads=False, **kwargs):
         )
         print(f"Time to create {var.upper()} {height} fig: ", datetime.now() - figTime)
         plt.close()
+        del ds
+        del ds_climo
+        del ds_t
+        del fig
+        gc.collect()
 
     return
 
@@ -832,7 +884,7 @@ def plot_t2m(ds, case_study, save_dir, roads=False, *args):
     var = "t2m"
     if os.path.exists(
         str(save_dir)
-        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -878,6 +930,8 @@ def plot_t2m(ds, case_study, save_dir, roads=False, *args):
             color="red",
             transform=ccrs.PlateCarree(),
             zorder=10,
+            edgecolors="black",
+            linewidth=0.8,
         )
         plt.savefig(
             str(save_dir) + f"/{var}-{vtimes.strftime('%Y%m%d%H')}.jpeg",
@@ -886,6 +940,71 @@ def plot_t2m(ds, case_study, save_dir, roads=False, *args):
         )
         print(f"Time to create {var.upper()} fig: ", datetime.now() - figTime)
         plt.close()
+        del ds
+        del ds_climo
+        del ds_t
+        del fig
+        gc.collect()
+    return
+
+
+def plot_t2m_anomaly(ds, case_study, save_dir, roads=False, *args):
+    var = "t2m_anomaly"
+    if os.path.exists(
+        str(save_dir)
+        + f"/-{var.replace('_', '-')}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+    ):
+        pass
+    else:
+        figTime = datetime.now()
+        ds, ds_climo, ds_t, extent, center = config_data(
+            ds, var, case_study, anomaly=True
+        )
+        # ds_t = ds_t
+        fig, gs, ax, lons, lats, vtimes = base_plot(
+            ds_t, ccrs.NorthPolarStereo(central_longitude=-100.0), var
+        )
+        cmap = matplotlib.colors.LinearSegmentedColormap.from_list(
+            "wxbell",
+            var_attrs[var]["colors"],
+            N=len(var_attrs[var]["levels"]["anomaly"]),
+        )
+        cf = ax.contourf(
+            lons,
+            lats,
+            gaussian_filter(ds_t.values - (ds_climo.values), sigma=2.4),
+            var_attrs[var]["levels"]["anomaly"],
+            cmap=cmap,
+            transform=ccrs.PlateCarree(),
+        )
+        cax = plt.subplot(gs[1])
+        clb = plt.colorbar(cf, cax=cax, orientation="horizontal")
+        clb.ax.set_title(var_attrs[var]["unit"], fontsize=10)
+        ax.set_extent(extent, ccrs.PlateCarree())
+        ax.scatter(
+            center[1],
+            center[0],
+            s=40,
+            marker="*",
+            color="red",
+            transform=ccrs.PlateCarree(),
+            zorder=10,
+            edgecolors="black",
+            linewidth=0.8,
+        )
+        plt.savefig(
+            str(save_dir)
+            + f"/{var.replace('_', '-')}-{vtimes.strftime('%Y%m%d%H')}.jpeg",
+            dpi=250,
+            bbox_inches="tight",
+        )
+        print(f"Time to create {var.upper()} fig: ", datetime.now() - figTime)
+        plt.close()
+        del ds
+        del ds_climo
+        del ds_t
+        del fig
+        gc.collect()
     return
 
 
@@ -893,7 +1012,7 @@ def plot_r2(ds, case_study, save_dir, roads=False, *args):
     var = "r2"
     if os.path.exists(
         str(save_dir)
-        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -937,6 +1056,8 @@ def plot_r2(ds, case_study, save_dir, roads=False, *args):
             color="red",
             transform=ccrs.PlateCarree(),
             zorder=10,
+            edgecolors="black",
+            linewidth=0.8,
         )
 
         plt.savefig(
@@ -946,6 +1067,11 @@ def plot_r2(ds, case_study, save_dir, roads=False, *args):
         )
         print(f"Time to create {var.upper()} fig: ", datetime.now() - figTime)
         plt.close()
+        del ds
+        del ds_climo
+        del ds_t
+        del fig
+        gc.collect()
     return
 
 
@@ -953,7 +1079,7 @@ def plot_tp(ds, case_study, save_dir, roads=False, *args):
     var = "atp"
     if os.path.exists(
         str(save_dir)
-        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -1015,6 +1141,8 @@ def plot_tp(ds, case_study, save_dir, roads=False, *args):
             color="red",
             transform=ccrs.PlateCarree(),
             zorder=10,
+            edgecolors="black",
+            linewidth=0.8,
         )
         plt.savefig(
             str(save_dir) + f"/{var}-{vtimes.strftime('%Y%m%d%H')}.jpeg",
@@ -1083,6 +1211,8 @@ def plot_tp(ds, case_study, save_dir, roads=False, *args):
             color="red",
             transform=ccrs.PlateCarree(),
             zorder=10,
+            edgecolors="black",
+            linewidth=0.8,
         )
         plt.savefig(
             str(save_dir) + f"/{var}-{vtimes.strftime('%Y%m%d%H')}.jpeg",
@@ -1091,6 +1221,11 @@ def plot_tp(ds, case_study, save_dir, roads=False, *args):
         )
         print(f"Time to create {var.upper()} fig: ", datetime.now() - figTime)
         plt.close()
+        del ds
+        del ds_climo
+        del ds_t
+        del fig
+        gc.collect()
     return
 
 
@@ -1098,7 +1233,7 @@ def plot_cape(ds, case_study, save_dir, roads=False, *args):
     var = "cape"
     if os.path.exists(
         str(save_dir)
-        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -1148,6 +1283,8 @@ def plot_cape(ds, case_study, save_dir, roads=False, *args):
             color="red",
             transform=ccrs.PlateCarree(),
             zorder=10,
+            edgecolors="black",
+            linewidth=0.8,
         )
 
         plt.savefig(
@@ -1157,6 +1294,11 @@ def plot_cape(ds, case_study, save_dir, roads=False, *args):
         )
         print(f"Time to create {var.upper()} fig: ", datetime.now() - figTime)
         plt.close()
+        del ds
+        del ds_climo
+        del ds_t
+        del fig
+        gc.collect()
     return
 
 

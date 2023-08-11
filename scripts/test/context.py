@@ -17,9 +17,11 @@ path = Path(__file__).resolve()  # this file
 this_dir = path.parent  # this folder
 notebooks_dir = this_dir
 root_dir = notebooks_dir.parents[1]
-data_dir = root_dir / Path("data")
+# data_dir = root_dir / Path("data")
+data_dir = "/Volumes/WFRT-Ext22/atsc413/data"
 json_dir = root_dir / Path("json")
-img_dir = root_dir / Path("img")
+# img_dir = root_dir / Path("img")
+img_dir = root_dir / Path("docs") / Path("img")  ## local img dir
 
 
 sys.path.insert(0, str(root_dir))
