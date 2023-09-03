@@ -29,8 +29,8 @@
 
     </header>
     <nav class="sidebar">
-      <!-- <a href="#" class="logo">Forecast Parameters</a> -->
-      <i class="logo" id="btn" onclick="changeText()">Forecast Parameters</i>
+      <a href="#" class="logo">Forecast Parameters</a>
+      <!-- <i class="logo" id="btn" onclick="changeText()">Forecast Parameters</i> -->
 
       <div class="menu-content">
         <ul class="menu-items">
@@ -142,7 +142,10 @@
                           Back
               </div>
               <li class="item">
-                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'cross-wsp')">Cross Section </a>
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'cross-wsp')">Cross Section  (High Level)</a>
+              </li>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), '25kPa-div')">25kPa Divergence (Kimiwan Complex)</a>
               </li>
             </ul>
           </li>
@@ -164,8 +167,8 @@
             <button class="dropdown-option" i="20190518Z00" j="20190520Z00" onclick="showImage('high_level', '20190518Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190518Z00</button>
             <button class="dropdown-option" i="20190528Z00" j="20190531Z21" onclick="showImage('high_level', '20190528Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190528Z00</button>
             <button class="dropdown-option" i="20190529Z00" j="20190531Z00" onclick="showImage('high_level', '20190529Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190529Z00</button>
-
-
+            <button class="dropdown-option" i="20190530Z00" j="20190601Z00" onclick="showImage('high_level', '20190530Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190530Z00</button>
+            <button class="dropdown-option" i="20190531Z00" j="20190602Z00" onclick="showImage('high_level', '20190531Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190531Z00</button>
           </div>
         </div>
         <div class="dropdown" >
@@ -182,12 +185,6 @@
             <button class="dropdown-option" i="20230523Z00" j="20230528Z00" onclick="showImage('kimiwan_complex', '20230523Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230523Z00</button>
             <button class="dropdown-option" i="20230524Z00" j="20230529Z00" onclick="showImage('kimiwan_complex', '20230524Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230524Z00</button>
             <button class="dropdown-option" i="20230525Z00" j="20230530Z00" onclick="showImage('kimiwan_complex', '20230525Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230525Z00</button>
-          </div>
-        </div>
-        <div class="dropdown" >
-          <button class="button" data-custom-attribute="donnie_creek">Donnie Creek</button>
-          <div class="dropdown-content">
-            <button class="dropdown-option" i="20230519Z00" j="20230521Z00" onclick="showImage('donnie_creek', '20230519Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230519Z00</button>
           </div>
         </div>
         <div class="dropdown" >
@@ -257,6 +254,11 @@
       </div>
       <div class="image-container">
         <img id="currentImage" src="" alt="Image">
+      </div>
+
+      <div class="slider-container">
+        <input type="range" min="0" max="100" value="50" class="slider" id="mySlider">
+        <!-- <p>Value: <span id="sliderValue">50</span></p> -->
       </div>
     </main>
 

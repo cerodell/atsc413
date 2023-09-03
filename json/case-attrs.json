@@ -6,10 +6,10 @@
     "init": "00",
     "freq": 3,
     "fct_days": [
-      "2019-05-31",
-      "2019-06-02"
+      "2019-05-16",
+      "2019-05-18"
     ],
-    "nasa": "https://go.nasa.gov/3pQuDhl"
+    "nasa": "https://go.nasa.gov/3L5Blr5"
   },
   "sparks_lake":{
     "loc": [50.998, -121.096],
@@ -21,7 +21,7 @@
       "2021-06-25",
       "2021-07-04"
     ],
-    "nasa": "https://go.nasa.gov/3PKadBi",
+    "nasa": "https://go.nasa.gov/3YYlLTU",
     "info": "https://earthobservatory.nasa.gov/images/148530/blazes-rage-in-british-columbia",
     "vid": "https://rammb.cira.colostate.edu/ramsdis/online/loop.asp?data_folder=loop_of_the_day/goes-16/20210630000000&number_of_images_to_display=100&loop_speed_ms=200"
     },

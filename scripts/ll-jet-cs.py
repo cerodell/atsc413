@@ -1,3 +1,5 @@
+#!/Users/crodell/miniconda3/envs/atsc413/bin/python
+
 import context
 import json
 import salem
@@ -179,7 +181,16 @@ for i in range(len(pathlist)):
     )
     ax_inset.scatter(endpoints[:, 0], endpoints[:, 1], c="k", zorder=2)
     ax_inset.plot(ds_cross["longitude"], ds_cross["latitude"], c="k", zorder=2)
-    ax_inset.scatter(loc[1], loc[0], zorder=2, s=40, marker="*", color="red")
+    ax_inset.scatter(
+        loc[1],
+        loc[0],
+        zorder=2,
+        s=40,
+        marker="*",
+        color="red",
+        edgecolors="black",
+        linewidth=0.8,
+    )
 
     # Add geographic features
     ax_inset.coastlines()

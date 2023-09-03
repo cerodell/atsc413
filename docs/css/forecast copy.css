@@ -4,7 +4,6 @@
   box-sizing: border-box;
 }
 
-/* Sidebar Styles */
 .sidebar {
   height: 100%;
   position: fixed;
@@ -21,7 +20,7 @@
 }
 
 .logo {
-  font-size: clamp(1.5vw, 1.5vw, 1.6em); /* Set font size with minimum, preferred, and maximum values */
+  font-size: 25px;
   padding: 0 15px;
 }
 
@@ -62,6 +61,7 @@
   transform: translateY(-50%);
   font-size: 22px;
   transition: all 0.4s ease;
+  font-size: 23px;
   text-align: center;
   cursor: pointer;
   transition: all 0.5s ease;
@@ -103,22 +103,19 @@
 }
 .menu-title {
   color: #333;
-  font-size: 1vw; /* Set font size based on viewport width */
+  font-size: 14px;
   padding: 15px 20px;
 }
 .item a,
 .submenu-item {
-  font-size: clamp(.5vw, 1vw, 1.2em); /* Set font size with minimum, preferred, and maximum values */
-  padding: 0.8em 1.6em; /* Adjust padding based on font size */
-  /* padding: 16px; */
+  padding: 16px;
   display: inline-block;
   width: 100%;
   border-radius: 12px;
 
 }
-
 .item i {
-  font-size: 1vw; /* Set font size based on viewport width */
+  font-size: 12px;
 }
 .item a:hover,
 .submenu-item:hover,
@@ -154,7 +151,7 @@
 .submenu .menu-title i {
   margin-right: 10px;
 }
-
+.navbar,
 .main {
   left: 260px;
   width: calc(100% - 260px);
@@ -177,46 +174,45 @@
   position: fixed;
   color: #fff;
   padding: 15px 20px;
-  /* font-size: 25px; */
-  font-size: 1vw; /* Set font size based on viewport width */
-
+  font-size: 25px;
 }
 .navbar #sidebar-close {
   cursor: pointer;
 }
 
-/* Image Container Styles */
 
-.image-container {
-  max-width: 85%; /* Limit container width */
-  max-height: 95vh; /* Limit container height to 95% of viewport height */
-  display: flex; /* Use flexbox for alignment */
+
+img {
+  max-width: 85%;
+  max-height: 95%;
+  display: inline-block;
   align-items: center;
-  justify-content: center; /* Center horizontally and vertically */
+}
+.image-container {
+  height: auto;
   overflow: hidden; /* Hide any overflow beyond the container */
 }
 
 .image-container img {
   max-width: 100%; /* Limit image width to container width */
-  max-height: 100%; /* Limit image height to container height */
+  height: auto; /* Maintain aspect ratio */
   display: block; /* Remove extra spacing beneath images */
-  margin: 0 auto; /* Center the image horizontally within the container */
-}
+  margin: 0 auto; /* Center the container horizontally */
 
-@media (min-width: 1000px) {
-  .image-container img {
-    max-width: 70%; /* Limit image width on large screens */
-    max-height: 70%; /* Limit container height to 95% of viewport height */
-  }
 }
-@media (max-height: 900px) {
-  .image-container img {
-    max-width: 75%; /* Limit image width on large screens */
-    max-height: 75%; /* Limit container height to 95% of viewport height */
+/* .image-container img{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  /* height: auto; */
+  /* max-height: 95%; */
+  /* max-width: calc(85% - 30px);
+  z-index: 100;
+  margin: 0 auto; /* Center the container horizontally */
 
-  }
-}
-
+/* } */ */ */
 
 
 .buttons-container {
@@ -231,19 +227,31 @@
   background-color: #e0e0e0;
 }
 
+@media (max-width: 768px) {
+  .buttons-container {
+    flex-wrap: wrap; /* Allow buttons to wrap onto multiple lines */
+    justify-content: flex-start; /* Align buttons to the left */
+  }
+}
+
+@media (max-width: 480px) {
+  .buttons-container {
+    flex-direction: column; /* Stack buttons vertically on smaller screens */
+    align-items: center; /* Center the buttons vertically */
+  }
+}
 
 
 .button {
   padding: 10px 20px;
-  /* font-size: 16px; */
-  font-size: clamp(.5vw, 1vw, 1.2em); /* Set font size with minimum, preferred, and maximum values */
+  font-size: 16px;
   background-color: #9de8fa;
   color: #333;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
-.button.active,
+
 .button:hover {
   background-color: #e0e0e0;
 }
@@ -257,8 +265,8 @@
 
 @media (max-width: 480px) {
   .button {
-    padding: 1px 1px; /* Further adjust the padding for even smaller screens */
-    font-size: 4px; /* Further adjust the font size for even smaller screens */
+    padding: 2px 2px; /* Further adjust the padding for even smaller screens */
+    font-size: 10px; /* Further adjust the font size for even smaller screens */
   }
 }
 
@@ -278,7 +286,6 @@
 }
 
 .dropdown-content button {
-  font-size: clamp(.5vw, 1vw, 1em); /* Set font size with minimum, preferred, and maximum values */
   display: block;
   width: 100%;
   text-align: left;
@@ -292,9 +299,9 @@
 .slider-container {
   margin: 10px;
   width: 75%;
-}
 
+}
 .slider {
   width: 100%;
-  margin: 0 auto;
+  margin: 0 auto; /* Center the container horizontally */
 }

@@ -16,7 +16,7 @@ import matplotlib.colors
 from matplotlib.axes import Axes
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-from scipy.ndimage.filters import gaussian_filter
+from scipy.ndimage import gaussian_filter
 from cartopy.vector_transform import vector_scalar_to_grid
 
 import cartopy.crs as ccrs
@@ -177,7 +177,7 @@ def config_data(ds, var, case_study, anomaly=False, **kwargs):
         if var == "50kPa":
             var_anomaly = "gh"
             ds_t = ds_climo.salem.transform(ds[var_anomaly].sel(isobaricInhPa=500))
-        elif var == "t2m_anomaly":
+        elif var == "t2m-anomaly":
             var_anomaly = "t2m"
             ds_t = ds_climo.salem.transform(ds[var_anomaly])
         else:
@@ -257,7 +257,7 @@ def plot_25kPa(ds, case_study, save_dir, roads=False, *args):
     var = "25kPa"
     if os.path.exists(
         str(save_dir)
-        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -361,7 +361,7 @@ def plot_50kPa(ds, case_study, save_dir, roads=False, *args):
     var = "50kPa"
     if os.path.exists(
         str(save_dir)
-        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -443,7 +443,7 @@ def plot_85kPa(ds, case_study, save_dir, roads=False, *args):
     var = "85kPa"
     if os.path.exists(
         str(save_dir)
-        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -523,7 +523,7 @@ def plot_100_50kPa(ds, case_study, save_dir, roads=False, *args):
     var = "100-50kPa"
     if os.path.exists(
         str(save_dir)
-        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -687,7 +687,7 @@ def plot_70kPa_RH(ds, case_study, save_dir, roads=False, *args):
     var = "70kPa-RH"
     if os.path.exists(
         str(save_dir)
-        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -746,7 +746,7 @@ def plot_wspwdir(ds, case_study, save_dir, height, roads=False, **kwargs):
     var = "wsp"
     if os.path.exists(
         str(save_dir)
-        + f"/-{var}-{height}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/{var}-{height}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -884,7 +884,7 @@ def plot_t2m(ds, case_study, save_dir, roads=False, *args):
     var = "t2m"
     if os.path.exists(
         str(save_dir)
-        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -949,10 +949,10 @@ def plot_t2m(ds, case_study, save_dir, roads=False, *args):
 
 
 def plot_t2m_anomaly(ds, case_study, save_dir, roads=False, *args):
-    var = "t2m_anomaly"
+    var = "t2m-anomaly"
     if os.path.exists(
         str(save_dir)
-        + f"/-{var.replace('_', '-')}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -993,8 +993,7 @@ def plot_t2m_anomaly(ds, case_study, save_dir, roads=False, *args):
             linewidth=0.8,
         )
         plt.savefig(
-            str(save_dir)
-            + f"/{var.replace('_', '-')}-{vtimes.strftime('%Y%m%d%H')}.jpeg",
+            str(save_dir) + f"/{var}-{vtimes.strftime('%Y%m%d%H')}.jpeg",
             dpi=250,
             bbox_inches="tight",
         )
@@ -1012,7 +1011,7 @@ def plot_r2(ds, case_study, save_dir, roads=False, *args):
     var = "r2"
     if os.path.exists(
         str(save_dir)
-        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -1079,7 +1078,7 @@ def plot_tp(ds, case_study, save_dir, roads=False, *args):
     var = "atp"
     if os.path.exists(
         str(save_dir)
-        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:
@@ -1233,7 +1232,7 @@ def plot_cape(ds, case_study, save_dir, roads=False, *args):
     var = "cape"
     if os.path.exists(
         str(save_dir)
-        + f"/-{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
+        + f"/{var}-{pd.to_datetime(ds.valid_time.values).strftime('%Y%m%d%H')}.jpeg"
     ):
         pass
     else:

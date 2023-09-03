@@ -1,12 +1,12 @@
 
 // ########################## SIDE BAR ##########################
 const sidebar = document.querySelector(".sidebar");
-const sidebarClose = document.querySelector("#sidebar-close");
+// const sidebarClose = document.querySelector("#sidebar-close");
 const menu = document.querySelector(".menu-content");
 const menuItems = document.querySelectorAll(".submenu-item");
 const subMenuTitles = document.querySelectorAll(".submenu .menu-title");
 
-sidebarClose.addEventListener("click", () => sidebar.classList.toggle("close"));
+// sidebarClose.addEventListener("click", () => sidebar.classList.toggle("close"));
 
 menuItems.forEach((item, index) => {
   item.addEventListener("click", () => {
@@ -27,6 +27,45 @@ subMenuTitles.forEach((title) => {
 });
 
 // ####################### END SIDE BAR ##########################
+
+
+// #######################  SLIDER  ##########################
+
+const slider = document.getElementById("mySlider");
+// const sliderValueDisplay = document.getElementById("sliderValue");
+
+// sliderValueDisplay.innerText = slider.value;
+
+slider.addEventListener("input", function() {
+    var loc = localStorage.getItem("loc");
+    var int = localStorage.getItem("int");
+    var varname = localStorage.getItem("varname");
+    console.log(slider.value);
+    var valid = sliderDateTime(slider.value, int);
+    console.log(valid);
+    showImage(loc, int, valid, varname);
+});
+
+// Function to increment the int date-time by one hour
+function sliderDateTime(value, int) {
+  var date = parseDateTime(int);
+  date.setHours(date.getHours() + value * 3); // Increment by one hour
+  return formatDate(date);
+}
+
+function sliderModifier(dataI, dataJ, valid){
+  var startDate = parseDateTime(dataI); // Replace with your start date
+  var endDate = parseDateTime(dataJ);   // Replace with your end date
+  var timeDifference = endDate - startDate;
+  var numberOfIntervals = timeDifference / (3 * 60 * 60 * 1000);
+  slider.min = 0;
+  slider.max = numberOfIntervals;
+  var endDate = parseDateTime(valid);   // Replace with your end date
+  var timeDifference = endDate - startDate;
+  var numberOfIntervals = timeDifference / (3 * 60 * 60 * 1000);
+  slider.value = numberOfIntervals;
+}
+// ####################### END SLIDER ##########################
 
 
 // ####################### MENU ##########################
@@ -158,17 +197,17 @@ buttons.forEach(function(button) {
     const dataJ = button.getAttribute('j');
     localStorage.setItem("dataI", dataI);
     localStorage.setItem("dataJ", dataJ);
-
     console.log("dataI  "  +dataI);
     console.log("dataJ  "  +dataJ);
   });
+
 });
 
 function showImage(loc, int, valid, varname) {
   var dataI = localStorage.getItem("dataI");
   var dataJ = localStorage.getItem("dataJ");
-  console.log("dataI:", dataI);
-  console.log("dataJ:", dataJ);
+  // console.log("dataI:", dataI);
+  // console.log("dataJ:", dataJ);
 
   if (isDateInPast(parseDateTime(valid), parseDateTime(dataI))) {
     var valid = dataI
@@ -186,7 +225,17 @@ function showImage(loc, int, valid, varname) {
     var valid = int
     localStorage.setItem("valid", valid);
     console.log("New location");
+    imageUrl = `../img/${loc}/gfs/${int}/${varname}-${valid.split('Z').join("")}.jpeg`
+    $.get(imageUrl)
+    .done(function() {
+      console.log(varname + " is a variable for this case");
+    }).fail(function() {
+      console.log(varname + " is NOT variable for this case, changing variable to 25kPa");
+      var varname = '25kPa';
+      localStorage.setItem("varname", varname);
+    })
   }
+  sliderModifier(dataI, dataJ, valid);
   imageUrl = `../img/${loc}/gfs/${int}/${varname}-${valid.split('Z').join("")}.jpeg`
   $.get(imageUrl)
     .done(function() {
@@ -202,6 +251,8 @@ function showImage(loc, int, valid, varname) {
         var valid = int
         localStorage.setItem("valid", valid);
       }else{
+        console.log("varname");
+        console.log(varname);
       }
       var loc = localStorage.getItem("loc");
       var varname = localStorage.getItem("varname");
@@ -255,6 +306,20 @@ function decrementDateTime(dateTime) {
   date.setHours(date.getHours() - 3); // Decrement by one hour
   return formatDate(date);
 }
+
+// document.addEventListener("DOMContentLoaded", function() {
+//   const buttonContainers = document.querySelectorAll(".button-container");
+//   buttonContainers.forEach(buttonContainer => {
+//     console.log('YUP!!!!!')
+//     const button = buttonContainer.querySelector(".button");
+//     const dropdown = buttonContainer.querySelector(".dropdown");
+
+//     dropdown.addEventListener("click", () => {
+//       console.log('YUP!!!!!')
+//       buttonContainer.classList.toggle("active");
+//     });
+//   });
+// });
 
 
 
@@ -313,44 +378,44 @@ function decrementDateTime(dateTime) {
 
 // Get the sidebar element
 
-// Get the toggle button element
-const toggleButton = document.querySelector('#btn');
+// // Get the toggle button element
+// const toggleButton = document.querySelector('#btn');
 
-// Add event listener to the toggle button
-toggleButton.addEventListener('click', function() {
-  // Toggle the collapsed class on the sidebar
-  sidebar.classList.toggle('collapsed');
-});
+// // Add event listener to the toggle button
+// toggleButton.addEventListener('click', function() {
+//   // Toggle the collapsed class on the sidebar
+//   sidebar.classList.toggle('collapsed');
+// });
 
-function changeText() {
-  const btn = document.getElementById('btn');
-  const submenuText1 = document.getElementById('submenu-text1');
-  const submenuText2 = document.getElementById('submenu-text2');
-  const submenuText3 = document.getElementById('submenu-text3');
-  const submenuText4 = document.getElementById('submenu-text4');
+// function changeText() {
+//   const btn = document.getElementById('btn');
+//   const submenuText1 = document.getElementById('submenu-text1');
+//   const submenuText2 = document.getElementById('submenu-text2');
+//   const submenuText3 = document.getElementById('submenu-text3');
+//   const submenuText4 = document.getElementById('submenu-text4');
 
-  if (btn.textContent === 'Forecast Parameters') {
-    btn.textContent = 'FP';
-    submenuText1.textContent = 'UH';
-    submenuText1.style.fontSize = '10px'; // Change the font size to desired value
-    submenuText2.textContent = 'UM';
-    submenuText2.style.fontSize = '10px'; // Change the font size to desired value
-    submenuText3.textContent = 'SF';
-    submenuText3.style.fontSize = '10px'; // Change the font size to desired value
-    submenuText4.textContent = 'MP';
-    submenuText4.style.fontSize = '10px'; // Change the font size to desired value
+//   if (btn.textContent === 'Forecast Parameters') {
+//     btn.textContent = 'FP';
+//     submenuText1.textContent = 'UH';
+//     submenuText1.style.fontSize = '10px'; // Change the font size to desired value
+//     submenuText2.textContent = 'UM';
+//     submenuText2.style.fontSize = '10px'; // Change the font size to desired value
+//     submenuText3.textContent = 'SF';
+//     submenuText3.style.fontSize = '10px'; // Change the font size to desired value
+//     submenuText4.textContent = 'MP';
+//     submenuText4.style.fontSize = '10px'; // Change the font size to desired value
 
 
-  } else {
-    btn.textContent = 'Forecast Parameters';
-    submenuText1.textContent = 'Upper Air Heights';
-    submenuText1.style.fontSize = ''; // Change the font size to desired value
-    submenuText2.textContent = 'Upper Air Moisture';
-    submenuText2.style.fontSize = ''; // Change the font size to desired value
-    submenuText3.textContent = 'Surface';
-    submenuText3.style.fontSize = ''; // Change the font size to desired value
-    submenuText4.textContent = 'Milti-Parameter';
-    submenuText4.style.fontSize = ''; // Change the font size to desired value
+//   } else {
+//     btn.textContent = 'Forecast Parameters';
+//     submenuText1.textContent = 'Upper Air Heights';
+//     submenuText1.style.fontSize = ''; // Change the font size to desired value
+//     submenuText2.textContent = 'Upper Air Moisture';
+//     submenuText2.style.fontSize = ''; // Change the font size to desired value
+//     submenuText3.textContent = 'Surface';
+//     submenuText3.style.fontSize = ''; // Change the font size to desired value
+//     submenuText4.textContent = 'Milti-Parameter';
+//     submenuText4.style.fontSize = ''; // Change the font size to desired value
 
-  }
-}
+//   }
+// }

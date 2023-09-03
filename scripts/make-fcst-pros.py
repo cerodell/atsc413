@@ -56,7 +56,7 @@ plot_list = [
     "wsp-100m",
     "wsp-85kPa",
     "t2m",
-    "t2m_anomaly",
+    "t2m-anomaly",
     "r2",
     "tp",
     "cape",
@@ -79,7 +79,7 @@ for fct_day in fct_days:
         mask = np.array(
             [
                 os.path.exists(
-                    str(save_dir) + f"/-{var}-{vtimes.strftime('%Y%m%d%H')}.jpeg"
+                    str(save_dir) + f"/{var}-{vtimes.strftime('%Y%m%d%H')}.jpeg"
                 )
                 for var in plot_list
             ]
@@ -133,7 +133,7 @@ for fct_day in fct_days:
                 plot_t2m(ds, case_study, save_dir, roads=True)
 
             ##################### 2m Temp ######################
-            if "t2m_anomaly" in plot_i:
+            if "t2m-anomaly" in plot_i:
                 plot_t2m_anomaly(ds, case_study, save_dir, roads=True)
 
             ##################### 2m RH ######################

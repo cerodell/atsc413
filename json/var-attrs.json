@@ -205,7 +205,7 @@
             75
         ],
         "figsize": [
-            10.0,
+            9.0,
             5.0
         ]
     },
@@ -327,7 +327,7 @@
             5.5
         ]
     },
-    "t2m_anomaly": {
+    "t2m-anomaly": {
         "colors2": [ "#f359e4", "#473cc8", "#a18dff", "#96f58d", "#1eb41e", "#1f6deb", "#79bafb", "#ffffff", "#ffffff", "#ffffff", "#ffffa7", "#ff9953", "#a71400", "#67402f", "#c9a097", "#ffe8e7", "#a5201f" ],
         "colors": [ "#f897ef","#f359e4","#6a0b61","#3424ad","#8373eb","#ddddff","#b6fbab","#51f150","#0ba10d","#1663d3","#50a5f5","#b4f1fb","#ffffff","#ffffff","#ffffa7","#fea761","#ff4e18","#e92b00","#a71400","#4d0100","#67402f","#a27a69","#ecddd6","#ffe8e7","#db5a5a","#a5201f"],
         "vmax":  18,
@@ -454,6 +454,48 @@
         "figsize": [
             8.0,
             5.5
+        ]
+    },
+    "25kPa-div": {
+        "colors": [ "#FFFFFF", "#BBBBBB", "#646464", "#1563D3", "#2883F1", "#50A5F5", "#97D3FB", "#0CA10D", "#37D33C", "#97F58D", "#B5FBAB", "#FFE978", "#FFC03D", "#FFA100", "#FF3300", "#C10000", "#960007", "#643C32" ],
+        "vmax": 0,
+        "vmin": 252,
+        "levels": {
+            "height": [ 900, 906, 912, 918, 924, 930, 936, 942, 948, 954, 960, 966, 972, 978, 984, 990, 996, 1002, 1008, 1014, 1020, 1026, 1032, 1038, 1044, 1050, 1056, 1062, 1068, 1074, 1080, 1086, 1092, 1098, 1104, 1110, 1116, 1122, 1128, 1134, 1140, 1146, 1152, 1158, 1164, 1170, 1176, 1182, 1188, 1194, 1200 ],
+            "speed": [-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        },
+        "unit": "(10)",
+        "title": "25kPa Geopotential Heights (dam) and Divergence (1/s)",
+        "sigma": 2.4,
+        "filter_by_keys": {
+            "gfs": {
+                "gh": {
+                    "typeOfLevel": "isobaricInhPa",
+                    "shortName": "gh"
+                },
+                "u": {
+                    "typeOfLevel": "isobaricInhPa",
+                    "shortName": "u"
+                },
+                "v": {
+                    "typeOfLevel": "isobaricInhPa",
+                    "shortName": "v"
+                },
+                "w": {
+                    "typeOfLevel": "isobaricInhPa",
+                    "shortName": "w"
+                }
+            }
+        },
+        "domain": [
+            -170,
+            -10,
+            20,
+            75
+        ],
+        "figsize": [
+            9.0,
+            5.0
         ]
     }
 }
