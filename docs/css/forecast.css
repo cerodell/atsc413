@@ -21,6 +21,9 @@
 .logo {
   font-size: clamp(1.5vw, 1.5vw, 1.6em); /* Set font size with minimum, preferred, and maximum values */
   padding: 0 5px;
+  position: relative; /* Set the positioning to relative */
+  top:12px; /* Adjust the value to lower or raise the logo */
+
 }
 
 .sidebar a {
@@ -70,7 +73,6 @@
 }
 
 #btn {
-  /* background-color: #4070f4; */
   color: #080808;
   padding: 8px 15px;
   border-radius: 4px;
@@ -98,23 +100,23 @@
 }
 .submenu-active .menu-items {
   transform: translateX(-56%);
+  padding-left: 30px;
+
 }
 .menu-title {
   color: #333;
   font-size: clamp(.5vw, 1vw, 1.2em); /* Set font size with minimum, preferred, and maximum values */
   padding: 0.8em 1.6em; /* Adjust padding based on font size */
 }
-.item a,
-.submenu-item {
+.item a, .submenu-item {
   font-size: clamp(.5vw, 1vw, 1.2em); /* Set font size with minimum, preferred, and maximum values */
   padding: 0.8em 1.6em; /* Adjust padding based on font size */
-  /* padding: 16px; */
   display: inline-block;
-  width: 100%;
+  width: 90%;
   border-radius: 12px;
 
-
 }
+
 
 .item i {
   font-size: 1vw; /* Set font size based on viewport width */
@@ -168,9 +170,25 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* height: auto; */
+  height: auto;
   z-index: 1000;
 }
+
+/* .main {
+  float: right;
+  width: auto;
+  max-width: 85%;
+  transition: all 0.5s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  max-height: 100vh;
+  z-index: 1000;
+} */
+
 .sidebar.close ~ .navbar,
 .sidebar.close ~ .main {
   left: 0;
@@ -201,13 +219,13 @@
 }
 
 .image-container img {
-  max-width: 100%; /* Limit image width to container width */
-  max-width: 90%; /* Limit image width to container width */
+  width: auto;    /* Maintain the aspect ratio */
+  max-width: 95%;
   height: auto;    /* Maintain the aspect ratio */
+  max-height: 100vh;
   display: block; /* Remove extra spacing beneath images */
   margin: 0 auto; /* Center the image horizontally within the container */
 }
-
 
 
 .buttons-container {
