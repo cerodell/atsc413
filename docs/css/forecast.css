@@ -6,12 +6,10 @@
 
 /* Sidebar Styles */
 .sidebar {
-  height: 100%;
+  height: calc(90% - 30px); /* Adjust the percentage and padding according to your preference */
   position: fixed;
-  width: calc(20% - 30px); /* Adjust the percentage and padding according to your preference */
-  max-width: 290px; /* Set a maximum width for the sidebar */
+  width: calc(18% - 20px); /* Adjust the percentage and padding according to your preference */
   background: #f1f1f1;
-  padding: 15px;
   z-index: 99;
   transition: width 0.5s ease; /* Add transition for smooth collapsing/expanding */
 }
@@ -22,7 +20,7 @@
 
 .logo {
   font-size: clamp(1.5vw, 1.5vw, 1.6em); /* Set font size with minimum, preferred, and maximum values */
-  padding: 0 15px;
+  padding: 0 5px;
 }
 
 .sidebar a {
@@ -31,7 +29,7 @@
 }
 
 .sidebar .logo-details {
-  height: 60px;
+  height: 10px;
   display: flex;
   align-items: center;
   position: relative;
@@ -84,16 +82,16 @@
 }
 .menu-content {
   position: relative;
-  height: 100%;
+  height: calc(90% - 30px); /* Adjust the percentage and padding according to your preference */
   width: 100%;
-  margin-top: 40px;
+  margin-top: 15px;
   overflow-y: scroll;
 }
 .menu-content::-webkit-scrollbar {
   display: none;
 }
 .menu-items {
-  height: 100%;
+  height: calc(90% - 30px); /* Adjust the percentage and padding according to your preference */
   width: 100%;
   list-style: none;
   transition: all 0.4s ease;
@@ -103,8 +101,8 @@
 }
 .menu-title {
   color: #333;
-  font-size: 1vw; /* Set font size based on viewport width */
-  padding: 15px 20px;
+  font-size: clamp(.5vw, 1vw, 1.2em); /* Set font size with minimum, preferred, and maximum values */
+  padding: 0.8em 1.6em; /* Adjust padding based on font size */
 }
 .item a,
 .submenu-item {
@@ -114,6 +112,7 @@
   display: inline-block;
   width: 100%;
   border-radius: 12px;
+
 
 }
 
@@ -141,7 +140,7 @@
   height: calc(100% + 100vh);
   background: #f1f1f1;
   display: none;
-  padding: 20px;
+  padding: 12px;
 
 }
 .show-submenu ~ .submenu {
@@ -152,21 +151,25 @@
   cursor: pointer;
 }
 .submenu .menu-title i {
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
+/* Sidebar Styles End */
+
+
+/* Menu Styles */
+/* Menu includes buttons for cas, fct img, and slider */
 .main {
-  left: 260px;
-  width: calc(100% - 260px);
+  float: right;
+  width: calc(85% - 30px);
   transition: all 0.5s ease;
-  z-index: 1000;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: auto;
-  z-index: 100;
+  /* height: auto; */
+  z-index: 1000;
 }
 .sidebar.close ~ .navbar,
 .sidebar.close ~ .main {
@@ -188,33 +191,21 @@
 /* Image Container Styles */
 
 .image-container {
-  max-width: 85%; /* Limit container width */
-  max-height: 95vh; /* Limit container height to 95% of viewport height */
+  max-width: 100%; /* Limit container width */
+  max-height: auto;    /* Maintain the aspect ratio */
   display: flex; /* Use flexbox for alignment */
   align-items: center;
   justify-content: center; /* Center horizontally and vertically */
-  overflow: hidden; /* Hide any overflow beyond the container */
+  z-index: 80;
+
 }
 
 .image-container img {
   max-width: 100%; /* Limit image width to container width */
-  max-height: 100%; /* Limit image height to container height */
+  max-width: 90%; /* Limit image width to container width */
+  height: auto;    /* Maintain the aspect ratio */
   display: block; /* Remove extra spacing beneath images */
   margin: 0 auto; /* Center the image horizontally within the container */
-}
-
-@media (min-width: 1000px) {
-  .image-container img {
-    max-width: 70%; /* Limit image width on large screens */
-    max-height: 70%; /* Limit container height to 95% of viewport height */
-  }
-}
-@media (max-height: 900px) {
-  .image-container img {
-    max-width: 75%; /* Limit image width on large screens */
-    max-height: 75%; /* Limit container height to 95% of viewport height */
-
-  }
 }
 
 
@@ -224,7 +215,7 @@
   flex-direction: row;
   justify-content: center; /* Center the buttons horizontally */
   gap: 10px;
-  margin-top: 20px; /* Add margin to separate buttons from image */
+  margin-bottom: 10px; /* Add margin to separate buttons from image */
 }
 
 .button-container:hover {
@@ -248,19 +239,14 @@
   background-color: #e0e0e0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   .button {
     padding: 2px 2px; /* Adjust the padding for smaller screens */
     font-size: 8px; /* Adjust the font size for smaller screens */
   }
 }
 
-@media (max-width: 480px) {
-  .button {
-    padding: 1px 1px; /* Further adjust the padding for even smaller screens */
-    font-size: 4px; /* Further adjust the font size for even smaller screens */
-  }
-}
+
 
 
 .dropdown {
@@ -272,7 +258,6 @@
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 999; /* Increase the z-index value */
 }
@@ -281,7 +266,7 @@
   font-size: clamp(.5vw, 1vw, 1em); /* Set font size with minimum, preferred, and maximum values */
   display: block;
   width: 100%;
-  text-align: left;
+  text-align: center;
   padding: 10px;
 }
 
@@ -291,7 +276,7 @@
 
 .slider-container {
   margin: 10px;
-  width: 75%;
+  width: 80%;
 }
 
 .slider {
