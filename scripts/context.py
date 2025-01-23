@@ -16,8 +16,8 @@ from pathlib import Path
 path = Path(__file__).resolve()  # this file
 this_dir = path.parent  # this folder
 root_dir = this_dir.parents[0]
-# data_dir = root_dir / Path("data")
-data_dir = "/Volumes/WFRT-Ext22/atsc413/data"
+data_dir = root_dir / Path("data")
+# data_dir = "/Volumes/WFRT-Ext22/atsc413/data"
 json_dir = root_dir / Path("json")
 # img_dir = root_dir / Path("img")  ## local img dir
 img_dir = root_dir / Path("docs") / Path("img")  ## local img dir

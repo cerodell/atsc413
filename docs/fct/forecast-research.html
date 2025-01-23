@@ -1,0 +1,291 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>UBC ATSC 413 - Forest-fire Weather and Climate</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/forecast.css" />
+    <link href="../css/a313styles.css" rel="stylesheet" type="text/css">
+    <script src="../js/jquery.js"></script>
+
+
+  </head>
+  <body>
+  <header>UBC ATSC 413 - Forest-fire Weather &amp; Climate
+    <nav>|
+      <a href="../index.html">Home</a> |
+	  <a href="../sched/index.html">Schedule</a> |
+	  <a href="../fire_basics/index.html">Fire Basics</a> |
+	  <a href="../cases/index.html">Fire Cases</a> |
+	  <a href="../met_concepts/index.html">Met. Concepts</a> |
+      <a href="../fct/forecast.html">Forecast Tools</a> |
+	  <a href="../smoke/index.html">Smoke</a> |
+    <a href=“../climate/index.html”>Climate</a>
+
+  </nav>
+
+    </header>
+    <nav class="sidebar">
+      <a href="#" class="logo">Forecast Parameters</a>
+      <!-- <i class="logo" id="btn" onclick="changeText()">Forecast Parameters</i> -->
+
+      <div class="menu-content">
+        <ul class="menu-items">
+
+          <li class="item">
+            <div class="submenu-item">
+              <span id="submenu-text1">Upper Air Heights</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+                          Back
+              </div>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), '25kPa')">25kPa Geopotential Heights (dam) and Wind Speed (knots)</a>
+              </li>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), '50kPa')">50kPa Geopotential Heights (dam) and Anomaly (m)</a>
+              </li>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'wsp-85kPa')">85kPa Wind Speed and Direction (km/hr)</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="item">
+            <div class="submenu-item">
+              <span id="submenu-text2">Upper Air Moisture</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+                          Back
+              </div>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), '70kPa-RH')">70kPa Relative Humidity (%)</a>
+              </li>
+            </ul>
+          </li>
+
+
+          <li class="item">
+            <div class="submenu-item">
+              <span id="submenu-text3">Surface</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+                Back
+              </div>
+              <li class="item">
+                <a href="#"  onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'tp')" >3-hr Precipitation (mm)</a>
+              </li>
+              <li class="item">
+                <a href="#"  onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'atp')" >Total Accumulated Precipitation (mm)</a>
+              </li>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'r2')" >2m Relative Humidity (%)</a>
+              </li>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 't2m')">2m Temperature (C)</a>
+              </li>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 't2m-anomaly')">2m Temperature Anomaly (C)</a>
+              </li>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'wsp-10m')">Wind Speed and Direction at 10m</a>
+              </li>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'wsp-100m')">Wind Speed and Direction at 100m</a>
+              </li>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'cape')">Convective Available Potential Energy (J/kg )</a>
+              </li>
+            </ul>
+          </li>
+
+
+          <li class="item">
+            <div class="submenu-item">
+              <span id="submenu-text4">Milti-Parameter</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+                          Back
+              </div>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), '100-50kPa')">3-h Precip (mm), MSLP (hPa), 100-50kPa Thickness (dam)</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="item">
+            <div class="submenu-item">
+              <span id="submenu-text5">Case Specific</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+
+            <ul class="menu-items submenu">
+              <div class="menu-title">
+                <i class="fa-solid fa-chevron-left"></i>
+                          Back
+              </div>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), 'cross-wsp')">Cross Section  (High Level)</a>
+              </li>
+              <li class="item">
+                <a href="#" onclick="showImage(localStorage.getItem('loc'), localStorage.getItem('int'), localStorage.getItem('valid'), '25kPa-div')">25kPa Divergence (Kimiwan Complex)</a>
+              </li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+    </nav>
+    <nav class="navbar">
+      <i class="fa-solid fa-bars" id="sidebar-close"></i>
+    </nav>
+
+    <main class="main">
+      <div class="buttons-container">
+        <div class="dropdown" >
+          <button class="button" id="high_level">High Level</button>
+          <div class="dropdown-content">
+            <button class="dropdown-option" id="20190516Z00" i="20190516Z00" j="20190520Z00" loc='high_level' ondblclick="showImage('high_level', '20190516Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190516Z00</button>
+            <button class="dropdown-option" id="20190517Z00" i="20190517Z00" j="20190521Z00" loc='high_level' ondblclick="showImage('high_level', '20190517Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190517Z00</button>
+            <button class="dropdown-option" id="20190518Z00" i="20190518Z00" j="20190522Z00" loc='high_level' ondblclick="showImage('high_level', '20190518Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190518Z00</button>
+            <button class="dropdown-option" id="20190528Z00" i="20190528Z00" j="20190601Z00" loc='high_level' ondblclick="showImage('high_level', '20190528Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190528Z00</button>
+            <button class="dropdown-option" id="20190529Z00" i="20190529Z00" j="20190602Z00" loc='high_level' ondblclick="showImage('high_level', '20190529Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190529Z00</button>
+            <button class="dropdown-option" id="20190530Z00" i="20190530Z00" j="20190603Z00" loc='high_level' ondblclick="showImage('high_level', '20190530Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190530Z00</button>
+            <button class="dropdown-option" id="20190531Z00" i="20190531Z00" j="20190604Z00" loc='high_level' ondblclick="showImage('high_level', '20190531Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20190531Z00</button>
+          </div>
+        </div>
+        <div class="dropdown" >
+          <button class="button" id="kimiwan_complex">Kimiwan Complex</button>
+          <div class="dropdown-content">
+            <button class="dropdown-option" id="20230515Z00" i="20230515Z00" j="20230520Z00" loc='kimiwan_complex' ondblclick="showImage('kimiwan_complex', '20230515Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230515Z00</button>
+            <button class="dropdown-option" id="20230516Z00" i="20230516Z00" j="20230521Z00" loc='kimiwan_complex' ondblclick="showImage('kimiwan_complex', '20230516Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230516Z00</button>
+            <button class="dropdown-option" id="20230517Z00" i="20230517Z00" j="20230522Z00" loc='kimiwan_complex' ondblclick="showImage('kimiwan_complex', '20230517Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230517Z00</button>
+            <button class="dropdown-option" id="20230518Z00" i="20230518Z00" j="20230523Z00" loc='kimiwan_complex' ondblclick="showImage('kimiwan_complex', '20230518Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230518Z00</button>
+            <button class="dropdown-option" id="20230519Z00" i="20230519Z00" j="20230524Z00" loc='kimiwan_complex' ondblclick="showImage('kimiwan_complex', '20230519Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230519Z00</button>
+            <button class="dropdown-option" id="20230520Z00" i="20230520Z00" j="20230525Z00" loc='kimiwan_complex' ondblclick="showImage('kimiwan_complex', '20230520Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230520Z00</button>
+            <button class="dropdown-option" id="20230521Z00" i="20230521Z00" j="20230526Z00" loc='kimiwan_complex' ondblclick="showImage('kimiwan_complex', '20230521Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230521Z00</button>
+            <button class="dropdown-option" id="20230522Z00" i="20230522Z00" j="20230527Z00" loc='kimiwan_complex' ondblclick="showImage('kimiwan_complex', '20230522Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230522Z00</button>
+            <button class="dropdown-option" id="20230523Z00" i="20230523Z00" j="20230528Z00" loc='kimiwan_complex' ondblclick="showImage('kimiwan_complex', '20230523Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230523Z00</button>
+            <button class="dropdown-option" id="20230524Z00" i="20230524Z00" j="20230529Z00" loc='kimiwan_complex' ondblclick="showImage('kimiwan_complex', '20230524Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230524Z00</button>
+            <button class="dropdown-option" id="20230525Z00" i="20230525Z00" j="20230530Z00" loc='kimiwan_complex' ondblclick="showImage('kimiwan_complex', '20230525Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230525Z00</button>
+          </div>
+        </div>
+        <div class="dropdown" >
+          <button class="button" id="sparks_lake">Sparks Lake</button>
+          <div class="dropdown-content">
+            <button class="dropdown-option" id="20210625Z00" i="20210625Z00" j="20210627Z00" loc='sparks_lake' ondblclick="showImage('sparks_lake', '20210625Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210625Z00</button>
+            <button class="dropdown-option" id="20210626Z00" i="20210626Z00" j="20210628Z00" loc='sparks_lake' ondblclick="showImage('sparks_lake', '20210626Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210626Z00</button>
+            <button class="dropdown-option" id="20210627Z00" i="20210627Z00" j="20210629Z00" loc='sparks_lake' ondblclick="showImage('sparks_lake', '20210627Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210627Z00</button>
+            <button class="dropdown-option" id="20210628Z00" i="20210628Z00" j="20210630Z00" loc='sparks_lake' ondblclick="showImage('sparks_lake', '20210628Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210628Z00</button>
+            <button class="dropdown-option" id="20210629Z00" i="20210629Z00" j="20210701Z00" loc='sparks_lake' ondblclick="showImage('sparks_lake', '20210629Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210629Z00</button>
+            <button class="dropdown-option" id="20210630Z00" i="20210630Z00" j="20210702Z00" loc='sparks_lake' ondblclick="showImage('sparks_lake', '20210630Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210630Z00</button>
+            <button class="dropdown-option" id="20210701Z00" i="20210701Z00" j="20210703Z00" loc='sparks_lake' ondblclick="showImage('sparks_lake', '20210701Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210701Z00</button>
+            <button class="dropdown-option" id="20210702Z00" i="20210702Z00" j="20210704Z00" loc='sparks_lake' ondblclick="showImage('sparks_lake', '20210702Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210702Z00</button>
+            <button class="dropdown-option" id="20210703Z00" i="20210703Z00" j="20210705Z00" loc='sparks_lake' ondblclick="showImage('sparks_lake', '20210703Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210703Z00</button>
+            <button class="dropdown-option" id="20210704Z00" i="20210704Z00" j="20210706Z00" loc='sparks_lake' ondblclick="showImage('sparks_lake', '20210704Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210704Z00</button>
+          </div>
+        </div>
+        <div class="dropdown" >
+          <button class="button" id="fort_mac">Fort McMurray</button>
+          <div class="dropdown-content">
+            <button class="dropdown-option" id="20160501Z00" i="20160501Z00" j="20160503Z00" loc='fort_mac' ondblclick="showImage('fort_mac', '20160501Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160501Z00</button>
+            <button class="dropdown-option" id="20160502Z00" i="20160502Z00" j="20160504Z00" loc='fort_mac' ondblclick="showImage('fort_mac', '20160502Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160502Z00</button>
+            <button class="dropdown-option" id="20160503Z00" i="20160503Z00" j="20160505Z00" loc='fort_mac' ondblclick="showImage('fort_mac', '20160503Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160503Z00</button>
+            <button class="dropdown-option" id="20160504Z00" i="20160504Z00" j="20160506Z00" loc='fort_mac' ondblclick="showImage('fort_mac', '20160504Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160504Z00</button>
+            <button class="dropdown-option" id="20160505Z00" i="20160505Z00" j="20160507Z00" loc='fort_mac' ondblclick="showImage('fort_mac', '20160505Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160505Z00</button>
+            <button class="dropdown-option" id="20160506Z00" i="20160506Z00" j="20160508Z00" loc='fort_mac' ondblclick="showImage('fort_mac', '20160506Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160506Z00</button>
+            <button class="dropdown-option" id="20160507Z00" i="20160507Z00" j="20160509Z00" loc='fort_mac' ondblclick="showImage('fort_mac', '20160507Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160507Z00</button>
+            <button class="dropdown-option" id="20160508Z00" i="20160508Z00" j="20160510Z00" loc='fort_mac' ondblclick="showImage('fort_mac', '20160508Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20160508Z00</button>
+
+          </div>
+        </div>
+        <div class="dropdown" >
+          <button class="button" id="camp_fire">Camp Fire</button>
+          <div class="dropdown-content">
+            <button class="dropdown-option" id="20181106Z00" i="20181106Z00" j="20181109Z00" loc='camp_fire' ondblclick="showImage('camp_fire', '20181106Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20181106Z00</button>
+            <button class="dropdown-option" id="20181107Z00" i="20181107Z00" j="20181110Z00" loc='camp_fire' ondblclick="showImage('camp_fire', '20181107Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20181107Z00</button>
+            <button class="dropdown-option" id="20181108Z00" i="20181108Z00" j="20181111Z00" loc='camp_fire' ondblclick="showImage('camp_fire', '20181108Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20181108Z00</button>
+            <button class="dropdown-option" id="20181109Z00" i="20181109Z00" j="20181112Z00" loc='camp_fire' ondblclick="showImage('camp_fire', '20181109Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20181109Z00</button>
+            <button class="dropdown-option" id="20181110Z00" i="20181110Z00" j="20181113Z00" loc='camp_fire' ondblclick="showImage('camp_fire', '20181110Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20181110Z00</button>
+            <button class="dropdown-option" id="20181111Z00" i="20181111Z00" j="20181114Z00" loc='camp_fire' ondblclick="showImage('camp_fire', '20181111Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20181111Z00</button>
+            <button class="dropdown-option" id="20181112Z00" i="20181112Z00" j="20181115Z00" loc='camp_fire' ondblclick="showImage('camp_fire', '20181112Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20181112Z00</button>
+
+          </div>
+        </div>
+        <div class="dropdown" >
+          <button class="button" id="qb_fires">Quebec Fires</button>
+          <div class="dropdown-content">
+            <button class="dropdown-option" id="20230601Z00" i="20230601Z00" j="20230603Z00" loc='qb_fires' ondblclick="showImage('qb_fires', '20230601Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230601Z00</button>
+            <button class="dropdown-option" id="20230602Z00" i="20230602Z00" j="20230604Z00" loc='qb_fires' ondblclick="showImage('qb_fires', '20230602Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230602Z00</button>
+            <button class="dropdown-option" id="20230603Z00" i="20230603Z00" j="20230605Z00" loc='qb_fires' ondblclick="showImage('qb_fires', '20230603Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230603Z00</button>
+            <button class="dropdown-option" id="20230604Z00" i="20230604Z00" j="20230606Z00" loc='qb_fires' ondblclick="showImage('qb_fires', '20230604Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230604Z00</button>
+            <button class="dropdown-option" id="20230605Z00" i="20230605Z00" j="20230607Z00" loc='qb_fires' ondblclick="showImage('qb_fires', '20230605Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230605Z00</button>
+            <button class="dropdown-option" id="20230606Z00" i="20230606Z00" j="20230608Z00" loc='qb_fires' ondblclick="showImage('qb_fires', '20230606Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230606Z00</button>
+            <button class="dropdown-option" id="20230607Z00" i="20230607Z00" j="20230609Z00" loc='qb_fires' ondblclick="showImage('qb_fires', '20230607Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230607Z00</button>
+            <button class="dropdown-option" id="20230608Z00" i="20230608Z00" j="20230610Z00" loc='qb_fires' ondblclick="showImage('qb_fires', '20230608Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20230608Z00</button>
+          </div>
+        </div>
+        <div class="dropdown" >
+          <button class="button" id="marshall_fire">Marshall Fire</button>
+          <div class="dropdown-content">
+            <button class="dropdown-option" id="20211229Z00" i="20211229Z00" j="20211231Z00" loc='marshall_fire' ondblclick="showImage('marshall_fire', '20211229Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20211229Z00</button>
+            <button class="dropdown-option" id="20211230Z00" i="20211230Z00" j="20220101Z00" loc='marshall_fire' ondblclick="showImage('marshall_fire', '20211230Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20211230Z00</button>
+            <button class="dropdown-option" id="20211231Z00" i="20211231Z00" j="20220102Z00" loc='marshall_fire' ondblclick="showImage('marshall_fire', '20211231Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20211231Z00</button>
+            <button class="dropdown-option" id="20220101Z00" i="20220101Z00" j="20220103Z00" loc='marshall_fire' ondblclick="showImage('marshall_fire', '20220101Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20220101Z00</button>
+          </div>
+        </div>
+        <div class="dropdown" >
+          <button class="button" id="caldor_fire">Caldor Fire</button>
+          <div class="dropdown-content">
+            <button class="dropdown-option" id="20210815Z00" i="20210815Z00" j="20210816Z00" loc='caldor_fire' ondblclick="showImage('caldor_fire', '20210815Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210815Z00</button>
+            <button class="dropdown-option" id="20210816Z00" i="20210816Z00" j="20210817Z00" loc='caldor_fire' ondblclick="showImage('caldor_fire', '20210816Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210816Z00</button>
+            <button class="dropdown-option" id="20210817Z00" i="20210817Z00" j="20210818Z00" loc='caldor_fire' ondblclick="showImage('caldor_fire', '20210817Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210817Z00</button>
+            <button class="dropdown-option" id="20210818Z00" i="20210818Z00" j="20210819Z00" loc='caldor_fire' ondblclick="showImage('caldor_fire', '20210818Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210818Z00</button>
+            <button class="dropdown-option" id="20210819Z00" i="20210819Z00" j="20210820Z00" loc='caldor_fire' ondblclick="showImage('caldor_fire', '20210819Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210819Z00</button>
+            <button class="dropdown-option" id="20210820Z00" i="20210820Z00" j="20210821Z00" loc='caldor_fire' ondblclick="showImage('caldor_fire', '20210820Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210820Z00</button>
+            <button class="dropdown-option" id="20210821Z00" i="20210821Z00" j="20210822Z00" loc='caldor_fire' ondblclick="showImage('caldor_fire', '20210821Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210821Z00</button>
+            <button class="dropdown-option" id="20210822Z00" i="20210822Z00" j="20210823Z00" loc='caldor_fire' ondblclick="showImage('caldor_fire', '20210822Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210822Z00</button>
+            <button class="dropdown-option" id="20210823Z00" i="20210823Z00" j="20210824Z00" loc='caldor_fire' ondblclick="showImage('caldor_fire', '20210823Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210823Z00</button>
+            <button class="dropdown-option" id="20210824Z00" i="20210824Z00" j="20210825Z00" loc='caldor_fire' ondblclick="showImage('caldor_fire', '20210824Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210824Z00</button>
+            <button class="dropdown-option" id="20210825Z00" i="20210825Z00" j="20210826Z00" loc='caldor_fire' ondblclick="showImage('caldor_fire', '20210825Z00', localStorage.getItem('valid'), localStorage.getItem('varname'))">20210825Z00</button>
+          </div>
+        </div>
+      </div>
+      <div class="image-container">
+        <img id="currentImage" src="" alt="Image">
+      </div>
+
+      <div class="slider-container">
+        <input type="range" min="0" max="100" value="50" class="slider" id="mySlider">
+        <!-- <p>Value: <span id="sliderValue">50</span></p> -->
+      </div>
+    </main>
+
+
+
+      <script>
+
+      </script>
+
+
+    <script src="../js/forecast.min.js"></script>
+  </body>
+</html>

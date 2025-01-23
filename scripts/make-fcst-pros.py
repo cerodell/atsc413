@@ -1,4 +1,4 @@
-#!/Users/crodell/miniconda3/envs/atsc413/bin/python
+#!/Users/crodell/miniconda3/envs/fwx/bin/python
 
 import sys
 import context
@@ -15,6 +15,8 @@ import getdata
 case_study = sys.argv[1]
 model = case_attrs[case_study]["model"]
 
+# case_study = "marshall_fire"
+# model = "era5"
 
 startTime = datetime.now()
 
@@ -46,36 +48,59 @@ fct_days = pd.date_range(
 
 # int_dir = getdata.int_dir
 print(case_study)
-
-plot_list = [
-    "25kPa",
-    "50kPa",
-    "100-50kPa",
-    "70kPa-RH",
-    "wsp-10m",
-    "wsp-100m",
-    "wsp-85kPa",
-    "t2m",
-    "t2m-anomaly",
-    "r2",
-    "tp",
-    "cape",
-]
-
+if model == "gfs":
+    plot_list = [
+        # "25kPa",
+        # "50kPa",
+        # "100-50kPa",
+        # "70kPa-RH",
+        # "wsp-10m",
+        # "wsp-100m",
+        # "wsp-85kPa",
+        # "t2m",
+        # "t2m-anomaly",
+        # "r2",
+        # "tp",
+        # "cape",
+        "25kPa-div"
+    ]
+elif model == "era5":
+    plot_list = [
+        "wsp-10m",
+        "t2m",
+        "r2",
+        "tp",
+    ]
 for fct_day in fct_days:
     int_dir = fct_day.strftime("%Y%m%dT%H")
-    pathlist = sorted(
-        Path(str(data_dir) + f"/{case_study}/{model}/{int_dir}").glob(f"*.grib2")
-    )
+    if model == "gfs":
+        print(f"Using GFS to create forecast Maps on {fct_day}")
+        pathlist = sorted(
+            Path(str(data_dir) + f"/{case_study}/{model}/{int_dir}").glob(f"*.grib2")
+        )
+    elif model == "era5":
+        print(f"Using ERA5 to create reanalysis Maps on {fct_day}")
+        ds_era5 = config_era5(
+            xr.open_dataset(
+                f"/Volumes/ThunderBay/CRodell/ecmwf/era5/{fct_day.strftime('%Y%m')}/era5-{fct_day.strftime('%Y%m%d%H')}.nc"
+            )
+        )
+        pathlist = ds_era5.time.values
     for i in range(len(pathlist)):
         # print(path)
         int_time = int_dir.replace("T", "Z")
         save_dir = Path(str(img_dir) + f"/{case_study}/{model}/{int_time}/")
         save_dir.mkdir(parents=True, exist_ok=True)
-        fct = int(
-            str(pathlist[i]).rsplit("/", 1)[1].rsplit(".", 1)[0].rsplit(".", 1)[1][1:]
-        )
-        vtimes = fct_day + pd.Timedelta(hours=fct)
+        if model == "gfs":
+            fct = int(
+                str(pathlist[i])
+                .rsplit("/", 1)[1]
+                .rsplit(".", 1)[0]
+                .rsplit(".", 1)[1][1:]
+            )
+            vtimes = fct_day + pd.Timedelta(hours=fct)
+        elif model == "era5":
+            vtimes = pd.Timestamp(pathlist[i])
         mask = np.array(
             [
                 os.path.exists(
@@ -88,7 +113,12 @@ for fct_day in fct_days:
             pass
         else:
             plot_i = list(np.array(plot_list)[mask == False])
-            ds = open_data(pathlist, i, model, "all_vars")
+            if model == "gfs":
+                ds = open_gfs_data(pathlist, i, model, "all_vars")
+
+            elif model == "era5":
+                ds = ds_era5.sel(time=pathlist[i])
+
             try:
                 ds["atp"] = ds["tp"] + ds_i["atp"]
             except:
@@ -96,6 +126,7 @@ for fct_day in fct_days:
             print(
                 f"Making Figs for Valid Datetime: {np.datetime_as_string(ds.valid_time, unit='h')} with Int time: {int_time}"
             )
+            print(str(int(ds.step.values.astype(float) / 3.6e12)))
             ###################### 25 kPa  ######################
             if "25kPa" in plot_i:
                 plot_25kPa(ds, case_study, save_dir)

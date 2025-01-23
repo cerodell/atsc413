@@ -1,19 +1,19 @@
 {
   "high_level":{
     "loc": [58.305, -117.2924],
-    "fct_horizon": 48,
+    "fct_horizon": 96,
     "model": "gfs",
     "init": "00",
     "freq": 3,
     "fct_days": [
-      "2019-05-16",
-      "2019-05-18"
+      "2019-05-28",
+      "2019-05-31"
     ],
     "nasa": "https://go.nasa.gov/3L5Blr5"
   },
   "sparks_lake":{
     "loc": [50.998, -121.096],
-    "fct_horizon": 48,
+    "fct_horizon": 96,
     "model": "gfs",
     "init": "00",
     "freq": 3,
@@ -27,47 +27,49 @@
     },
   "kimiwan_complex":{
       "loc": [55.9924, -116.5107],
-      "fct_horizon": 120,
+      "fct_horizon": 72,
       "model": "gfs",
       "init": "00",
       "freq": 3,
       "fct_days": [
-      "2023-05-15",
-      "2023-05-25"
+      "2023-05-03",
+      "2023-05-03"
       ],
       "nasa": "https://go.nasa.gov/3OpoNvI",
       "nasa2": "https://go.nasa.gov/45gOe9k"
     },
   "donnie_creek":{
-    "loc": [],
+    "loc": [57.7398, -121.4070],
     "fct_horizon": 48,
     "model": "gfs",
     "init": "00",
     "freq": 3,
     "fct_days": [
-    ],
-    "nasa": ""
+      "2023-05-11",
+      "2023-05-16"
+      ],
+    "nasa": "https://go.nasa.gov/3Yh6PQZ"
   },
   "fort_mac":{
     "loc": [56.7442, -111.3824],
-    "fct_horizon": 48,
+    "fct_horizon": 96,
     "model": "gfs",
     "init": "00",
     "freq": 3,
     "fct_days": [
-      "2016-05-01",
+      "2016-04-28",
       "2016-05-08"
     ],
     "nasa": "https://go.nasa.gov/3L19OHm"
   },
   "camp_fire":{
     "loc": [39.7688, -121.5922],
-    "fct_horizon": 72,
+    "fct_horizon": 96,
     "model": "gfs",
     "init": "00",
     "freq": 3,
     "fct_days": [
-      "2018-11-06",
+      "2018-11-05",
       "2018-11-12"
     ],
     "nasa": "https://go.nasa.gov/3Y97ljl"
@@ -79,21 +81,93 @@
     "init": "00",
     "freq": 3,
     "fct_days": [
-      "2023-06-01",
+      "2023-05-30",
       "2023-06-08"
     ],
     "nasa": "https://go.nasa.gov/3q2ON7Q"
   },
   "marshall_fire":{
     "loc": [39.9546, -105.1989],
+    "fct_horizon": 96,
+    "model": "gfs",
+    "init": "00",
+    "freq": 3,
+    "fct_days": [
+      "2021-12-28",
+      "2022-01-01"
+    ],
+    "nasa": "https://go.nasa.gov/3r7t2E3"
+  },
+  "caldor_fire":{
+    "loc": [38.6, -120.2],
+    "fct_horizon": 24,
+    "model": "era5",
+    "init": "00",
+    "freq": 3,
+    "fct_days": [
+      "2021-08-15",
+      "2021-08-25"
+    ],
+    "nasa": "https://go.nasa.gov/3PUE2iK"
+  },
+  "wildcat":{
+    "loc": [53.2, -102.5],
+    "fct_horizon": 24,
+    "model": "gfs",
+    "init": "00",
+    "freq": 3,
+    "fct_days": [
+      "2021-07-21",
+      "2021-07-28"
+    ],
+    "nasa": "https://go.nasa.gov/43dHisf"
+  },
+  "oak_fire":{
+    "loc": [37.55, -119.8],
+    "fct_horizon": 24,
+    "model": "gfs",
+    "init": "00",
+    "freq": 3,
+    "fct_days": [
+      "2022-07-22",
+      "2022-07-29"
+    ],
+    "nasa": "https://go.nasa.gov/43dHisf"
+  },
+  "lahaina_fire":{
+    "loc": [20.8788, -156.6718],
+    "fct_horizon": 72,
+    "model": "gfs",
+    "init": "00",
+    "freq": 3,
+    "fct_days": [
+      "2023-08-08",
+      "2023-08-10"
+    ],
+    "nasa": "https://go.nasa.gov/3BQgsOU"
+  },
+  "williams_flats":{
+    "loc": [47.9715, -118.5532],
     "fct_horizon": 48,
     "model": "gfs",
     "init": "00",
     "freq": 3,
     "fct_days": [
-      "2021-12-29",
-      "2022-01-01"
+      "2019-08-02",
+      "2019-08-09"
     ],
-    "nasa": "https://go.nasa.gov/3r7t2E3"
+    "nasa": "https://go.nasa.gov/4fmDHPj"
+  },
+  "palisades_fire":{
+    "loc": [34.0643, -118.5736],
+    "fct_horizon": 48,
+    "model": "gfs",
+    "init": "00",
+    "freq": 3,
+    "fct_days": [
+      "2025-01-06",
+      "2025-01-09"
+    ],
+    "nasa": "https://go.nasa.gov/4fmDHPj"
   }
 }

@@ -1,3 +1,5 @@
+#!/Users/crodell/miniconda3/envs/fwx/bin/python
+
 import context
 import gc
 
@@ -43,6 +45,32 @@ def setBold(txt):
     return r"$\bf{" + str(txt) + "}$"
 
 
+def solve_RH(ds):
+    """
+    Function to calculate relative humidity (RH) from dew point temperature (C) and temperature (C)
+    """
+    ## Extract temperature and dew point temperature data from input dataset
+    td = ds["d2m"]
+    t = ds["t2m"]
+    ## Calculate relative humidity as a percentage using inverted clausius clapeyron
+    rh = (
+        (6.11 * 10 ** (7.5 * (td / (237.7 + td))))
+        / (6.11 * 10 ** (7.5 * (t / (237.7 + t))))
+        * 100
+    )
+    ## Set any RH values above 100 to 100
+    rh = xr.where(rh > 100, 100, rh)
+    ## Create a new dataset variable for relative humidity and assign calculated values to it
+    ds["r2"] = rh
+    if (
+        np.min(ds.r2) > 90
+    ):  # check if any RH values are nonphysical (i.e., less than 0 or greater than 100)
+        raise ValueError(
+            "ERROR: Check TD nonphysical RH values"
+        )  # if so, raise a value error with a warning message
+    return ds
+
+
 def solve_W_WD(ds):
 
     ## Define the latitude and longitude arrays in degrees
@@ -78,7 +106,7 @@ def solve_W_WD(ds):
     return ds
 
 
-def open_data(pathlist, i, model, var):
+def open_gfs_data(pathlist, i, model, var):
     bashCommand = f" rm -rf {str(pathlist[i]).rsplit('/', 1)[0]}/*.idx"
     os.system(bashCommand)
     openTime = datetime.now()
@@ -146,20 +174,43 @@ def open_data(pathlist, i, model, var):
     return ds
 
 
+def config_era5(ds):
+    ds["u"] = ds["u10"]
+    ds["v"] = ds["v10"]
+    ds = solve_W_WD(ds)
+    ds = solve_RH(ds)
+    ds["valid_time"] = ds["time"]
+
+    return ds
+
+
 def config_data(ds, var, case_study, anomaly=False, **kwargs):
     if len(var_attrs[var]["domain"]) == 2:
-        plat, plon = var_attrs[var]["domain"][0], var_attrs[var]["domain"][1]
-        # print(kwargs)
-        try:
-            if "".join([i for i in kwargs["height"] if not i.isdigit()]) == "kPa":
-                # scale = int(''.join(c for c in kwargs['height'] if c.isdigit()))
-                # print(scale)
-                plat, plon = (
-                    var_attrs[var]["domain"][0] + 12,
-                    var_attrs[var]["domain"][1] + 16,
-                )
-        except:
-            pass
+        if case_study == "lahaina_fire":
+            plat, plon = 4, 6
+            try:
+                if "".join([i for i in kwargs["height"] if not i.isdigit()]) == "kPa":
+                    # scale = int(''.join(c for c in kwargs['height'] if c.isdigit()))
+                    # print(scale)
+                    plat, plon = (
+                        var_attrs[var]["domain"][0] + 6,
+                        var_attrs[var]["domain"][1] + 10,
+                    )
+            except:
+                pass
+        else:
+            plat, plon = var_attrs[var]["domain"][0], var_attrs[var]["domain"][1]
+            # print(kwargs)
+            try:
+                if "".join([i for i in kwargs["height"] if not i.isdigit()]) == "kPa":
+                    # scale = int(''.join(c for c in kwargs['height'] if c.isdigit()))
+                    # print(scale)
+                    plat, plon = (
+                        var_attrs[var]["domain"][0] + 12,
+                        var_attrs[var]["domain"][1] + 16,
+                    )
+            except:
+                pass
         center = case_attrs[case_study]["loc"]
         lat, lon = int(center[0]), int(center[1])
         extent = [lon - plon, lon + plon, lat - plat, lat + plat]
@@ -213,13 +264,17 @@ def config_data(ds, var, case_study, anomaly=False, **kwargs):
 
 def base_plot(ds, plotcrs, var, *args):
 
-    lons, lats, vtimes, itime, stime = (
+    lons, lats, vtimes, itime = (
         ds.longitude.values,
         ds.latitude.values,
         pd.to_datetime(ds.valid_time.values),
         pd.to_datetime(ds.time.values),
-        str(int(ds.step.values.astype(float) / 3.6e12)),
     )
+    try:
+        stime = str(int(ds.step.values.astype(float) / 3.6e12))
+    except:
+        stime = str(pd.Timestamp(ds.time.values).strftime("%H"))
+
     # Download and add the states and coastlines
     states = NaturalEarthFeature(
         category="cultural",
@@ -325,6 +380,7 @@ def plot_25kPa(ds, case_study, save_dir, roads=False, *args):
             colors=var_attrs[var]["colors"],
             norm=norm,
             transform=ccrs.PlateCarree(),
+            extend="both",
         )
         cax = plt.subplot(gs[1])
         clb = plt.colorbar(cf, cax=cax, orientation="horizontal")
@@ -408,6 +464,7 @@ def plot_50kPa(ds, case_study, save_dir, roads=False, *args):
             var_attrs[var]["levels"]["anomaly"],
             cmap=cmap,
             transform=ccrs.PlateCarree(),
+            extend="both",
         )
         cax = plt.subplot(gs[1])
         clb = plt.colorbar(cf, cax=cax, orientation="horizontal")
@@ -488,6 +545,7 @@ def plot_85kPa(ds, case_study, save_dir, roads=False, *args):
             np.arange(120, 185, 5),
             cmap="coolwarm",
             transform=ccrs.PlateCarree(),
+            extend="both",
         )
         cax = plt.subplot(gs[1])
         clb = plt.colorbar(cf, cax=cax, orientation="horizontal")
@@ -637,6 +695,7 @@ def plot_100_50kPa(ds, case_study, save_dir, roads=False, *args):
                 colors=colors,
                 norm=norm,
                 transform=ccrs.PlateCarree(),
+                extend="both",
             )
         except:
             vmin, vmax = var_attrs["tp"]["vmin"], var_attrs["tp"]["vmax"]
@@ -651,6 +710,7 @@ def plot_100_50kPa(ds, case_study, save_dir, roads=False, *args):
                 colors=colors,
                 norm=norm,
                 transform=ccrs.PlateCarree(),
+                extend="both",
             )
 
         cax = plt.subplot(gs[1])
@@ -711,6 +771,7 @@ def plot_70kPa_RH(ds, case_study, save_dir, roads=False, *args):
             colors=colors,
             norm=norm,
             transform=ccrs.PlateCarree(),
+            extend="both",
         )
         cax = plt.subplot(gs[1])
         clb = plt.colorbar(cf, cax=cax, orientation="horizontal")
@@ -837,7 +898,13 @@ def plot_wspwdir(ds, case_study, save_dir, height, roads=False, **kwargs):
             "wxbell", colors, N=len(levels)
         )
         cf = ax.contourf(
-            lons, lats, wsp, levels=levels, cmap=cmap, transform=ccrs.PlateCarree()
+            lons,
+            lats,
+            wsp,
+            levels=levels,
+            cmap=cmap,
+            transform=ccrs.PlateCarree(),
+            extend="both",
         )
         cax = plt.subplot(gs[1])
         clb = plt.colorbar(cf, cax=cax, orientation="horizontal")
@@ -908,6 +975,7 @@ def plot_t2m(ds, case_study, save_dir, roads=False, *args):
             colors=colors,
             norm=norm,
             transform=ccrs.PlateCarree(),
+            extend="both",
         )
         cax = plt.subplot(gs[1])
         clb = plt.colorbar(cf, cax=cax, orientation="horizontal")
@@ -976,6 +1044,7 @@ def plot_t2m_anomaly(ds, case_study, save_dir, roads=False, *args):
             var_attrs[var]["levels"]["anomaly"],
             cmap=cmap,
             transform=ccrs.PlateCarree(),
+            extend="both",
         )
         cax = plt.subplot(gs[1])
         clb = plt.colorbar(cf, cax=cax, orientation="horizontal")
@@ -1033,6 +1102,7 @@ def plot_r2(ds, case_study, save_dir, roads=False, *args):
             colors=colors,
             norm=norm,
             transform=ccrs.PlateCarree(),
+            extend="both",
         )
         cax = plt.subplot(gs[1])
         clb = plt.colorbar(cf, cax=cax, orientation="horizontal")
@@ -1101,6 +1171,7 @@ def plot_tp(ds, case_study, save_dir, roads=False, *args):
                 colors=colors,
                 norm=norm,
                 transform=ccrs.PlateCarree(),
+                extend="both",
             )
             cax = plt.subplot(gs[1])
             clb = plt.colorbar(cf, cax=cax, orientation="horizontal")
@@ -1118,6 +1189,7 @@ def plot_tp(ds, case_study, save_dir, roads=False, *args):
                 colors=colors,
                 norm=norm,
                 transform=ccrs.PlateCarree(),
+                extend="both",
             )
             cax = plt.subplot(gs[1])
             clb = plt.colorbar(cf, cax=cax, orientation="horizontal")
@@ -1171,6 +1243,7 @@ def plot_tp(ds, case_study, save_dir, roads=False, *args):
                 colors=colors,
                 norm=norm,
                 transform=ccrs.PlateCarree(),
+                extend="both",
             )
             cax = plt.subplot(gs[1])
             clb = plt.colorbar(cf, cax=cax, orientation="horizontal")
@@ -1188,6 +1261,7 @@ def plot_tp(ds, case_study, save_dir, roads=False, *args):
                 colors=colors,
                 norm=norm,
                 transform=ccrs.PlateCarree(),
+                extend="both",
             )
             cax = plt.subplot(gs[1])
             clb = plt.colorbar(cf, cax=cax, orientation="horizontal")
@@ -1260,6 +1334,7 @@ def plot_cape(ds, case_study, save_dir, roads=False, *args):
             levels=levels,
             cmap=cmap,
             transform=ccrs.PlateCarree(),
+            extend="both",
         )
         cax = plt.subplot(gs[1])
         clb = plt.colorbar(cf, cax=cax, orientation="horizontal")

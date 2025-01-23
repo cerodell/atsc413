@@ -39,11 +39,13 @@ const slider = document.getElementById("mySlider");
 slider.addEventListener("input", function() {
     var loc = localStorage.getItem("loc");
     var int = localStorage.getItem("int");
+    var dataJ = localStorage.getItem("dataJ");
+
     var varname = localStorage.getItem("varname");
     // console.log(slider.value);
     var valid = sliderDateTime(slider.value, int);
     // console.log(valid);
-    showImage(loc, int, valid, varname);
+    showImage(loc, int, dataJ, valid, varname);
 });
 
 // Function to increment the int date-time by one hour
@@ -60,6 +62,7 @@ function sliderModifier(dataI, dataJ, valid){
   var numberOfIntervals = timeDifference / (3 * 60 * 60 * 1000);
   slider.min = 0;
   slider.max = numberOfIntervals;
+
   var endDate = parseDateTime(valid);   // Replace with your end date
   var timeDifference = endDate - startDate;
   var numberOfIntervals = timeDifference / (3 * 60 * 60 * 1000);
@@ -179,106 +182,66 @@ localStorage.setItem("varname", "50kPa");
 // Log the cached variables
 console.log("loc:", loc);
 console.log("int:", int);
+console.log("dataJ:", dataJ);
 console.log("valid:", valid);
 console.log("varname:", varname);
-showImage(loc, int, valid, varname);
-// Toggle "active" class for the current location
-var buttonsContainer = document.getElementById(loc);
-buttonsContainer.classList.toggle('active');
+showImage(loc, int, dataJ, valid, varname);
+
 
 // function toggleDropdown() {
 //   const dropdownContainer = document.getElementById('dropdownContainer');
 //   dropdownContainer.classList.toggle('open');
 // }
 
+var currentIndex = 0; // Initialize the current index of the date range
 const buttons = document.querySelectorAll('.dropdown-option');
 
 buttons.forEach(function(button) {
   button.addEventListener('click', function() {
     const dataI = button.getAttribute('i');
     const dataJ = button.getAttribute('j');
-    const Z = button.getAttribute('z');
     localStorage.setItem("dataI", dataI);
     localStorage.setItem("dataJ", dataJ);
-    localStorage.setItem("Z", Z);
-    // console.log(button);
+    // console.log("dataI  "  +dataI);
     // console.log("dataJ  "  +dataJ);
-    // console.log("location  "  +location);
-  });
-  button.addEventListener('dblclick', function() {
     var location = button.getAttribute('loc');
-    colorcase(location);
-    colortime(button.getAttribute('i'))
+    console.log("location  "  +location);
+    // colorcase(location);
   });
 
 });
 
-function colorcase(location) {
-    if (location === localStorage.getItem("loc", loc)) {
-          console.log("KEEP COLOR");
 
-    } else {
-      // Remove "active" class from all buttons except the current location
-      var allButtons = document.querySelectorAll('.button');
-      allButtons.forEach(button => {
-        if (button.id !== location) {
-          button.classList.remove('active');
-        }
-      });
-      // Toggle "active" class for the current location
-      var buttonsContainer = document.getElementById(location);
-      buttonsContainer.classList.add('active');
-    }
-}
+function colorcase(location){
+  // var myList = ["high_level", "kimiwan_complex", "sparks_lake", "fort_mac", "camp_fire", "qb_fires", "marshall_fire"];
+  // var variableToRemove = location;
+  // for (let i = 0; i < myList.length; i++) {
+  //   if (myList[i] === variableToRemove) {
+  //     myList.splice(i, 1); // Remove the item at index i
+  //     i--; // Decrement i to account for the removed item
+  //   }
+  // }
+  // console.log(myList);
 
-function colortime(timeIDX) {
-  if (timeIDX === localStorage.getItem("int", int)) {
-        console.log("KEEP COLOR FOR TIME");
-  } else {
-    // Remove "active" class from all buttons except the current location
-    var allButtons = document.querySelectorAll('.dropdown-option');
-    allButtons.forEach(button => {
-      if (button.id !== timeIDX) {
-        button.classList.remove('active');
-      }
-    });
-    // Toggle "active" class for the current location
-    var buttonsContainer = document.getElementById(timeIDX);
-    console.log(buttonsContainer);
-    buttonsContainer.classList.add('active');
-  }
+  // for (const item of myList) {
+  //   document.getElementById(item).classList.toggle("nonactive");
+
+  // }
+  var buttonsContainer = document.getElementById(location);
+  buttonsContainer.classList.toggle("active");
+
+  // console.log("buttonsContainer");
+  // console.log(buttonsContainer);
+
 }
 
 
-// function colorcase(location){
-//   if (location === localStorage.getItem("loc", loc)) {
-//     console.log("KEEP COLOR");
-//       var myList = ["high_level", "kimiwan_complex", "sparks_lake", "fort_mac", "camp_fire", "qb_fires", "marshall_fire"];
-//       var variableToRemove = location;
-//       for (let i = 0; i < myList.length; i++) {
-//         if (myList[i] === variableToRemove) {
-//           myList.splice(i, 1); // Remove the item at index i
-//           i--; // Decrement i to account for the removed item
-//         }
-//       }
-//       console.log(myList);
-//       for (const item of myList) {
-//         document.getElementById(item).classList.toggle("nonactive");
-//       }
-//   } else {
-//     console.log(location);
-//     var buttonsContainer = document.getElementById(location);
-//     buttonsContainer.classList.toggle("active");
-//   }
-// }
 
-
-
-function showImage(loc, int, valid, varname) {
-  localStorage.setItem("int0", localStorage.getItem("int"));
-  var dataI = localStorage.getItem("dataI");
-  var dataJ = localStorage.getItem("dataJ");
-
+function showImage(loc, int, dataJ, valid, varname) {
+  var dataI = int;
+  var dataJ = dataJ;
+  localStorage.setItem("dataI", dataI);
+  localStorage.setItem("dataJ", dataJ);
   console.log("=================");
   console.log("loc:", loc);
   console.log("int:", int);
@@ -286,12 +249,11 @@ function showImage(loc, int, valid, varname) {
   console.log("varname:", varname);
   console.log("dataI:", dataI);
   console.log("dataJ:", dataJ);
-  console.log(dataI == localStorage.getItem("int0"));
   console.log("=================");
 
-  if (isDateInPast(parseDateTime(valid), parseDateTime(dataI)) && dataI == localStorage.getItem("int0")) {
-    var valid = dataJ
-    localStorage.setItem("valid", valid);
+  if (isDateInPast(parseDateTime(valid), parseDateTime(dataI))) {
+    // var valid = dataJ
+    // localStorage.setItem("valid", valid);
     console.log("valid  less than dataI" );
   } else if (isDateInPast(parseDateTime(dataJ), parseDateTime(valid))) {
     var valid = int
@@ -347,7 +309,6 @@ function showImage(loc, int, valid, varname) {
       // console.log(imageUrl);
       const currentImage = document.getElementById('currentImage');
       currentImage.src = imageUrl;
-
     })
 }
 
@@ -363,6 +324,7 @@ function showImage(loc, int, valid, varname) {
 document.addEventListener('keydown', function(event) {
   var loc = localStorage.getItem("loc");
   var int = localStorage.getItem("int");
+  var dataJ = localStorage.getItem("dataJ");
   var valid = localStorage.getItem("valid");
   var varname = localStorage.getItem("varname");
 
@@ -371,11 +333,11 @@ document.addEventListener('keydown', function(event) {
     if (event.code === 'ArrowLeft') {
       // Decrement the int date-time by one hour
       var prevDateTime = decrementDateTime(valid);
-      showImage(loc, int, prevDateTime, varname);
+      showImage(loc, int, dataJ, prevDateTime, varname);
     } else if (event.code === 'ArrowRight') {
       // Increment the int date-time by one hour
       var nextDateTime = incrementDateTime(valid);
-      showImage(loc, int, nextDateTime, varname);
+      showImage(loc, int, dataJ, nextDateTime, varname);
     }
   }
 });
