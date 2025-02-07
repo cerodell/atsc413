@@ -1,4 +1,4 @@
-#!/Users/crodell/miniconda3/envs/fwx/bin/python
+#!/mnt/beegfs/home/crodell/miniforge3/envs/fwx/bin/python
 
 import context
 import gc
@@ -931,13 +931,14 @@ def plot_wspwdir(ds, case_study, save_dir, height, roads=False, **kwargs):
             edgecolors="black",
             linewidth=0.8,
         )
-        plt.savefig(
-            str(save_dir) + f"/{var}-{height}-{vtimes.strftime('%Y%m%d%H')}.jpeg",
-            dpi=250,
-            bbox_inches="tight",
-        )
-        print(f"Time to create {var.upper()} {height} fig: ", datetime.now() - figTime)
-        plt.close()
+        plt.show()
+        # plt.savefig(
+        #     str(save_dir) + f"/{var}-{height}-{vtimes.strftime('%Y%m%d%H')}.jpeg",
+        #     dpi=250,
+        #     bbox_inches="tight",
+        # )
+        # print(f"Time to create {var.upper()} {height} fig: ", datetime.now() - figTime)
+        # plt.close()
         del ds
         del ds_climo
         del ds_t

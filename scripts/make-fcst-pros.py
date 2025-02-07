@@ -1,6 +1,7 @@
-#!/Users/crodell/miniconda3/envs/fwx/bin/python
+#!/mnt/beegfs/home/crodell/miniforge3/envs/fwx/bin/python
 
 import sys
+
 import context
 import json
 import os.path
@@ -10,10 +11,11 @@ import cfgrib
 from datetime import datetime
 from utils.plot import *
 from context import json_dir, data_dir, img_dir
-import getdata
+# import getdata
 
-case_study = sys.argv[1]
-model = case_attrs[case_study]["model"]
+
+# case_study = sys.argv[1]
+# model = case_attrs[case_study]["model"]
 
 # case_study = "marshall_fire"
 # model = "era5"
@@ -34,9 +36,9 @@ with open(str(json_dir) + "/case-attrs.json") as f:
 # model = "gfs"
 # int_dir = "20210625T00"
 
-# case_study = "kimiwan_complex"
-# model = "gfs"
-# int_dir = "20230522T00"
+case_study = "palisades_fire"
+model = "era5"
+int_dir = "202350107T00"
 
 
 # case_study = "qb_fires"
@@ -67,9 +69,10 @@ if model == "gfs":
 elif model == "era5":
     plot_list = [
         "wsp-10m",
+        "wsp-100m",
         "t2m",
-        "r2",
-        "tp",
+        # "r2",
+        # "tp",
     ]
 for fct_day in fct_days:
     int_dir = fct_day.strftime("%Y%m%dT%H")
@@ -82,7 +85,7 @@ for fct_day in fct_days:
         print(f"Using ERA5 to create reanalysis Maps on {fct_day}")
         ds_era5 = config_era5(
             xr.open_dataset(
-                f"/Volumes/ThunderBay/CRodell/ecmwf/era5/{fct_day.strftime('%Y%m')}/era5-{fct_day.strftime('%Y%m%d%H')}.nc"
+                f"{data_dir}/ecmwf/era5/{fct_day.strftime('%Y%m')}/era5-single-levels-{fct_day.strftime('%Y%m%d')}.grib"
             )
         )
         pathlist = ds_era5.time.values

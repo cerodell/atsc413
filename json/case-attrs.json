@@ -160,10 +160,11 @@
   },
   "palisades_fire":{
     "loc": [34.0643, -118.5736],
+    "show_fire": "true",
     "fct_horizon": 48,
-    "model": "gfs",
+    "model": "era5",
     "init": "00",
-    "freq": 3,
+    "freq": 1,
     "fct_days": [
       "2025-01-06",
       "2025-01-09"

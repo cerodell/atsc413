@@ -1,39 +1,56 @@
-#!/Users/crodell/miniconda3/envs/fwf/bin/python
+#!/mnt/beegfs/home/crodell/miniforge3/envs/fwx/bin/python
 
 import context
 import cdsapi
-import numpy as np
 import pandas as pd
 from datetime import datetime
+from pathlib import Path
 
 from context import data_dir
 
 
+# level = "single-levels"
+
+# variables = [
+#                 "10m_u_component_of_wind",
+#                 "10m_v_component_of_wind",
+#                 "100m_u_component_of_wind",
+#                 "100m_v_component_of_wind",
+#                 "2m_dewpoint_temperature",
+#                 "2m_temperature",
+#                 "mean_sea_level_pressure",
+#                 "total_precipitation",
+#             ]
+
+level = "pressure-levels"
+
+variables =   [
+                "geopotential",
+                "u_component_of_wind",
+                "v_component_of_wind",
+                "vertical_velocity"
+            ]
+pressure_level = ["500", "700", "925", "850"],
+
 c = cdsapi.Client()
-save_dir = str(data_dir) + "/era5/"
-
-
-# date_range = pd.date_range("2013-02-12", "2019-12-27")
-date_range = pd.date_range("2025-01-07", "2025-01-08")
+save_dir = f"{data_dir}/ecmwf/era5/"
+date_range = pd.date_range("2025-01-06", "2025-01-08")
 for date in date_range:
     startTime = datetime.now()
+    make_dir = Path(save_dir + f'{date.strftime("%Y%m")}/')
+    make_dir.mkdir(parents=True, exist_ok=True)
+
     c.retrieve(
-        "reanalysis-era5-single-levels",
+        f"reanalysis-era5-{level}",
         {
             "product_type": "reanalysis",
-            "format": "netcdf",
-            "variable": [
-                "10m_u_component_of_wind",
-                "10m_v_component_of_wind",
-                "2m_dewpoint_temperature",
-                "2m_temperature",
-                "mean_sea_level_pressure",
-                "100m_u_component_of_wind",
-                "100m_v_component_of_wind",
-            ],
+            "format": "grib",
+            "download_format": "unarchived",
+            "variable": variables,
             "year": date.strftime("%Y"),
             "month": date.strftime("%m"),
             "day": date.strftime("%d"),
+            "pressure_level": pressure_level,
             "time": [
                 "00:00",
                 "01:00",
@@ -61,12 +78,13 @@ for date in date_range:
                 "23:00",
             ],
         },
-        save_dir + f'era5-{date.strftime("%Y%m%d00")}.nc',
+        str(make_dir) + f'/era5-{level}-{date.strftime("%Y%m%d")}.grib',
     )
 
     print(
-        f'downloaded era5-{date.strftime("%Y%m%d00")}.nc in {datetime.now() - startTime}'
+        f'downloaded era5-{level}-{date.strftime("%Y%m%d")}.grib in {datetime.now() - startTime}'
     )
+
 
 
 # save_dir = "/Volumes/WFRT-Data02/era5/"
